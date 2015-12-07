@@ -15,6 +15,15 @@
 
     <string name="action_settings">Settings</string>
     <string name="pick_what">Pick what you need</string>
+    <string name="beranda">Beranda</string>
+    <string name="kabar_berita">Kabar Berita</string>
+    <string name="kritik_saran">Kritik dan Saran</string>
+    <string name="tentang">Tentang Reka</string>
+    <string name="app_version">App Version 1.0</string>
+    <string name="app_description">lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet</string>
+    <string name="email_anda">Alamat email anda</string>
+    <string name="kritik_saran_description">Kritik &amp; saran yang anda tulis akan dikirim langsung ke email Rekatour.</string>
+    <string name="send">Kirim</string>
 
 
 </resources>

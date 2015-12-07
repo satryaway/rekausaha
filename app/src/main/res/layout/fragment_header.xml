@@ -8,8 +8,7 @@
         android:id="@+id/image_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="centerCrop"
-        android:src="@drawable/banner1" />
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/image_caption"
@@ -17,9 +16,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="#85000000"
-        android:padding="10dp"
-        android:text="Bromo"
+        android:padding="15dp"
         android:textColor="@android:color/white"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
 </RelativeLayout>
