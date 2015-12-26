@@ -26,4 +26,5 @@
     <string name="send">Kirim</string>
     <string name="please_wait">Please Wait</string>
     <string name="RTO">Request Timed Out</string>
+    <string name="search_airport">Cari Bandara</string>
 </resources>

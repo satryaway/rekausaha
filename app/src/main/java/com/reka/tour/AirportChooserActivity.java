@@ -3,8 +3,11 @@ package com.reka.tour;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -12,6 +15,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.ValueAnimator;
+import com.reka.tour.adapter.AirportListAdapter;
 import com.reka.tour.model.Airport;
 import com.reka.tour.utils.APIAgent;
 import com.reka.tour.utils.CommonConstants;
@@ -36,6 +40,7 @@ public class AirportChooserActivity extends Activity {
     private ExpandableStickyListHeadersListView airportLV;
     AirportListAdapter mAirportListAdapter;
     WeakHashMap<View, Integer> mOriginalViewHeightPool = new WeakHashMap<>();
+    private EditText filterAirportET;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +48,12 @@ public class AirportChooserActivity extends Activity {
         setContentView(R.layout.airport_chooser_layout);
         getData();
 
+        initUI();
+        setCallBack();
+    }
+
+    private void initUI() {
+        filterAirportET = (EditText) findViewById(R.id.filter_et);
         airportLV = (ExpandableStickyListHeadersListView) findViewById(R.id.airport_lv);
         airportLV.setAnimExecutor(new AnimationExecutor());
         mAirportListAdapter = new AirportListAdapter(this);
@@ -55,6 +66,25 @@ public class AirportChooserActivity extends Activity {
                 } else {
                     airportLV.collapse(headerId);
                 }
+            }
+        });
+    }
+
+    private void setCallBack() {
+        filterAirportET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                mAirportListAdapter.getFilter().filter(s);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
     }

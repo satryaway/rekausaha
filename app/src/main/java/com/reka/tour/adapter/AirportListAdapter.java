@@ -1,13 +1,16 @@
-package com.reka.tour;
+package com.reka.tour.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
+import com.reka.tour.R;
 import com.reka.tour.model.Airport;
 
 import java.util.ArrayList;
@@ -15,14 +18,14 @@ import java.util.List;
 
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
-public class AirportListAdapter extends BaseAdapter implements
-        StickyListHeadersAdapter, SectionIndexer {
-
+public class AirportListAdapter extends BaseAdapter implements StickyListHeadersAdapter, SectionIndexer, Filterable {
     private final Context mContext;
     private int[] mSectionIndices;
     private Character[] mSectionLetters;
     private LayoutInflater mInflater;
     private List<Airport> airportList = new ArrayList<>();
+    private List<Airport> airportFilterList;
+    private ValueFilter valueFilter;
 
     public AirportListAdapter(Context context) {
         mContext = context;
@@ -113,9 +116,8 @@ public class AirportListAdapter extends BaseAdapter implements
 
     @Override
     public int getPositionForSection(int section) {
-        if (mSectionIndices.length == 0) {
+        if (mSectionIndices.length == 0)
             return 0;
-        }
 
         if (section >= mSectionIndices.length) {
             section = mSectionIndices.length - 1;
@@ -144,6 +146,8 @@ public class AirportListAdapter extends BaseAdapter implements
         this.airportList = airportList;
         mSectionIndices = getSectionIndices();
         mSectionLetters = getSectionLetters();
+        this.airportFilterList = airportList;
+        getFilter();
         notifyDataSetChanged();
     }
 
@@ -155,4 +159,46 @@ public class AirportListAdapter extends BaseAdapter implements
         TextView text;
     }
 
+    @Override
+    public Filter getFilter() {
+        if (valueFilter == null)
+            valueFilter = new ValueFilter();
+
+        return valueFilter;
+    }
+
+    private class ValueFilter extends Filter {
+
+        //Invoked in a worker thread to filter the data according to the constraint.
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            FilterResults results = new FilterResults();
+            if (constraint != null && constraint.length() > 0) {
+                List<Airport> filterList = new ArrayList<>();
+                for (int i = 0; i < airportFilterList.size(); i++) {
+                    if (airportFilterList.get(i).name.toLowerCase().contains(constraint)
+                            || airportFilterList.get(i).countryName.toLowerCase().contains(constraint)
+                            || airportFilterList.get(i).locationName.toLowerCase().contains(constraint)) {
+                        filterList.add(airportFilterList.get(i));
+                    }
+                }
+
+                results.count = filterList.size();
+                results.values = filterList;
+            } else {
+                results.count = airportList.size();
+                results.values = airportList;
+            }
+
+            return results;
+        }
+
+        //Invoked in the UI thread to publish the filtering results in the user interface.
+        @SuppressWarnings("unchecked")
+        @Override
+        protected void publishResults(CharSequence constraint, Filter.FilterResults results) {
+            airportList = (List<Airport>) results.values;
+            notifyDataSetChanged();
+        }
+    }
 }
