@@ -24,6 +24,6 @@
     <string name="email_anda">Alamat email anda</string>
     <string name="kritik_saran_description">Kritik &amp; saran yang anda tulis akan dikirim langsung ke email Rekatour.</string>
     <string name="send">Kirim</string>
-
-
+    <string name="please_wait">Please Wait</string>
+    <string name="RTO">Request Timed Out</string>
 </resources>
