@@ -23,6 +23,6 @@ public class SquareView extends RelativeLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        setMeasuredDimension(getMeasuredWidth(), getMeasuredWidth()*130/100);
+        setMeasuredDimension(getMeasuredWidth(), getMeasuredWidth()*125/100);
     }
 }

@@ -53,7 +53,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, view);
-setCallBack();
+        setCallBack();
 
         HeaderAdapter mAdapter = new HeaderAdapter(getActivity());
         mPager.setAdapter(mAdapter);
@@ -66,7 +66,7 @@ setCallBack();
         return view;
     }
 
-    private void setCallBack(){
+    private void setCallBack() {
         navFlight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

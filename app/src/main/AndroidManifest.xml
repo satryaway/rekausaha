@@ -23,7 +23,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.AirportChooserActivity" />
-        <activity android:name=".activity.FlightActivity"></activity>
+        <activity android:name=".activity.FlightActivity" />
+        <activity android:name=".activity.DepartureActivity" />
+        <activity android:name=".activity.ApertureActivity" />
+        <activity android:name=".activity.CheckoutActivity" />
     </application>
 
 </manifest>

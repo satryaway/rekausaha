@@ -47,13 +47,15 @@ public class AirportChooserActivity extends AppCompatActivity {
     private ExpandableStickyListHeadersListView airportLV;
     private EditText filterAirportET;
     private Toolbar toolbar;
+    private String title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.airport_chooser_layout);
-        getData();
 
+
+        getData();
         initUI();
         setCallBack();
     }
@@ -73,6 +75,7 @@ public class AirportChooserActivity extends AppCompatActivity {
     private void initUI() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.back);
+        toolbar.setTitle(getIntent().getExtras().getString("title"));
         setSupportActionBar(toolbar);
 
         filterAirportET = (EditText) findViewById(R.id.filter_et);

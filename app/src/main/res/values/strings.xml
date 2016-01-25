@@ -38,4 +38,9 @@
     <string name="anak">Anak 2-12 tahun</string>
     <string name="cari_pesawat">Cari Pesawat</string>
     <string name="pilih_penerbangan">Pilih Penerbangan</string>
+    <string name="pergi">Pergi</string>
+    <string name="detail_pesanan">Detail Pesanan</string>
+    <string name="bayi"><![CDATA[Bayi <2 Tahun]]></string>
+    <string name="pilih_kota_keberangkatan">Pilih Kota Keberangkatan</string>
+    <string name="pilih_kota_tujuan">Pilih Kota Tujuan</string>
 </resources>
