@@ -1,12 +1,16 @@
-package com.reka.tour;
+package com.reka.tour.activity;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -15,6 +19,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.ValueAnimator;
+import com.reka.tour.R;
 import com.reka.tour.adapter.AirportListAdapter;
 import com.reka.tour.model.Airport;
 import com.reka.tour.utils.APIAgent;
@@ -35,12 +40,13 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 /**
  * @author satryaway
  */
-public class AirportChooserActivity extends Activity {
-    private List<Airport> airportList = new ArrayList<>();
-    private ExpandableStickyListHeadersListView airportLV;
+public class AirportChooserActivity extends AppCompatActivity {
     AirportListAdapter mAirportListAdapter;
     WeakHashMap<View, Integer> mOriginalViewHeightPool = new WeakHashMap<>();
+    private List<Airport> airportList = new ArrayList<>();
+    private ExpandableStickyListHeadersListView airportLV;
     private EditText filterAirportET;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +58,23 @@ public class AirportChooserActivity extends Activity {
         setCallBack();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                finish();
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void initUI() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.back);
+        setSupportActionBar(toolbar);
+
         filterAirportET = (EditText) findViewById(R.id.filter_et);
         airportLV = (ExpandableStickyListHeadersListView) findViewById(R.id.airport_lv);
         airportLV.setAnimExecutor(new AnimationExecutor());
@@ -66,6 +88,21 @@ public class AirportChooserActivity extends Activity {
                 } else {
                     airportLV.collapse(headerId);
                 }
+            }
+        });
+        airportLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Airport airport = mAirportListAdapter.getAirport(position);
+
+                Intent myIntent = new Intent();
+                myIntent.putExtra("AIRPORT_CODE", airport.code);
+                myIntent.putExtra("AIRPORT_NAME", airport.name);
+                myIntent.putExtra("AIRPORT_LOCATION", airport.locationName);
+                setResult(RESULT_OK, myIntent);
+                finish();
+
             }
         });
     }

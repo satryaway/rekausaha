@@ -1,14 +1,17 @@
 package com.reka.tour.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.reka.tour.R;
+import com.reka.tour.activity.FlightActivity;
 import com.reka.tour.adapter.HeaderAdapter;
 import com.reka.tour.views.pagerindicator.AutoScrollViewPager;
 import com.reka.tour.views.pagerindicator.CirclePageIndicator;
@@ -26,6 +29,8 @@ public class HomeFragment extends Fragment {
     AutoScrollViewPager mPager;
     @Bind(R.id.txt_runningtext)
     TextView textViewRunning;
+    @Bind(R.id.nav_flight)
+    ImageView navFlight;
 
     private String LOG_TAG = HomeFragment.class.getName();
 
@@ -48,7 +53,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, view);
-
+setCallBack();
 
         HeaderAdapter mAdapter = new HeaderAdapter(getActivity());
         mPager.setAdapter(mAdapter);
@@ -59,5 +64,14 @@ public class HomeFragment extends Fragment {
         textViewRunning.setSelected(true);
 
         return view;
+    }
+
+    private void setCallBack(){
+        navFlight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().startActivity(new Intent(getActivity(), FlightActivity.class));
+            }
+        });
     }
 }

@@ -27,4 +27,15 @@
     <string name="please_wait">Please Wait</string>
     <string name="RTO">Request Timed Out</string>
     <string name="search_airport">Cari Bandara</string>
+    <string name="sekali_jalan">Sekali Jalan</string>
+    <string name="pulang_pergi">Pulang Pergi</string>
+    <string name="dari">Dari</string>
+    <string name="menuju">Menuju</string>
+    <string name="berangkat">Berangkat</string>
+    <string name="pulang">Pulang</string>
+    <string name="penumpang">Penumpang</string>
+    <string name="dewasa">Dewasa</string>
+    <string name="anak">Anak 2-12 tahun</string>
+    <string name="cari_pesawat">Cari Pesawat</string>
+    <string name="pilih_penerbangan">Pilih Penerbangan</string>
 </resources>

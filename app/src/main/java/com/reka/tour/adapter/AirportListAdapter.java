@@ -67,6 +67,10 @@ public class AirportListAdapter extends BaseAdapter implements StickyListHeaders
         return airportList.get(position);
     }
 
+    public Airport getAirport(int position) {
+        return airportList.get(position);
+    }
+
     @Override
     public long getItemId(int position) {
         return position;
@@ -151,20 +155,20 @@ public class AirportListAdapter extends BaseAdapter implements StickyListHeaders
         notifyDataSetChanged();
     }
 
-    class HeaderViewHolder {
-        TextView text;
-    }
-
-    class ViewHolder {
-        TextView text;
-    }
-
     @Override
     public Filter getFilter() {
         if (valueFilter == null)
             valueFilter = new ValueFilter();
 
         return valueFilter;
+    }
+
+    class HeaderViewHolder {
+        TextView text;
+    }
+
+    class ViewHolder {
+        TextView text;
     }
 
     private class ValueFilter extends Filter {
