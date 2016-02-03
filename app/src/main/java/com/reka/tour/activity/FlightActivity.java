@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.reka.tour.R;
+import com.reka.tour.utils.CommonConstants;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -25,9 +26,13 @@ import butterknife.ButterKnife;
 
 
 public class FlightActivity extends AppCompatActivity implements View.OnClickListener {
-    private static String AIRPORT_CODE = "";
-    private static String AIRPORT_NAME = "";
-    private static String AIRPORT_LOCATION = "";
+    private static String AIRPORT_CODE_D = "";
+    private static String AIRPORT_NAME_D = "";
+    private static String AIRPORT_LOCATION_D = "";
+    private static String AIRPORT_CODE_A = "";
+    private static String AIRPORT_NAME_A = "";
+    private static String AIRPORT_LOCATION_A = "";
+
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.tabLayout)
@@ -84,7 +89,11 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
     private int totalAdult = 0;
     private int totalChild = 0;
     private int totalBaby = 0;
+    private String dateDeparture;
+    private String dateAperture;
+    private SimpleDateFormat dateDayFormatter;
     private SimpleDateFormat dateFormatter;
+    private Calendar newCalendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +111,20 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void initUI() {
+
+
+        newCalendar = Calendar.getInstance();
+        dateDayFormatter = new SimpleDateFormat("EEEE , dd MMMM yyyy", new Locale("ind", "IDN"));
+        dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+
+        //date now
+        tvDeparture.setText(dateDayFormatter.format(newCalendar.getTime()));
+        dateDeparture = dateFormatter.format(newCalendar.getTime());
+
+        //date next week
+        newCalendar.add(Calendar.DATE, 6);
+        tvAperture.setText(dateDayFormatter.format(newCalendar.getTime()));
+
         tabLayout.addTab(tabLayout.newTab().setText(R.string.sekali_jalan));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.pulang_pergi));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -110,8 +133,10 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
                 int position = tab.getPosition();
                 if (position == 0) {
                     dpAperture.setVisibility(View.GONE);
+                    dateAperture = "";
                 } else if (position == 1) {
                     dpAperture.setVisibility(View.VISIBLE);
+                    dateAperture = dateFormatter.format(newCalendar.getTime());
                 }
             }
 
@@ -125,6 +150,7 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
 
             }
         });
+
     }
 
     private void setCallBack() {
@@ -158,8 +184,6 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         Intent pickIntent;
 
-        final Calendar newCalendar = Calendar.getInstance();
-        dateFormatter = new SimpleDateFormat("EEEE , dd MMMM yyyy", new Locale("ind", "IDN"));
 
         totalAdult = Integer.parseInt(tvAdultTotal.getText().toString());
         totalChild = Integer.parseInt(tvChildTotal.getText().toString());
@@ -170,12 +194,14 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
                 pickIntent = new Intent(FlightActivity.this,
                         AirportChooserActivity.class);
                 pickIntent.putExtra("title", getString(R.string.pilih_kota_keberangkatan));
+                pickIntent.putExtra(CommonConstants.FLIGHT, CommonConstants.DEPARTURE);
                 startActivityForResult(pickIntent, DARI_AIRPORT);
                 break;
             case R.id.menuju_airport_code:
                 pickIntent = new Intent(FlightActivity.this,
                         AirportChooserActivity.class);
                 pickIntent.putExtra("title", getString(R.string.pilih_kota_tujuan));
+                pickIntent.putExtra(CommonConstants.FLIGHT, CommonConstants.APERTURE);
                 startActivityForResult(pickIntent, MENUJU_AIRPORT);
                 break;
 
@@ -184,7 +210,8 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         Calendar newDate = Calendar.getInstance();
                         newDate.set(year, monthOfYear, dayOfMonth);
-                        tvDeparture.setText(dateFormatter.format(newDate.getTime()));
+                        tvDeparture.setText(dateDayFormatter.format(newDate.getTime()));
+                        dateDeparture = dateFormatter.format(newDate.getTime());
                     }
 
                 }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH)).show();
@@ -194,7 +221,8 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         Calendar newDate = Calendar.getInstance();
                         newDate.set(year, monthOfYear, dayOfMonth);
-                        tvAperture.setText(dateFormatter.format(newDate.getTime()));
+                        tvAperture.setText(dateDayFormatter.format(newDate.getTime()));
+                        dateAperture = dateFormatter.format(newDate.getTime());
                     }
 
                 }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH)).show();
@@ -237,7 +265,17 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
                 }
                 break;
             case R.id.cari_pesawat:
-                startActivity(new Intent(FlightActivity.this, DepartureActivity.class));
+                Intent findFlightIntent = new Intent(FlightActivity.this, DepartureActivity.class);
+                findFlightIntent.putExtra(CommonConstants.AIRPORT_CODE_D, AIRPORT_CODE_D);
+                findFlightIntent.putExtra(CommonConstants.AIRPORT_CODE_A, AIRPORT_CODE_A);
+                findFlightIntent.putExtra(CommonConstants.AIRPORT_LOCATION_D, AIRPORT_NAME_D + "\n" + AIRPORT_LOCATION_D);
+                findFlightIntent.putExtra(CommonConstants.AIRPORT_LOCATION_A, AIRPORT_NAME_A + "\n" + AIRPORT_LOCATION_A);
+                findFlightIntent.putExtra(CommonConstants.ADULT, String.valueOf(totalAdult));
+                findFlightIntent.putExtra(CommonConstants.CHILD, String.valueOf(totalChild));
+                findFlightIntent.putExtra(CommonConstants.INFRANT, String.valueOf(totalBaby));
+                findFlightIntent.putExtra(CommonConstants.DATE, dateDeparture);
+                findFlightIntent.putExtra(CommonConstants.RET_DATE, dateAperture);
+                startActivity(findFlightIntent);
                 break;
 
             default:
@@ -253,19 +291,19 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
         if (resultCode == Activity.RESULT_OK) {
 
             if (requestCode == DARI_AIRPORT) {
-                AIRPORT_CODE = data.getStringExtra("AIRPORT_CODE");
-                AIRPORT_NAME = data.getStringExtra("AIRPORT_NAME");
-                AIRPORT_LOCATION = data.getStringExtra("AIRPORT_LOCATION");
-                dariAirportCode.setText(AIRPORT_CODE);
-                dariAirportName.setText(AIRPORT_NAME + "\n" + AIRPORT_LOCATION);
+                AIRPORT_CODE_D = data.getStringExtra(CommonConstants.AIRPORT_CODE_D);
+                AIRPORT_NAME_D = data.getStringExtra(CommonConstants.AIRPORT_NAME_D);
+                AIRPORT_LOCATION_D = data.getStringExtra(CommonConstants.AIRPORT_LOCATION_D);
+                dariAirportCode.setText(AIRPORT_CODE_D);
+                dariAirportName.setText(AIRPORT_NAME_D + "\n" + AIRPORT_LOCATION_D);
             }
 
             if (requestCode == MENUJU_AIRPORT) {
-                AIRPORT_CODE = data.getStringExtra("AIRPORT_CODE");
-                AIRPORT_NAME = data.getStringExtra("AIRPORT_NAME");
-                AIRPORT_LOCATION = data.getStringExtra("AIRPORT_LOCATION");
-                menujuAirportCode.setText(AIRPORT_CODE);
-                menujuAirportName.setText(AIRPORT_NAME + "\n" + AIRPORT_LOCATION);
+                AIRPORT_CODE_A = data.getStringExtra(CommonConstants.AIRPORT_CODE_A);
+                AIRPORT_NAME_A = data.getStringExtra(CommonConstants.AIRPORT_NAME_A);
+                AIRPORT_LOCATION_A = data.getStringExtra(CommonConstants.AIRPORT_LOCATION_A);
+                menujuAirportCode.setText(AIRPORT_CODE_A);
+                menujuAirportName.setText(AIRPORT_NAME_A + "\n" + AIRPORT_LOCATION_A);
             }
         }
         super.onActivityResult(requestCode, resultCode, data);

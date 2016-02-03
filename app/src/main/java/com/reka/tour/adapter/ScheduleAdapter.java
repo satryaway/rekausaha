@@ -9,28 +9,31 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.reka.tour.R;
-import com.reka.tour.model.Schedule;
+import com.reka.tour.model.NearbyGoDate;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 /**
  * Created by fachrifebrian on 9/2/15.
  */
-public class ScheduleAdapter extends ArrayAdapter<Schedule> {
+public class ScheduleAdapter extends ArrayAdapter<NearbyGoDate> {
 
     private int layoutResourceId;
     private Context context;
 
 
-    public ScheduleAdapter(Context context, ArrayList<Schedule> scheduleArrayList) {
+    public ScheduleAdapter(Context context, ArrayList<NearbyGoDate> scheduleArrayList) {
         super(context, R.layout.item_schedule, scheduleArrayList);
         this.context = context;
         this.layoutResourceId = R.layout.item_schedule;
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {
-        final Schedule schedule = getItem(position);
+        final NearbyGoDate schedule = getItem(position);
 
         LayoutInflater mInflater = (LayoutInflater) context
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -48,9 +51,20 @@ public class ScheduleAdapter extends ArrayAdapter<Schedule> {
         holder.tvDate = (TextView) convertView.findViewById(R.id.tv_date);
         holder.tvPrice = (TextView) convertView.findViewById(R.id.tv_price);
 
-        holder.tvDay.setText(schedule.getDay());
-        holder.tvDate.setText(schedule.getDate());
-        holder.tvPrice.setText(schedule.getPrice());
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dayFormatter = new SimpleDateFormat("EEE", new Locale("ind", "IDN"));
+        SimpleDateFormat dateMonthFormatter = new SimpleDateFormat("dd MMM", new Locale("ind", "IDN"));
+
+
+        try {
+            holder.tvDay.setText(dayFormatter.format(format1.parse(schedule.date)) + "");
+            holder.tvDate.setText(dateMonthFormatter.format(format1.parse(schedule.date)) + "");
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        holder.tvPrice.setText(schedule.price);
 
         return convertView;
     }

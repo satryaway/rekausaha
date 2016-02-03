@@ -45,29 +45,29 @@ public class ApertureActivity extends AppCompatActivity {
     }
 
     private void setValue() {
-        for (int i = 1; i <= 8; i++) {
-            scheduleArrayList.add(new Schedule(
-                    "Sun",
-                    "1" + i + " Jan",
-                    "IDR 123." + (23 * i + 152)
-            ));
-        }
-
-        scheduleAdapter = new ScheduleAdapter(this, scheduleArrayList);
-        listSchedule.setAdapter(scheduleAdapter);
-
-        for (int i = 1; i <= 8; i++) {
-            flightArrayList.add(new Flight(
-                    "" + i,
-                    "Batik Air " + i,
-                    i + "1:00 - 10:" + i,
-                    i + ":20 ,Direct",
-                    "IDR 123." + (23 * i + 152)
-            ));
-        }
-
-        flightAdapter = new FlightAdapter(this, flightArrayList);
-        listFlight.setAdapter(flightAdapter);
+//        for (int i = 1; i <= 8; i++) {
+//            scheduleArrayList.add(new Schedule(
+//                    "Sun",
+//                    "1" + i + " Jan",
+//                    "IDR 123." + (23 * i + 152)
+//            ));
+//        }
+//
+//        scheduleAdapter = new ScheduleAdapter(this, scheduleArrayList);
+//        listSchedule.setAdapter(scheduleAdapter);
+//
+//        for (int i = 1; i <= 8; i++) {
+//            flightArrayList.add(new Flight(
+//                    "" + i,
+//                    "Batik Air " + i,
+//                    i + "1:00 - 10:" + i,
+//                    i + ":20 ,Direct",
+//                    "IDR 123." + (23 * i + 152)
+//            ));
+//        }
+//
+//        flightAdapter = new FlightAdapter(this, flightArrayList);
+//        listFlight.setAdapter(flightAdapter);
     }
 
     @Override

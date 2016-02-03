@@ -17,6 +17,7 @@ public class APIAgent {
     private ProgressDialog progressDialog;
 
     public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+        client.setTimeout(1000);
         client.get(url, params, responseHandler);
     }
 

@@ -15,4 +15,32 @@ public class CommonConstants {
     public static String ERROR_MSGS = "error_msgs";
     public static String ALL_AIRPORT = "all_airport";
     public static String AIRPORT = "airport";
+
+
+    public static String NEARBY_GO_DATE = "nearby_go_date";
+    public static String NEARBY = "nearby";
+
+    public static String D = "d";
+    public static String A = "a";
+    public static String ADULT = "adult";
+    public static String CHILD = "child";
+    public static String INFRANT = "infant";
+    public static String DATE = "date";
+    public static String RET_DATE = "ret_date";
+
+    public static String DEPARTURES = "departures";
+    public static String RESULT = "result";
+
+
+    public static String FLIGHT = "FLIGHT";
+    public static String DEPARTURE = "DEPARTURE";
+    public static String AIRPORT_CODE_D = "AIRPORT_CODE_D";
+    public static String AIRPORT_NAME_D = "AIRPORT_NAME_D";
+    public static String AIRPORT_LOCATION_D = "AIRPORT_LOCATION_D";
+
+    public static String APERTURE = "APERTURE";
+    public static String AIRPORT_CODE_A = "AIRPORT_CODE_A";
+    public static String AIRPORT_NAME_A = "AIRPORT_NAME_A";
+    public static String AIRPORT_LOCATION_A = "AIRPORT_LOCATION_A";
+
 }

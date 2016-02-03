@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.nineoldandroids.animation.Animator;
@@ -22,7 +23,6 @@ import com.nineoldandroids.animation.ValueAnimator;
 import com.reka.tour.R;
 import com.reka.tour.adapter.AirportListAdapter;
 import com.reka.tour.model.Airport;
-import com.reka.tour.utils.APIAgent;
 import com.reka.tour.utils.CommonConstants;
 
 import org.json.JSONArray;
@@ -99,12 +99,22 @@ public class AirportChooserActivity extends AppCompatActivity {
 
                 Airport airport = mAirportListAdapter.getAirport(position);
 
-                Intent myIntent = new Intent();
-                myIntent.putExtra("AIRPORT_CODE", airport.code);
-                myIntent.putExtra("AIRPORT_NAME", airport.name);
-                myIntent.putExtra("AIRPORT_LOCATION", airport.locationName);
-                setResult(RESULT_OK, myIntent);
-                finish();
+                if (getIntent().getExtras().getString(CommonConstants.FLIGHT).equals(CommonConstants.DEPARTURE)) {
+                    Intent myIntent = new Intent();
+                    myIntent.putExtra(CommonConstants.AIRPORT_CODE_D, airport.code);
+                    myIntent.putExtra(CommonConstants.AIRPORT_NAME_D, airport.name);
+                    myIntent.putExtra(CommonConstants.AIRPORT_LOCATION_D, airport.locationName);
+                    setResult(RESULT_OK, myIntent);
+                    finish();
+                } else if (getIntent().getExtras().getString(CommonConstants.FLIGHT).equals(CommonConstants.APERTURE)) {
+                    Intent myIntent = new Intent();
+                    myIntent.putExtra(CommonConstants.AIRPORT_CODE_A, airport.code);
+                    myIntent.putExtra(CommonConstants.AIRPORT_NAME_A, airport.name);
+                    myIntent.putExtra(CommonConstants.AIRPORT_LOCATION_A, airport.locationName);
+                    setResult(RESULT_OK, myIntent);
+                    finish();
+                }
+
 
             }
         });
@@ -130,7 +140,7 @@ public class AirportChooserActivity extends AppCompatActivity {
     }
 
     private void getData() {
-        String url = CommonConstants.BASE_URL + "flight_api/all_airport";
+        String url = "http://api-sandbox.tiket.com/" + "flight_api/all_airport";
 
         RequestParams requestParams = new RequestParams();
         requestParams.put(CommonConstants.TOKEN, "19d0ceaca45f9ee27e3c51df52786f1d904280f9");
@@ -139,7 +149,9 @@ public class AirportChooserActivity extends AppCompatActivity {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.please_wait));
 
-        APIAgent.get(url, requestParams, new JsonHttpResponseHandler() {
+        AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
+        client.setTimeout(10000);
+        client.get(url, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onStart() {
                 progressDialog.show();

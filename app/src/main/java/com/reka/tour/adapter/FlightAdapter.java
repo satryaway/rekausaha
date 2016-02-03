@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.reka.tour.R;
-import com.reka.tour.model.Flight;
+import com.reka.tour.model.Departures;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -19,19 +19,19 @@ import java.util.ArrayList;
 /**
  * Created by fachrifebrian on 9/2/15.
  */
-public class FlightAdapter extends ArrayAdapter<Flight> {
+public class FlightAdapter extends ArrayAdapter<Departures> {
 
     private int layoutResourceId;
     private Context context;
 
-    public FlightAdapter(Context context, ArrayList<Flight> flightArrayList) {
+    public FlightAdapter(Context context, ArrayList<Departures> flightArrayList) {
         super(context, R.layout.item_flight, flightArrayList);
         this.context = context;
         this.layoutResourceId = R.layout.item_flight;
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {
-        final Flight schedule = getItem(position);
+        final Departures schedule = getItem(position);
 
         LayoutInflater mInflater = (LayoutInflater) context
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -51,12 +51,12 @@ public class FlightAdapter extends ArrayAdapter<Flight> {
         holder.tvDuration = (TextView) convertView.findViewById(R.id.tv_duration);
         holder.tvPrice = (TextView) convertView.findViewById(R.id.tv_price);
 
-        Picasso.with(getContext()).load(R.drawable.flight_ic).into(holder.ivFlight);
+        Picasso.with(getContext()).load(schedule.image).into(holder.ivFlight);
 
-        holder.tvName.setText(schedule.getName());
-        holder.tvTime.setText(schedule.getTime());
-        holder.tvDuration.setText(schedule.getDuration());
-        holder.tvPrice.setText(schedule.getPrice());
+        holder.tvName.setText(schedule.airlinesName);
+        holder.tvTime.setText(schedule.simpleDepartureTime +" - "+schedule.simpleArrivalTime);
+        holder.tvDuration.setText(schedule.duration);
+        holder.tvPrice.setText(schedule.priceValue);
 
         return convertView;
     }
