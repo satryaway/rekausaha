@@ -30,8 +30,9 @@ public class CommonConstants {
 
     public static String DEPARTURES = "departures";
     public static String RESULT = "result";
+    public static String SEARCH_QUARIES = "search_queries";
 
-
+    public static String RUTE = "RUTE";
     public static String FLIGHT = "FLIGHT";
     public static String DEPARTURE = "DEPARTURE";
     public static String AIRPORT_CODE_D = "AIRPORT_CODE_D";

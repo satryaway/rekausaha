@@ -127,6 +127,7 @@
                                     android:textStyle="bold" />
 
                                 <TextView
+                                    android:id="@+id/tv_flight_number"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="SJ-160"
@@ -179,28 +180,16 @@
                             style="@style/Base.TextAppearance.AppCompat.Body1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:text="CGK - DPS (12:30 - 15:20)" />
 
-                            android:text="Soekarno hatta (JKT) - Ngurah Rai (DPS)" />
-
-                        <TextView
-                            android:id="@+id/tv_time"
-                            style="@style/Base.TextAppearance.AppCompat.Title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/tv_rute"
-                            android:text="20:10 - 23:50" />
 
                         <TextView
                             android:id="@+id/tv_duration"
                             style="@style/Base.TextAppearance.AppCompat.Body1"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_alignBottom="@+id/tv_time"
-                            android:layout_alignEnd="@+id/tv_rute"
-                            android:layout_alignRight="@+id/tv_rute"
                             android:layout_below="@+id/tv_rute"
-                            android:gravity="center"
-                            android:text="Duration : 2 Ja m 1 Menit" />
+                            android:text="Duration : 2j 1m" />
 
 
                     </RelativeLayout>
@@ -227,7 +216,7 @@
 
                             <TextView
                                 android:id="@+id/tv_adult_price"
-                                android:layout_width="100dp"
+                                android:layout_width="120dp"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_alignParentRight="true"
@@ -253,7 +242,7 @@
 
                             <TextView
                                 android:id="@+id/tv_child_price"
-                                android:layout_width="100dp"
+                                android:layout_width="120dp"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_alignParentRight="true"
@@ -279,7 +268,7 @@
 
                             <TextView
                                 android:id="@+id/tv_baby_price"
-                                android:layout_width="100dp"
+                                android:layout_width="120dp"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_alignParentRight="true"
@@ -305,11 +294,11 @@
                             android:layout_alignParentStart="true"
                             android:layout_alignParentTop="true"
                             android:gravity="right"
-                            android:text="Subtotal"
+                            android:text="TOTAL"
                             android:textColor="@android:color/white" />
 
                         <TextView
-                            android:id="@+id/tv_subtotal"
+                            android:id="@+id/tv_total"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -326,50 +315,6 @@
             </android.support.v7.widget.CardView>
 
 
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="?android:selectableItemBackground"
-                android:padding="@dimen/activity_horizontal_margin"
-                app:cardCornerRadius="2dp"
-                app:cardUseCompatPadding="true">
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorAccent"
-                    android:padding="@dimen/activity_vertical_margin">
-
-                    <TextView
-                        android:id="@+id/total"
-                        style="@style/Base.TextAppearance.AppCompat.Subhead"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:gravity="right"
-                        android:text="Total"
-                        android:textAllCaps="true"
-                        android:textColor="@android:color/white" />
-
-                    <TextView
-                        android:id="@+id/tv_total"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="true"
-                        android:gravity="right|center_vertical"
-                        android:text="IDR 2.234.533"
-                        android:textColor="@android:color/white" />
-
-                </RelativeLayout>
-
-            </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"

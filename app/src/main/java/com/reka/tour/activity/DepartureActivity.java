@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,8 +23,8 @@ import com.reka.tour.R;
 import com.reka.tour.adapter.FlightAdapter;
 import com.reka.tour.adapter.ScheduleAdapter;
 import com.reka.tour.model.Departures;
-import com.reka.tour.model.Flight;
 import com.reka.tour.model.NearbyGoDate;
+import com.reka.tour.model.SearchQueries;
 import com.reka.tour.utils.CommonConstants;
 
 import org.json.JSONArray;
@@ -31,6 +33,8 @@ import org.json.JSONObject;
 import org.lucasr.twowayview.TwoWayView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -54,10 +58,11 @@ public class DepartureActivity extends AppCompatActivity {
     private ScheduleAdapter scheduleAdapter;
     private ArrayList<NearbyGoDate> nearbyGoDateArrayList = new ArrayList<>();
     private ArrayList<Departures> depAirportArrayList = new ArrayList<>();
+    private SearchQueries searchQueries;
 
     private FlightAdapter flightAdapter;
-    private ArrayList<Flight> flightArrayList = new ArrayList<>();
     private Bundle bundle;
+    private String dateValue, retDateValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,15 +85,41 @@ public class DepartureActivity extends AppCompatActivity {
         dariAirportName.setText(bundle.getString(CommonConstants.AIRPORT_LOCATION_D));
         menujuAirportCode.setText(bundle.getString(CommonConstants.AIRPORT_CODE_A));
         menujuAirportName.setText(bundle.getString(CommonConstants.AIRPORT_LOCATION_A));
+
+        dateValue = "2014-05-25";
+//        dateValue = bundle.getString(CommonConstants.DATE);
+        retDateValue = bundle.getString(CommonConstants.RET_DATE);
     }
 
     private void setCallback() {
+        listSchedule.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                view.setSelected(true);
+                dateValue = nearbyGoDateArrayList.get(position).date;
+                //                retDate = nearbyGoDateArrayList.get(position).date;
+                getData();
+
+            }
+        });
+
         listFlight.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(DepartureActivity.this, CheckoutActivity.class));
+
+                Intent intentDeparture = new Intent(DepartureActivity.this, CheckoutActivity.class);
+                intentDeparture.putExtra(CommonConstants.DEPARTURES, depAirportArrayList.get(position));
+                intentDeparture.putExtra(CommonConstants.SEARCH_QUARIES, searchQueries);
+                startActivity(intentDeparture);
             }
         });
+    }
+
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_filter, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -99,12 +130,20 @@ public class DepartureActivity extends AppCompatActivity {
                 finish();
                 break;
 
+            case R.id.action_filter:
+                break;
+
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void getData() {
-        String url = CommonConstants.BASE_URL + "search/flight?V=3";
+//        String url = CommonConstants.BASE_URL + "search/flight?V=3";
+        String url = "http://api-sandbox.tiket.com/search/flight?d=CGK&a=DPS&date=" + dateValue +
+                "&ret_date=2014-05-30&adult=" + bundle.getString(CommonConstants.ADULT) +
+                "&child=" + bundle.getString(CommonConstants.CHILD) +
+                "&infant=" + bundle.getString(CommonConstants.INFRANT) +
+                "&token=19d0ceaca45f9ee27e3c51df52786f1d904280f9&v=3&output=json";
 
         RequestParams requestParams = new RequestParams();
         requestParams.put(CommonConstants.D, bundle.getString(CommonConstants.AIRPORT_CODE_D));
@@ -112,7 +151,7 @@ public class DepartureActivity extends AppCompatActivity {
         requestParams.put(CommonConstants.ADULT, bundle.getString(CommonConstants.ADULT));
         requestParams.put(CommonConstants.CHILD, bundle.getString(CommonConstants.CHILD));
         requestParams.put(CommonConstants.INFRANT, bundle.getString(CommonConstants.INFRANT));
-        requestParams.put(CommonConstants.DATE, bundle.getString(CommonConstants.DATE));
+        requestParams.put(CommonConstants.DATE, dateValue);
         requestParams.put(CommonConstants.RET_DATE, bundle.getString(CommonConstants.RET_DATE));
         requestParams.put(CommonConstants.TOKEN, "19d0ceaca45f9ee27e3c51df52786f1d904280f9");
         requestParams.put(CommonConstants.OUTPUT, CommonConstants.JSON);
@@ -122,7 +161,7 @@ public class DepartureActivity extends AppCompatActivity {
 
         AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
         client.setTimeout(10000);
-        client.get(url, requestParams, new JsonHttpResponseHandler() {
+        client.get(url, null, new JsonHttpResponseHandler() {
             @Override
             public void onStart() {
                 progressDialog.show();
@@ -137,20 +176,31 @@ public class DepartureActivity extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 Log.e("JSON FLIGHT", response.toString() + "");
                 try {
+                    Gson gson = new Gson();
+
                     JSONArray nearbyDateArrayList = response.getJSONObject(CommonConstants.NEARBY_GO_DATE).getJSONArray(CommonConstants.NEARBY);
                     for (int i = 0; i < nearbyDateArrayList.length(); i++) {
-                        Gson gson = new Gson();
                         nearbyGoDateArrayList.add(gson.fromJson(nearbyDateArrayList.getJSONObject(i).toString(), NearbyGoDate.class));
                     }
 
                     scheduleAdapter = new ScheduleAdapter(DepartureActivity.this, nearbyGoDateArrayList);
                     listSchedule.setAdapter(scheduleAdapter);
 
+                    JSONObject searchQueriesObject = response.getJSONObject(CommonConstants.SEARCH_QUARIES);
+                    searchQueries = gson.fromJson(searchQueriesObject.toString(), SearchQueries.class);
+
                     JSONArray airportArrayList = response.getJSONObject(CommonConstants.DEPARTURES).getJSONArray(CommonConstants.RESULT);
                     for (int i = 0; i < airportArrayList.length(); i++) {
-                        Gson gson = new Gson();
                         depAirportArrayList.add(gson.fromJson(airportArrayList.getJSONObject(i).toString(), Departures.class));
                     }
+
+                    // Sorting
+                    Collections.sort(depAirportArrayList, new Comparator<Departures>() {
+                        @Override
+                        public int compare(Departures fruit2, Departures fruit1) {
+                            return Double.compare(Double.parseDouble(fruit2.priceAdult), Double.parseDouble(fruit1.priceAdult));
+                        }
+                    });
 
                     flightAdapter = new FlightAdapter(DepartureActivity.this, depAirportArrayList);
                     listFlight.setAdapter(flightAdapter);

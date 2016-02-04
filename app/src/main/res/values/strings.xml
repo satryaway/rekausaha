@@ -43,4 +43,5 @@
     <string name="bayi"><![CDATA[Bayi <2 Tahun]]></string>
     <string name="pilih_kota_keberangkatan">Pilih Kota Keberangkatan</string>
     <string name="pilih_kota_tujuan">Pilih Kota Tujuan</string>
+    <string name="filter">Filter</string>
 </resources>

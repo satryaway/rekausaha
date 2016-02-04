@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.reka.tour.R;
 import com.reka.tour.model.Departures;
+import com.reka.tour.utils.Util;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -56,7 +57,7 @@ public class FlightAdapter extends ArrayAdapter<Departures> {
         holder.tvName.setText(schedule.airlinesName);
         holder.tvTime.setText(schedule.simpleDepartureTime +" - "+schedule.simpleArrivalTime);
         holder.tvDuration.setText(schedule.duration);
-        holder.tvPrice.setText(schedule.priceValue);
+        holder.tvPrice.setText(Util.toRupiahFormat(schedule.priceAdult));
 
         return convertView;
     }

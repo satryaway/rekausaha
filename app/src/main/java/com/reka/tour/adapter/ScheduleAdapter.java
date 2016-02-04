@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.reka.tour.R;
 import com.reka.tour.model.NearbyGoDate;
+import com.reka.tour.utils.Util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,7 +25,7 @@ public class ScheduleAdapter extends ArrayAdapter<NearbyGoDate> {
 
     private int layoutResourceId;
     private Context context;
-
+    private ViewHolder holder;
 
     public ScheduleAdapter(Context context, ArrayList<NearbyGoDate> scheduleArrayList) {
         super(context, R.layout.item_schedule, scheduleArrayList);
@@ -38,7 +39,7 @@ public class ScheduleAdapter extends ArrayAdapter<NearbyGoDate> {
         LayoutInflater mInflater = (LayoutInflater) context
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
-        ViewHolder holder;
+
         if (convertView == null) {
             convertView = mInflater.inflate(layoutResourceId, null);
             holder = new ViewHolder();
@@ -64,9 +65,14 @@ public class ScheduleAdapter extends ArrayAdapter<NearbyGoDate> {
             e.printStackTrace();
         }
 
-        holder.tvPrice.setText(schedule.price);
-
+        if(schedule.price!=null){
+            holder.tvPrice.setText(Util.toRupiahFormat(schedule.price));
+        }
         return convertView;
+    }
+
+    public void onSelect(int position) {
+        holder.tvDay.setBackgroundColor(getContext().getResources().getColor(R.color.colorPrimary));
     }
 
     static class ViewHolder {

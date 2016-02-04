@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.reka.tour.R;
 import com.reka.tour.utils.CommonConstants;
@@ -265,17 +266,23 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
                 }
                 break;
             case R.id.cari_pesawat:
-                Intent findFlightIntent = new Intent(FlightActivity.this, DepartureActivity.class);
-                findFlightIntent.putExtra(CommonConstants.AIRPORT_CODE_D, AIRPORT_CODE_D);
-                findFlightIntent.putExtra(CommonConstants.AIRPORT_CODE_A, AIRPORT_CODE_A);
-                findFlightIntent.putExtra(CommonConstants.AIRPORT_LOCATION_D, AIRPORT_NAME_D + "\n" + AIRPORT_LOCATION_D);
-                findFlightIntent.putExtra(CommonConstants.AIRPORT_LOCATION_A, AIRPORT_NAME_A + "\n" + AIRPORT_LOCATION_A);
-                findFlightIntent.putExtra(CommonConstants.ADULT, String.valueOf(totalAdult));
-                findFlightIntent.putExtra(CommonConstants.CHILD, String.valueOf(totalChild));
-                findFlightIntent.putExtra(CommonConstants.INFRANT, String.valueOf(totalBaby));
-                findFlightIntent.putExtra(CommonConstants.DATE, dateDeparture);
-                findFlightIntent.putExtra(CommonConstants.RET_DATE, dateAperture);
-                startActivity(findFlightIntent);
+                if (dariAirportCode.getText().toString().isEmpty() || menujuAirportCode.getText().toString().isEmpty()) {
+                    Toast.makeText(FlightActivity.this, "Isi yang masih kosong", Toast.LENGTH_LONG).show();
+                } else {
+                    Intent findFlightIntent = new Intent(FlightActivity.this, DepartureActivity.class);
+                    findFlightIntent.putExtra(CommonConstants.AIRPORT_CODE_D, AIRPORT_CODE_D);
+                    findFlightIntent.putExtra(CommonConstants.AIRPORT_CODE_A, AIRPORT_CODE_A);
+                    findFlightIntent.putExtra(CommonConstants.AIRPORT_LOCATION_D, AIRPORT_NAME_D + "\n" + AIRPORT_LOCATION_D);
+                    findFlightIntent.putExtra(CommonConstants.AIRPORT_LOCATION_A, AIRPORT_NAME_A + "\n" + AIRPORT_LOCATION_A);
+                    findFlightIntent.putExtra(CommonConstants.ADULT, String.valueOf(totalAdult));
+                    findFlightIntent.putExtra(CommonConstants.CHILD, String.valueOf(totalChild));
+                    findFlightIntent.putExtra(CommonConstants.INFRANT, String.valueOf(totalBaby));
+                    findFlightIntent.putExtra(CommonConstants.DATE, dateDeparture);
+                    findFlightIntent.putExtra(CommonConstants.RET_DATE, dateAperture);
+                    startActivity(findFlightIntent);
+                }
+
+
                 break;
 
             default:

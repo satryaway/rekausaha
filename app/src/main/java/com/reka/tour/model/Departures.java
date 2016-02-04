@@ -45,6 +45,8 @@ public class Departures implements Serializable {
     public String simpleArrivalTime;
     @SerializedName("long_via")
     public String longVia;
+    @SerializedName("full_via")
+    public String fullVia;
     @SerializedName("markup_price_string")
     public String markupPriceString;
     @SerializedName("need_baggage")

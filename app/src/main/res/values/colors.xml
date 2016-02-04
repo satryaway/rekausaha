@@ -20,5 +20,6 @@
     <color name="header_pressed">#ffc0392b</color>
     <color name="menu_section_header">#FFDDDDDD</color>
     <color name="white">#ffffff</color>
+    <color name="gray">#636363</color>
 
 </resources>
