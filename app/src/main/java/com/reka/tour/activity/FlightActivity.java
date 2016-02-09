@@ -44,9 +44,9 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
     @Bind(R.id.date_berangkat)
     TextView tvDeparture;
     @Bind(R.id.choose_pulang)
-    RelativeLayout dpAperture;
+    RelativeLayout dpArrival;
     @Bind(R.id.date_pulang)
-    TextView tvAperture;
+    TextView tvArrival;
 
     @Bind(R.id.dari_airport_code)
     TextView dariAirportCode;
@@ -91,7 +91,7 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
     private int totalChild = 0;
     private int totalBaby = 0;
     private String dateDeparture;
-    private String dateAperture;
+    private String dateArrival;
     private SimpleDateFormat dateDayFormatter;
     private SimpleDateFormat dateFormatter;
     private Calendar newCalendar;
@@ -124,7 +124,7 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
 
         //date next week
         newCalendar.add(Calendar.DATE, 6);
-        tvAperture.setText(dateDayFormatter.format(newCalendar.getTime()));
+        tvArrival.setText(dateDayFormatter.format(newCalendar.getTime()));
 
         tabLayout.addTab(tabLayout.newTab().setText(R.string.sekali_jalan));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.pulang_pergi));
@@ -133,11 +133,11 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
                 if (position == 0) {
-                    dpAperture.setVisibility(View.GONE);
-                    dateAperture = "";
+                    dpArrival.setVisibility(View.GONE);
+                    dateArrival = "";
                 } else if (position == 1) {
-                    dpAperture.setVisibility(View.VISIBLE);
-                    dateAperture = dateFormatter.format(newCalendar.getTime());
+                    dpArrival.setVisibility(View.VISIBLE);
+                    dateArrival = dateFormatter.format(newCalendar.getTime());
                 }
             }
 
@@ -158,7 +158,7 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
         dariAirportCode.setOnClickListener(this);
         menujuAirportCode.setOnClickListener(this);
         dpDeparture.setOnClickListener(this);
-        dpAperture.setOnClickListener(this);
+        dpArrival.setOnClickListener(this);
         cariPesawat.setOnClickListener(this);
 
         btnAdultMinus.setOnClickListener(this);
@@ -222,8 +222,8 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         Calendar newDate = Calendar.getInstance();
                         newDate.set(year, monthOfYear, dayOfMonth);
-                        tvAperture.setText(dateDayFormatter.format(newDate.getTime()));
-                        dateAperture = dateFormatter.format(newDate.getTime());
+                        tvArrival.setText(dateDayFormatter.format(newDate.getTime()));
+                        dateArrival = dateFormatter.format(newDate.getTime());
                     }
 
                 }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH)).show();
@@ -278,7 +278,7 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
                     findFlightIntent.putExtra(CommonConstants.CHILD, String.valueOf(totalChild));
                     findFlightIntent.putExtra(CommonConstants.INFRANT, String.valueOf(totalBaby));
                     findFlightIntent.putExtra(CommonConstants.DATE, dateDeparture);
-                    findFlightIntent.putExtra(CommonConstants.RET_DATE, dateAperture);
+                    findFlightIntent.putExtra(CommonConstants.RET_DATE, dateArrival);
                     startActivity(findFlightIntent);
                 }
 

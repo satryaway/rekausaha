@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!--waktu-->
+        <TextView
+            style="@style/Base.TextAppearance.AppCompat.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/waktu_penerbangan" />
+
+        <CheckBox
+            android:id="@+id/cb_pagi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="@string/pagi"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/gray" />
+
+        <CheckBox
+            android:id="@+id/cb_siang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="@string/siang"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/gray" />
+
+        <CheckBox
+            android:id="@+id/cb_sore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="@string/sore"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/gray" />
+
+        <CheckBox
+            android:id="@+id/cb_malam"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="@string/malam"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/gray" />
+
+        <!--harga-->
+
+        <TextView
+            style="@style/Base.TextAppearance.AppCompat.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/harga" />
+
+        <RadioGroup
+            android:id="@+id/rg_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1">
+
+            <RadioButton
+                android:id="@+id/rb_lowprice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/termurah" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/gray" />
+
+            <RadioButton
+                android:id="@+id/rb_highprice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="@string/termahal" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/gray" />
+        </RadioGroup>
+
+
+        <!--opsi penerbangan-->
+
+        <TextView
+            style="@style/Base.TextAppearance.AppCompat.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/opsi_penerbangan" />
+
+        <CheckBox
+            android:id="@+id/cb_nonstop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:gravity="center_vertical"
+
+            android:padding="10dp"
+            android:text="@string/nonstop"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/gray" />
+
+
+        <CheckBox
+            android:id="@+id/cb_transit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="@string/transit"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/gray" />
+
+        <!--Maskapai-->
+
+        <TextView
+            style="@style/Base.TextAppearance.AppCompat.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/maskapai" />
+
+        <ListView
+            android:id="@+id/list_maskapai"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp" />
+
+    </LinearLayout>
+</ScrollView>

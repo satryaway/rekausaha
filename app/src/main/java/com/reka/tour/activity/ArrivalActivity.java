@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class ApertureActivity extends AppCompatActivity {
+public class ArrivalActivity extends AppCompatActivity {
     @Bind(R.id.list_schedule)
     TwoWayView listSchedule;
     @Bind(R.id.list_flight)
@@ -34,7 +34,7 @@ public class ApertureActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_aperture);
+        setContentView(R.layout.activity_arrival);
         ButterKnife.bind(this);
 
         ((Toolbar) findViewById(R.id.toolbar)).setNavigationIcon(R.drawable.back);

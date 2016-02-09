@@ -50,7 +50,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorAccent"
-                android:padding="@dimen/activity_horizontal_margin">
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_horizontal_margin"
+                >
 
                 <TextView
                     android:id="@+id/dari"
@@ -87,10 +90,11 @@
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/ic_flight" />
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/ic_flyto" />
 
                 <TextView
                     android:id="@+id/menuju"
@@ -146,7 +150,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/activity_vertical_margin"
-                    android:src="@drawable/ic_kritik_saran" />
+                    android:src="@drawable/ic_calendar" />
 
                 <TextView
                     android:id="@+id/berangkat"
@@ -193,7 +197,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/activity_vertical_margin"
-                    android:src="@drawable/ic_kritik_saran" />
+                    android:src="@drawable/ic_calendar" />
 
                 <TextView
                     android:id="@+id/pulang"
@@ -252,10 +256,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:drawableLeft="@drawable/ic_kabar_berita"
+                        android:drawableLeft="@drawable/ic_adult"
                         android:gravity="center"
                         android:text="1"
-
                         android:textSize="30sp"
                         android:textStyle="bold" />
 
@@ -313,7 +316,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:drawableLeft="@drawable/ic_kabar_berita"
+                        android:drawableLeft="@drawable/ic_child"
                         android:gravity="center"
                         android:text="0"
                         android:textSize="30sp"
@@ -371,7 +374,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:drawableLeft="@drawable/ic_kabar_berita"
+                        android:drawableLeft="@drawable/ic_infrant"
                         android:gravity="center"
                         android:text="0"
                         android:textSize="30sp"

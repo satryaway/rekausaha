@@ -131,6 +131,10 @@ public class DepartureActivity extends AppCompatActivity {
                 break;
 
             case R.id.action_filter:
+                Intent intentDeparture = new Intent(DepartureActivity.this, FilterActivity.class);
+//                intentDeparture.putExtra(CommonConstants.DEPARTURES, depAirportArrayList.get(position));
+//                intentDeparture.putExtra(CommonConstants.SEARCH_QUARIES, searchQueries);
+                startActivity(intentDeparture);
                 break;
 
         }
