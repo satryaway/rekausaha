@@ -68,14 +68,15 @@
             android:layout_below="@+id/dari_airport_code"
             android:layout_toLeftOf="@+id/imageView"
             android:layout_toStartOf="@+id/imageView"
-            android:maxLines="2"
+            android:maxLines="3"
+            android:paddingBottom="@dimen/activity_horizontal_margin"
             android:text="Soekarno Hatta\nJakarta"
             android:textColor="@android:color/white" />
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:layout_centerHorizontal="true"
             android:src="@drawable/ic_flyto" />
 
@@ -110,7 +111,8 @@
             android:layout_toEndOf="@+id/imageView"
             android:layout_toRightOf="@+id/imageView"
             android:gravity="right"
-            android:maxLines="2"
+            android:maxLines="3"
+            android:paddingBottom="@dimen/activity_horizontal_margin"
             android:text="Ngurah Rai\nBali"
             android:textColor="@android:color/white" />
 

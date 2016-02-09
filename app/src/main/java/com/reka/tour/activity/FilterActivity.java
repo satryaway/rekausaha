@@ -13,10 +13,15 @@ import android.widget.Toast;
 
 import com.reka.tour.R;
 import com.reka.tour.adapter.MaskapaiAdapter;
+import com.reka.tour.model.Departures;
 import com.reka.tour.model.Maskapai;
+import com.reka.tour.utils.CommonConstants;
 import com.reka.tour.utils.Util;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -34,6 +39,8 @@ public class FilterActivity extends AppCompatActivity {
 
     private MaskapaiAdapter maskapaiAdapter;
     private ArrayList<Maskapai> maskapais = new ArrayList<>();
+    private ArrayList<Departures> departures = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,12 +68,22 @@ public class FilterActivity extends AppCompatActivity {
     }
 
     private void setValue() {
-        for (int i = 1; i <= 5; i++) {
+
+        departures = (ArrayList<Departures>) getIntent().getSerializableExtra(CommonConstants.FLIGHT);
+
+        for (int i = 0; i < departures.size(); i++) {
             maskapais.add(new Maskapai(
-                    "Air " + i,
-                   true
+                    departures.get(i).airlinesName,
+                    true
             ));
         }
+
+        Map<String, Maskapai> maskapaiMap = new LinkedHashMap<>();
+        for (Maskapai maskapai : maskapais) {
+            maskapaiMap.put(maskapai.getAirplane(), maskapai);
+        }
+        maskapais.clear();
+        maskapais.addAll(maskapaiMap.values());
 
         maskapaiAdapter = new MaskapaiAdapter(this, maskapais);
         listMaskapai.setAdapter(maskapaiAdapter);
@@ -85,6 +102,10 @@ public class FilterActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
+    public class MaskapaiComparator implements Comparator<Maskapai> {
+        public int compare(Maskapai c1, Maskapai c2) {
+            return c1.getAirplane().compareTo(c2.getAirplane());
+        }
+    }
 
 }
