@@ -19,7 +19,6 @@ import com.reka.tour.utils.CommonConstants;
 import com.reka.tour.utils.Util;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -100,12 +99,6 @@ public class FilterActivity extends AppCompatActivity {
 
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public class MaskapaiComparator implements Comparator<Maskapai> {
-        public int compare(Maskapai c1, Maskapai c2) {
-            return c1.getAirplane().compareTo(c2.getAirplane());
-        }
     }
 
 }

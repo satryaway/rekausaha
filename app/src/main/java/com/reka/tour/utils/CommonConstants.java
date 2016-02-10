@@ -30,9 +30,20 @@ public class CommonConstants {
 
     public static String DEPARTURES = "departures";
     public static String RESULT = "result";
+    public static String REQUIRED = "required";
+    public static String SEPARATOR = "separator";
+    public static String CONSALUTATION = "conSalutation";
+    public static String CONFIRSTNAME = "conFirstName";
+    public static String CONLASTNAME = "conLastName";
+    public static String CONPHONE = "conPhone";
+    public static String CONEMAILADDRESS = "conEmailAddress";
+    public static String FIELDTEXT = "FieldText";
+    public static String RESOURCE = "resource";
     public static String SEARCH_QUARIES = "search_queries";
 
-    public static String RUTE = "RUTE";
+    public static String FLIGHT_ID = "flight_id";
+
+    public static String RESPONE = "RESPONE";
     public static String FLIGHT = "FLIGHT";
     public static String DEPARTURE = "DEPARTURE";
     public static String AIRPORT_CODE_D = "AIRPORT_CODE_D";
@@ -43,5 +54,6 @@ public class CommonConstants {
     public static String AIRPORT_CODE_A = "AIRPORT_CODE_A";
     public static String AIRPORT_NAME_A = "AIRPORT_NAME_A";
     public static String AIRPORT_LOCATION_A = "AIRPORT_LOCATION_A";
+
 
 }

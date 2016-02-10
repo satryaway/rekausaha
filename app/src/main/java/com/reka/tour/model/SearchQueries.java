@@ -26,13 +26,113 @@ public class SearchQueries implements Serializable {
     @SerializedName("sort")
     public String sort;
 
-//    "from": "CGK",
-//            "to": "DPS",
-//            "date": "2016-02-05",
-//            "ret_date": "2014-05-30",
-//            "adult": "1",
-//            "child": "0",
-//            "infant": "0",
-//            "sort": false
+//    "separator": {
+//        "mandatory": 1,
+//                "type": "text",
+//                "example": "",
+//                "FieldText": "Informasi Kontak yang Dapat Dihubungi",
+//                "category": "separator",
+//                "disabled": "false"
+//    },
+//            "conSalutation": {
+//        "mandatory": 1,
+//                "type": "combobox",
+//                "example": "Mr",
+//                "FieldText": "Titel",
+//                "category": "contact",
+//                "resource": [
+//        {
+//            "id": "Mr",
+//                "name": "Tuan"
+//        },
+//        {
+//            "id": "Mrs",
+//                "name": "Nyonya"
+//        },
+//        {
+//            "id": "Ms",
+//                "name": "Nona"
+//        }
+//        ],
+//        "disabled": "false"
+//    },
+//            "conFirstName": {
+//        "mandatory": 1,
+//                "type": "textbox",
+//                "example": "Jane",
+//                "FieldText": "Nama Depan",
+//                "category": "contact",
+//                "disabled": "false"
+//    },
+//            "conLastName": {
+//        "mandatory": 0,
+//                "type": "textbox",
+//                "example": "wacob",
+//                "FieldText": "Nama Belakang",
+//                "category": "contact",
+//                "disabled": "false"
+//    },
+//            "conPhone": {
+//        "mandatory": 1,
+//                "type": "textbox",
+//                "example": "+6285212345678",
+//                "FieldText": "No. Telepon",
+//                "category": "contact",
+//                "disabled": "false"
+//    },
+//            "conEmailAddress": {
+//        "mandatory": 1,
+//                "type": "textbox",
+//                "example": "example@email.com",
+//                "FieldText": "Kontak Email",
+//                "category": "contact",
+//                "disabled": "false"
+//    },
+//            "separator_adult1": {
+//        "mandatory": 1,
+//                "type": "text",
+//                "example": "",
+//                "FieldText": "Penumpang Dewasa 1",
+//                "category": "separator",
+//                "disabled": "false"
+//    },
+//            "titlea1": {
+//        "mandatory": 1,
+//                "type": "combobox",
+//                "example": "Mr",
+//                "FieldText": "Titel",
+//                "category": "adult1",
+//                "resource": [
+//        {
+//            "id": "Mr",
+//                "name": "Tuan"
+//        },
+//        {
+//            "id": "Mrs",
+//                "name": "Nyonya"
+//        },
+//        {
+//            "id": "Ms",
+//                "name": "Nona"
+//        }
+//        ],
+//        "disabled": "false"
+//    },
+//            "firstnamea1": {
+//        "mandatory": 1,
+//                "type": "textbox",
+//                "example": "Jane",
+//                "FieldText": "Nama Depan",
+//                "category": "adult1",
+//                "disabled": "false"
+//    },
+//            "lastnamea1": {
+//        "mandatory": 0,
+//                "type": "textbox",
+//                "example": "wacob",
+//                "FieldText": "Nama Belakang",
+//                "category": "adult1",
+//                "disabled": "false"
+//    }
 
 }

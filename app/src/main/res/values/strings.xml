@@ -76,4 +76,6 @@
     <string name="termurah">Termurah</string>
     <string name="termahal">Termahal</string>
     <string name="simpan">Simpan</string>
+    <string name="nama_depan">Nama Depan</string>
+    <string name="nama_belakang">Nama Belakang</string>
 </resources>

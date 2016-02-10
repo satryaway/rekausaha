@@ -56,7 +56,7 @@ public class FlightAdapter extends ArrayAdapter<Departures> {
 
         holder.tvName.setText(schedule.airlinesName);
         holder.tvTime.setText(schedule.simpleDepartureTime +" - "+schedule.simpleArrivalTime);
-        holder.tvDuration.setText(schedule.duration);
+        holder.tvDuration.setText(schedule.duration+", "+schedule.stop);
         holder.tvPrice.setText(Util.toRupiahFormat(schedule.priceAdult));
 
         return convertView;

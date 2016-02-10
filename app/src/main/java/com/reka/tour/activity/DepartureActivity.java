@@ -24,7 +24,6 @@ import com.reka.tour.adapter.FlightAdapter;
 import com.reka.tour.adapter.ScheduleAdapter;
 import com.reka.tour.model.Departures;
 import com.reka.tour.model.NearbyGoDate;
-import com.reka.tour.model.SearchQueries;
 import com.reka.tour.utils.CommonConstants;
 
 import org.json.JSONArray;
@@ -58,7 +57,6 @@ public class DepartureActivity extends AppCompatActivity {
     private ScheduleAdapter scheduleAdapter;
     private ArrayList<NearbyGoDate> nearbyGoDateArrayList = new ArrayList<>();
     private ArrayList<Departures> depAirportArrayList = new ArrayList<>();
-    private SearchQueries searchQueries;
 
     private FlightAdapter flightAdapter;
     private Bundle bundle;
@@ -107,9 +105,9 @@ public class DepartureActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intentDeparture = new Intent(DepartureActivity.this, CheckoutActivity.class);
-                intentDeparture.putExtra(CommonConstants.DEPARTURES, depAirportArrayList.get(position));
-                intentDeparture.putExtra(CommonConstants.SEARCH_QUARIES, searchQueries);
+                Intent intentDeparture = new Intent(DepartureActivity.this, DetailOrderActivity.class);
+                intentDeparture.putExtra(CommonConstants.FLIGHT_ID, depAirportArrayList.get(position).flightId);
+                intentDeparture.putExtra(CommonConstants.DATE, dateValue);
                 startActivity(intentDeparture);
             }
         });
@@ -189,9 +187,6 @@ public class DepartureActivity extends AppCompatActivity {
 
                     scheduleAdapter = new ScheduleAdapter(DepartureActivity.this, nearbyGoDateArrayList);
                     listSchedule.setAdapter(scheduleAdapter);
-
-                    JSONObject searchQueriesObject = response.getJSONObject(CommonConstants.SEARCH_QUARIES);
-                    searchQueries = gson.fromJson(searchQueriesObject.toString(), SearchQueries.class);
 
                     JSONArray airportArrayList = response.getJSONObject(CommonConstants.DEPARTURES).getJSONArray(CommonConstants.RESULT);
                     for (int i = 0; i < airportArrayList.length(); i++) {

@@ -36,8 +36,7 @@
         android:background="@color/colorAccent"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_horizontal_margin"
-        >
+        android:paddingTop="@dimen/activity_horizontal_margin">
 
         <TextView
             android:id="@+id/dari"
@@ -69,7 +68,7 @@
             android:layout_toLeftOf="@+id/imageView"
             android:layout_toStartOf="@+id/imageView"
             android:maxLines="3"
-            android:paddingBottom="@dimen/activity_horizontal_margin"
+            android:paddingBottom="10dp"
             android:text="Soekarno Hatta\nJakarta"
             android:textColor="@android:color/white" />
 
@@ -112,7 +111,7 @@
             android:layout_toRightOf="@+id/imageView"
             android:gravity="right"
             android:maxLines="3"
-            android:paddingBottom="@dimen/activity_horizontal_margin"
+            android:paddingBottom="10dp"
             android:text="Ngurah Rai\nBali"
             android:textColor="@android:color/white" />
 

@@ -27,7 +27,7 @@
         <activity android:name=".activity.FlightActivity" />
         <activity android:name=".activity.DepartureActivity" />
         <activity android:name=".activity.ArrivalActivity" />
-        <activity android:name=".activity.CheckoutActivity" />
+        <activity android:name=".activity.DetailOrderActivity" />
         <activity
             android:name=".activity.InfoPassangerActivity"
             android:windowSoftInputMode="stateHidden" />

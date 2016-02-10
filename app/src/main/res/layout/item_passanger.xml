@@ -63,16 +63,15 @@
             android:layout_marginBottom="4dp">
 
             <EditText
-                android:id="@+id/ev_name"
+                android:id="@+id/ev_first_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/nama_lengkap"
+                android:hint="@string/nama_depan"
                 android:inputType="text"
                 android:singleLine="true"
                 android:tag="@string/titel" />
 
         </android.support.design.widget.TextInputLayout>
-
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -80,11 +79,11 @@
             android:layout_marginBottom="4dp">
 
             <EditText
-                android:id="@+id/ev_notelp"
+                android:id="@+id/ev_last_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/no_telp"
-                android:inputType="number"
+                android:hint="@string/nama_belakang"
+                android:inputType="text"
                 android:singleLine="true"
                 android:tag="@string/titel" />
 
