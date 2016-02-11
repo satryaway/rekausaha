@@ -1,5 +1,6 @@
 package com.reka.tour.activity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,17 +35,18 @@ import org.lucasr.twowayview.TwoWayView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 
 public class DepartureActivity extends AppCompatActivity {
+    private final int FILTER_FLIGHT = 100;
     @Bind(R.id.list_schedule)
     TwoWayView listSchedule;
     @Bind(R.id.list_flight)
     ListView listFlight;
-
     @Bind(R.id.dari_airport_code)
     TextView dariAirportCode;
     @Bind(R.id.dari_airport_name)
@@ -53,11 +55,11 @@ public class DepartureActivity extends AppCompatActivity {
     TextView menujuAirportCode;
     @Bind(R.id.menuju_airport_name)
     TextView menujuAirportName;
-
     private ScheduleAdapter scheduleAdapter;
     private ArrayList<NearbyGoDate> nearbyGoDateArrayList = new ArrayList<>();
     private ArrayList<Departures> depAirportArrayList = new ArrayList<>();
-
+    private ArrayList<Departures> depAirportFilterArrayList = new ArrayList<>();
+    private ArrayList<Departures> departures;
     private FlightAdapter flightAdapter;
     private Bundle bundle;
     private String dateValue, retDateValue;
@@ -104,9 +106,22 @@ public class DepartureActivity extends AppCompatActivity {
         listFlight.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 Intent intentDeparture = new Intent(DepartureActivity.this, DetailOrderActivity.class);
-                intentDeparture.putExtra(CommonConstants.FLIGHT_ID, depAirportArrayList.get(position).flightId);
+
+                if(departures!=null){
+                    intentDeparture.putExtra(CommonConstants.FLIGHT_ID, departures.get(position).flightId);
+                    intentDeparture.putExtra(CommonConstants.HAS_FOOD, departures.get(position).hasFood);
+                    intentDeparture.putExtra(CommonConstants.AIRPORT_TAX, departures.get(position).airportTax);
+                    intentDeparture.putExtra(CommonConstants.BAGGAGE, departures.get(position).checkInBaggage);
+                    intentDeparture.putExtra(CommonConstants.NEED_BAGGAGE, departures.get(position).needBaggage);
+                }else {
+                    intentDeparture.putExtra(CommonConstants.FLIGHT_ID, depAirportArrayList.get(position).flightId);
+                    intentDeparture.putExtra(CommonConstants.HAS_FOOD, depAirportArrayList.get(position).hasFood);
+                    intentDeparture.putExtra(CommonConstants.AIRPORT_TAX, depAirportArrayList.get(position).airportTax);
+                    intentDeparture.putExtra(CommonConstants.BAGGAGE, depAirportArrayList.get(position).checkInBaggage);
+                    intentDeparture.putExtra(CommonConstants.NEED_BAGGAGE, depAirportArrayList.get(position).needBaggage);
+                }
+
                 intentDeparture.putExtra(CommonConstants.DATE, dateValue);
                 startActivity(intentDeparture);
             }
@@ -130,13 +145,44 @@ public class DepartureActivity extends AppCompatActivity {
 
             case R.id.action_filter:
                 Intent intentDeparture = new Intent(DepartureActivity.this, FilterActivity.class);
-                intentDeparture.putExtra(CommonConstants.FLIGHT, depAirportArrayList);
-//                intentDeparture.putExtra(CommonConstants.SEARCH_QUARIES, searchQueries);
-                startActivity(intentDeparture);
+                intentDeparture.putExtra(CommonConstants.FLIGHT, depAirportFilterArrayList);
+//                startActivity(intentDeparture);
+                startActivityForResult(intentDeparture, FILTER_FLIGHT);
+//                flightAdapter.filter("3:9,","murah","transit","citi,garuda");
                 break;
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK) {
+
+            if (requestCode == FILTER_FLIGHT) {
+                flightAdapter.notifyDataSetChanged();
+
+                departures = (ArrayList<Departures>) data.getSerializableExtra(CommonConstants.DEPARTURES);
+                String FILTER_MASKAPAI = data.getStringExtra(CommonConstants.FILTER_MASKAPAI);
+                String FILTER_JAM = data.getStringExtra(CommonConstants.FILTER_JAM);
+                String FILTER_OPSI = data.getStringExtra(CommonConstants.FILTER_OPSI);
+                String FILTER_HARGA = data.getStringExtra(CommonConstants.FILTER_HARGA);
+
+                Log.e("FILTER_MASKAPAI", FILTER_MASKAPAI.toLowerCase(Locale.getDefault()) + " " +
+                                FILTER_JAM.toLowerCase(Locale.getDefault()) + " " +
+                                FILTER_OPSI.toLowerCase(Locale.getDefault()) + " " +
+                                FILTER_HARGA.toLowerCase(Locale.getDefault())
+                );
+
+                flightAdapter = new FlightAdapter(DepartureActivity.this, departures);
+                listFlight.setAdapter(flightAdapter);
+
+                flightAdapter.filter(FILTER_JAM, FILTER_HARGA, FILTER_OPSI, FILTER_MASKAPAI.toLowerCase(Locale.getDefault()));
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void getData() {
@@ -200,6 +246,8 @@ public class DepartureActivity extends AppCompatActivity {
                             return Double.compare(Double.parseDouble(fruit2.priceAdult), Double.parseDouble(fruit1.priceAdult));
                         }
                     });
+
+                    depAirportFilterArrayList.addAll(depAirportArrayList);
 
                     flightAdapter = new FlightAdapter(DepartureActivity.this, depAirportArrayList);
                     listFlight.setAdapter(flightAdapter);

@@ -1,10 +1,12 @@
 package com.reka.tour.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -26,6 +28,21 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class FilterActivity extends AppCompatActivity {
+    @Bind(R.id.cb_pagi)
+    CheckBox cbPagi;
+    @Bind(R.id.cb_siang)
+    CheckBox cbSiang;
+    @Bind(R.id.cb_sore)
+    CheckBox cbSore;
+    @Bind(R.id.cb_malam)
+    CheckBox cbMalam;
+
+    @Bind(R.id.cb_nonstop)
+    CheckBox cbNonstop;
+    @Bind(R.id.cb_transit)
+    CheckBox cbTransit;
+
+
     @Bind(R.id.rg_price)
     RadioGroup rgPrice;
     @Bind(R.id.list_maskapai)
@@ -62,6 +79,15 @@ public class FilterActivity extends AppCompatActivity {
                 rbPrice = (RadioButton) findViewById(selectedId);
                 Toast.makeText(FilterActivity.this, rbPrice.getText(), Toast.LENGTH_SHORT).show();
 
+
+                Intent myIntent = new Intent();
+                myIntent.putExtra(CommonConstants.DEPARTURES, departures);
+                myIntent.putExtra(CommonConstants.FILTER_MASKAPAI, filterMaskapai());
+                myIntent.putExtra(CommonConstants.FILTER_JAM, filterJam());
+                myIntent.putExtra(CommonConstants.FILTER_OPSI, filterOpsi());
+                myIntent.putExtra(CommonConstants.FILTER_HARGA, rbPrice.getText());
+                setResult(RESULT_OK, myIntent);
+                finish();
             }
         });
     }
@@ -86,6 +112,57 @@ public class FilterActivity extends AppCompatActivity {
 
         maskapaiAdapter = new MaskapaiAdapter(this, maskapais);
         listMaskapai.setAdapter(maskapaiAdapter);
+    }
+
+
+    private String filterMaskapai() {
+        String maskapaiString = "";
+
+        for (int i = 0; i < maskapaiAdapter.getCount(); i++) {
+            View view = listMaskapai.getChildAt(i);
+            CheckBox cbMaskapai = (CheckBox) view.findViewById(R.id.cb_maskapai);
+            if (cbMaskapai.isChecked()) {
+                maskapaiString += cbMaskapai.getText().toString() + ",";
+            }
+        }
+        return maskapaiString;
+    }
+
+    private String filterJam() {
+        String jamString = "";
+        if (cbPagi.isChecked() && cbSiang.isChecked() && cbSore.isChecked() && cbMalam.isChecked()) {
+            return jamString;
+        } else {
+            if (cbPagi.isChecked()) {
+                jamString += "3:9,";
+            }
+            if (cbSiang.isChecked()) {
+                jamString += "9:15,";
+            }
+            if (cbSore.isChecked()) {
+                jamString += "15:18,";
+            }
+            if (cbMalam.isChecked()) {
+                jamString += "18:3,";
+            }
+            return jamString;
+        }
+    }
+
+    private String filterOpsi() {
+        String filterOpsi = "";
+
+        if (cbNonstop.isChecked() && cbTransit.isChecked()) {
+            return filterOpsi;
+        } else {
+            if(cbNonstop.isChecked()){
+                filterOpsi+="langsung";
+            }else {
+                filterOpsi+="transit";
+            }
+            return filterOpsi;
+        }
+
     }
 
 

@@ -47,6 +47,13 @@ public class DetailOrderActivity extends AppCompatActivity {
     @Bind(R.id.tv_flight_number)
     TextView tvFlightNumber;
 
+    @Bind(R.id.iv_baggage)
+    ImageView ivBaggage;
+    @Bind(R.id.iv_food)
+    ImageView ivFood;
+    @Bind(R.id.iv_tax)
+    ImageView ivTax;
+
     @Bind(R.id.tv_rute)
     TextView tvRute;
     @Bind(R.id.tv_duration)
@@ -79,7 +86,7 @@ public class DetailOrderActivity extends AppCompatActivity {
 
 
     private Bundle bundle;
-    private String flightID, dateValue;
+    private String flightID, dateValue, hasFood, airportTax, baggage, needBaggage;
     private DeparturesOrder departures;
     private Resource resource;
 
@@ -100,6 +107,10 @@ public class DetailOrderActivity extends AppCompatActivity {
         bundle = getIntent().getExtras();
         flightID = bundle.getString(CommonConstants.FLIGHT_ID);
         dateValue = bundle.getString(CommonConstants.DATE);
+        hasFood = bundle.getString(CommonConstants.HAS_FOOD);
+        airportTax = bundle.getString(CommonConstants.AIRPORT_TAX);
+        needBaggage = bundle.getString(CommonConstants.NEED_BAGGAGE);
+        baggage = bundle.getString(CommonConstants.BAGGAGE);
 
         getData();
         setCallBack();
@@ -182,6 +193,22 @@ public class DetailOrderActivity extends AppCompatActivity {
     }
 
     private void setValue() {
+
+        if (hasFood.equals("0")) {
+            ivFood.setVisibility(View.GONE);
+        }
+        if (!Boolean.valueOf(airportTax)) {
+            ivTax.setVisibility(View.GONE);
+        }
+        if (needBaggage.equals("0")) {
+            ivBaggage.setVisibility(View.GONE);
+        } else {
+            if (baggage.equals("15")) {
+                ivBaggage.setImageResource(R.drawable.ic_baggage_15);
+            } else if (baggage.equals("20")) {
+                ivBaggage.setImageResource(R.drawable.ic_baggage_20);
+            }
+        }
 
 
         try {

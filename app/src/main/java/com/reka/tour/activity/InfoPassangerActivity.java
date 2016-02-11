@@ -108,7 +108,6 @@ public class InfoPassangerActivity extends AppCompatActivity {
                 resources.add(gson.fromJson(resourcesArray.getJSONObject(i).toString(), Resource.class));
             }
 
-
             JSONObject departuresObject = new JSONObject(responeString).getJSONObject(CommonConstants.DEPARTURES);
             departures = gson.fromJson(departuresObject.toString(), DeparturesOrder.class);
 

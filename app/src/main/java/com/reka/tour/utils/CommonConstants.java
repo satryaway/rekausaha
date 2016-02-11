@@ -43,6 +43,11 @@ public class CommonConstants {
 
     public static String FLIGHT_ID = "flight_id";
 
+    public static String HAS_FOOD = "HAS_FOOD";
+    public static String AIRPORT_TAX = "AIRPORT_TAX";
+    public static String BAGGAGE = "BAGGAGE";
+    public static String NEED_BAGGAGE = "NEED_BAGGAGE";
+
     public static String RESPONE = "RESPONE";
     public static String FLIGHT = "FLIGHT";
     public static String DEPARTURE = "DEPARTURE";
@@ -54,6 +59,11 @@ public class CommonConstants {
     public static String AIRPORT_CODE_A = "AIRPORT_CODE_A";
     public static String AIRPORT_NAME_A = "AIRPORT_NAME_A";
     public static String AIRPORT_LOCATION_A = "AIRPORT_LOCATION_A";
+
+    public static String FILTER_MASKAPAI = "FILTER_MASKAPAI";
+    public static String FILTER_JAM = "FILTER_JAM";
+    public static String FILTER_HARGA = "FILTER_HARGA";
+    public static String FILTER_OPSI = "FILTER_OPSI";
 
 
 }
