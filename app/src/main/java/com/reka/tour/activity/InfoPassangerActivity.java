@@ -194,7 +194,7 @@ public class InfoPassangerActivity extends AppCompatActivity {
     }
 
     private void submitOrder() throws ParseException {
-        String url = CommonConstants.BASE_URL + "order/add/flight";
+        String url = CommonConstants.BASE_URL + "order/add/flight?v=3";
 
 //        https://api-sandbox.tiket.com/order/add/flight?token=19d0ceaca45f9ee27e3c51df52786f1d904280f9&
 // flight_id=2035957&child=1&adult=1&infant=1&conSalutation=Mrs&conFirstName=budianto&

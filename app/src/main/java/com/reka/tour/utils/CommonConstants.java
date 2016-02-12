@@ -41,6 +41,9 @@ public class CommonConstants {
     public static String RESOURCE = "resource";
     public static String SEARCH_QUARIES = "search_queries";
 
+    public static String MYORDER = "myorder";
+    public static String ORDER_ID = "order_id";
+
     public static String FLIGHT_ID = "flight_id";
 
     public static String HAS_FOOD = "HAS_FOOD";

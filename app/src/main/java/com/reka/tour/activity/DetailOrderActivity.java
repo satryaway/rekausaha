@@ -37,62 +37,73 @@ import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 
 public class DetailOrderActivity extends AppCompatActivity {
+    private static String flightID, dateValue, hasFood, airportTax, baggage, needBaggage;
+    private static DeparturesOrder departuresReturn;
     @Bind(R.id.tv_date)
     TextView tvDate;
-
     @Bind(R.id.iv_flight)
     ImageView ivFlight;
     @Bind(R.id.tv_name)
     TextView tvAirlinesName;
     @Bind(R.id.tv_flight_number)
     TextView tvFlightNumber;
-
     @Bind(R.id.iv_baggage)
     ImageView ivBaggage;
     @Bind(R.id.iv_food)
     ImageView ivFood;
     @Bind(R.id.iv_tax)
     ImageView ivTax;
-
     @Bind(R.id.tv_rute)
     TextView tvRute;
     @Bind(R.id.tv_duration)
     TextView tvDuration;
-
     @Bind(R.id.tv_adult)
     TextView tvAdult;
     @Bind(R.id.tv_adult_price)
     TextView tvAdultPrice;
-
     @Bind(R.id.layout_child)
     RelativeLayout layoutChild;
     @Bind(R.id.tv_child)
     TextView tvChild;
     @Bind(R.id.tv_child_price)
     TextView tvChildPrice;
-
     @Bind(R.id.layout_baby)
     RelativeLayout layoutInfrant;
     @Bind(R.id.tv_baby)
     TextView tvInfrant;
     @Bind(R.id.tv_baby_price)
     TextView tvInfrantPrice;
-
     @Bind(R.id.tv_total)
     TextView tvTotal;
-
     @Bind(R.id.layout_detail_order)
     ScrollView layoutDetailOrder;
-
-
     private Bundle bundle;
-    private String flightID, dateValue, hasFood, airportTax, baggage, needBaggage;
     private DeparturesOrder departures;
     private Resource resource;
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private SimpleDateFormat dateFormatter = new SimpleDateFormat("EEEE, dd MMMM yyyy", new Locale("ind", "IDN"));
     private String responeString;
+
+    public static DeparturesOrder getDepartures() {
+        return departuresReturn;
+    }
+
+    public static String getHasFood() {
+        return hasFood;
+    }
+
+    public static String getAirportTax() {
+        return airportTax;
+    }
+
+    public static String getNeedBaggage() {
+        return needBaggage;
+    }
+
+    public static String getBaggage() {
+        return baggage;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +127,6 @@ public class DetailOrderActivity extends AppCompatActivity {
         setCallBack();
 
     }
-
 
     private void getData() {
         layoutDetailOrder.setVisibility(View.GONE);
@@ -156,6 +166,7 @@ public class DetailOrderActivity extends AppCompatActivity {
 
                     JSONObject departuresObject = response.getJSONObject(CommonConstants.DEPARTURES);
                     departures = gson.fromJson(departuresObject.toString(), DeparturesOrder.class);
+                    departuresReturn = departures;
 
                     setValue();
                     layoutDetailOrder.setVisibility(View.VISIBLE);
@@ -247,7 +258,6 @@ public class DetailOrderActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -267,5 +277,4 @@ public class DetailOrderActivity extends AppCompatActivity {
     public void setResponeString(String responeString) {
         this.responeString = responeString;
     }
-
 }

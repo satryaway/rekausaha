@@ -101,8 +101,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/tanggal_lahir"
                 android:inputType="text"
-                android:singleLine="true"
-                android:visibility="gone" />
+                android:singleLine="true" />
 
         </android.support.design.widget.TextInputLayout>
 
