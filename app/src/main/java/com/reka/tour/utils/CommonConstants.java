@@ -43,6 +43,8 @@ public class CommonConstants {
 
     public static String MYORDER = "myorder";
     public static String ORDER_ID = "order_id";
+    public static String ORDER_DETAIL_ID = "order_detail_id";
+    public static String DATA = "data";
 
     public static String FLIGHT_ID = "flight_id";
 

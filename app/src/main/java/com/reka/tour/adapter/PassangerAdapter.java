@@ -41,16 +41,16 @@ public class PassangerAdapter extends ArrayAdapter<Passanger> {
     private Context context;
     private ArrayList<Passanger> passangers;
     private Passanger passanger;
-    private String[] itemsData;
+    private ArrayList<String> titleList;
     private ViewHolder holder;
     private SimpleDateFormat dateDayFormatter;
     private Calendar newCalendar;
 
-    public PassangerAdapter(Context context, ArrayList<Passanger> passangers, String[] itemsData) {
+    public PassangerAdapter(Context context, ArrayList<Passanger> passangers, ArrayList<String> titleList) {
         super(context, R.layout.item_passanger, passangers);
         this.context = context;
         this.layoutResourceId = R.layout.item_passanger;
-        this.itemsData = itemsData;
+        this.titleList = titleList;
         this.passangers = passangers;
     }
 
@@ -93,20 +93,55 @@ public class PassangerAdapter extends ArrayAdapter<Passanger> {
     }
 
     private void setEvTitel(final ViewHolder holder) {
-        holder.evTitel.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (MotionEvent.ACTION_UP == motionEvent.getAction()) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setItems(itemsData, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int item) {
-                            holder.evTitel.setText(itemsData[item]);
+        if (passanger.getType().toLowerCase().contains("dewasa")) {
+            holder.evTitel.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    if (MotionEvent.ACTION_UP == motionEvent.getAction()) {
+
+                        final String[] titelDewasa = new String[titleList.size()];
+                        for (int i = 0; i < titleList.size(); i++) {
+                            titelDewasa[i]=titleList.get(i);
                         }
-                    }).create().show();
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        builder.setItems(titelDewasa, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int item) {
+                                holder.evTitel.setText(titelDewasa[item]);
+                            }
+                        }).create().show();
+                    }
+                    return true;
                 }
-                return true;
-            }
-        });
+            });
+        } else {
+            holder.evTitel.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    if (MotionEvent.ACTION_UP == motionEvent.getAction()) {
+
+                        ArrayList<String> titleListRemove = new ArrayList<>();
+                        titleListRemove.addAll(titleList);
+                        titleListRemove.remove("Nyonya");
+
+                        final String[] titelAnakBayi = new String[titleListRemove.size()];
+                        for (int i = 0; i < titleListRemove.size(); i++) {
+                            titelAnakBayi[i]=titleListRemove.get(i);
+                        }
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        builder.setItems(titelAnakBayi, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int item) {
+                                holder.evTitel.setText(titelAnakBayi[item]);
+                            }
+                        }).create().show();
+                    }
+                    return true;
+                }
+            });
+        }
+
+
     }
 
     private void setCheckBox(final ViewHolder holder) {

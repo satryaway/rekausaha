@@ -73,7 +73,7 @@ public class InfoPassangerActivity extends AppCompatActivity {
     private DeparturesOrder departures;
     private String responeString;
     private Bundle bundle;
-    private String[] itemTitel;
+    private ArrayList<String> itemTitel = new ArrayList<>();
     private int countAdult;
     private int countChild;
     private int countInfant;
@@ -86,6 +86,16 @@ public class InfoPassangerActivity extends AppCompatActivity {
 
         ((Toolbar) findViewById(R.id.toolbar)).setNavigationIcon(R.drawable.back);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        (findViewById(R.id.toolbar)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                evTitel.setText("Tuan");
+                evFirstName.setText("Randi");
+                evLastName.setText("Perma");
+                evNotelp.setText("6289931262955");
+                evEmail.setText("reka.usaha@gmail.com");
+            }
+        });
 
         bundle = getIntent().getExtras();
         responeString = bundle.getString(CommonConstants.RESPONE);
@@ -141,9 +151,8 @@ public class InfoPassangerActivity extends AppCompatActivity {
             }
         }
 
-        itemTitel = new String[resources.size()];
         for (int i = 0; i < resources.size(); i++) {
-            itemTitel[i] = resources.get(i).name;
+            itemTitel.add(resources.get(i).name);
         }
 
         passangerAdapter = new PassangerAdapter(this, passangers, itemTitel);
@@ -155,10 +164,16 @@ public class InfoPassangerActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (MotionEvent.ACTION_UP == motionEvent.getAction()) {
+
+                    final String[] titelDewasa = new String[itemTitel.size()];
+                    for (int i = 0; i < itemTitel.size(); i++) {
+                        titelDewasa[i]=itemTitel.get(i);
+                    }
+
                     AlertDialog.Builder builder = new AlertDialog.Builder(InfoPassangerActivity.this);
-                    builder.setItems(itemTitel, new DialogInterface.OnClickListener() {
+                    builder.setItems(titelDewasa, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int item) {
-                            evTitel.setText(itemTitel[item]);
+                            evTitel.setText(titelDewasa[item]);
                         }
                     }).create().show();
                 }
@@ -231,6 +246,7 @@ public class InfoPassangerActivity extends AppCompatActivity {
                 requestParams.put("titlea" + id, evTitel.getText().toString());
                 requestParams.put("firstnamea" + id, evFirstName.getText().toString());
                 requestParams.put("lastnamea" + id, evLastName.getText().toString());
+                requestParams.put("birthdatea" + id, dateFormatter.format(dateDayFormatter.parse(evTanggalLahir.getText().toString())));
             } else {
                 if (countChild != 0) {
                     if (i >= countAdult && i < countAdult + countChild) {//2-3
@@ -278,7 +294,7 @@ public class InfoPassangerActivity extends AppCompatActivity {
                 Log.e("JSON PASSANGER", response.toString() + "");
                 responeString = response.toString();
 
-                Intent intentDeparture = new Intent(InfoPassangerActivity.this, MethodPaymentActivity.class);
+                Intent intentDeparture = new Intent(InfoPassangerActivity.this, ListOrderActivity.class);
 //                intentDeparture.putExtra(CommonConstants.DEPARTURES, depAirportArrayList.get(position));
 //                intentDeparture.putExtra(CommonConstants.SEARCH_QUARIES, searchQueries);
                 startActivity(intentDeparture);
