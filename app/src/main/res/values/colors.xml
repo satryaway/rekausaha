@@ -21,5 +21,6 @@
     <color name="menu_section_header">#FFDDDDDD</color>
     <color name="white">#ffffff</color>
     <color name="gray">#636363</color>
+    <color name="gray_light">#CCCCCC</color>
 
 </resources>

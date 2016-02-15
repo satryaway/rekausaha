@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.reka.tour.R;
 import com.reka.tour.activity.FlightActivity;
 import com.reka.tour.adapter.HeaderAdapter;
+import com.reka.tour.hotel.activity.HotelActivity;
 import com.reka.tour.views.pagerindicator.AutoScrollViewPager;
 import com.reka.tour.views.pagerindicator.CirclePageIndicator;
 
@@ -31,6 +32,8 @@ public class HomeFragment extends Fragment {
     TextView textViewRunning;
     @Bind(R.id.nav_flight)
     ImageView navFlight;
+    @Bind(R.id.nav_hotel)
+    ImageView navHotel;
 
     private String LOG_TAG = HomeFragment.class.getName();
 
@@ -71,6 +74,13 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getActivity().startActivity(new Intent(getActivity(), FlightActivity.class));
+            }
+        });
+
+        navHotel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().startActivity(new Intent(getActivity(), HotelActivity.class));
             }
         });
     }

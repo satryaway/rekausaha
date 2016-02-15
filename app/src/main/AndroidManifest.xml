@@ -34,6 +34,10 @@
         <activity android:name=".activity.MethodPaymentActivity" />
         <activity android:name=".activity.PaymentActivity" />
         <activity android:name=".activity.FilterActivity" />
+        <activity android:name=".activity.ListOrderActivity" />
+        <activity
+            android:name=".hotel.activity.HotelActivity"
+            android:windowSoftInputMode="stateHidden" />
 
         <!--
              ATTENTION: This was auto-generated to add Google Play services to your project for
@@ -43,7 +47,11 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".activity.ListOrderActivity"></activity>
+        <activity android:name=".hotel.activity.ChooserHotelActivity" />
+        <activity android:name=".hotel.activity.ListHotelActivity" />
+        <activity android:name=".hotel.activity.SortirHotelActivity" />
+        <activity android:name=".hotel.activity.FilterHotelActivity" />
+        <activity android:name=".hotel.activity.ProfileHotelActivity"></activity>
     </application>
 
 </manifest>

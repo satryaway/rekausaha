@@ -8,5 +8,8 @@
     <dimen name="fab_margin">16dp</dimen>
 
     <dimen name="corner_radius">4dp</dimen>
+    <dimen name="height_300">300dp</dimen>
+    <dimen name="height_150">150dp</dimen>
+    <dimen name="height_200">200dp</dimen>
 
 </resources>
