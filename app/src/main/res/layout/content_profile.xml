@@ -12,9 +12,9 @@
         android:background="@android:color/white"
         android:scrollbars="horizontal"
         app:tabGravity="fill"
-        app:tabIndicatorColor="@color/colorPrimaryDark"
-        app:tabSelectedTextColor="@color/colorPrimaryDark"
-        app:tabTextColor="@color/colorPrimary" />
+        app:tabIndicatorColor="@color/colorAccent"
+        app:tabSelectedTextColor="@color/colorAccent"
+        app:tabTextColor="@color/gray" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -30,7 +30,8 @@
             <com.reka.tour.views.WrapContentHeightViewPager
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="100dp" />
 
         </LinearLayout>
 
@@ -38,68 +39,6 @@
     </android.support.v4.widget.NestedScrollView>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/gray_light"
-        android:orientation="horizontal">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="50"
-            android:gravity="right|center">
-
-            <TextView
-                android:id="@+id/tv_harga_mulai"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Harga mulai dari"
-                />
-
-            <TextView
-                android:id="@+id/tv_harga_hotel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_harga_mulai"
-                android:gravity="center"
-                android:text="IDR 150.000/malam"
-                android:textColor="@color/colorAccent" />
-        </RelativeLayout>
-
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/item_penumpang"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:layout_weight="50"
-            app:cardCornerRadius="2dp"
-            app:cardUseCompatPadding="true">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:background="@color/colorPrimary"
-                android:orientation="vertical"
-                android:padding="5dp">
-
-                <TextView
-                    android:id="@+id/tv_lihatkamar"
-                    style="@style/Base.TextAppearance.AppCompat.Subhead"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="@string/lihat_kamar"
-                    android:textAllCaps="true"
-                    android:textColor="@android:color/white" />
-            </RelativeLayout>
-        </android.support.v7.widget.CardView>
-
-    </LinearLayout>
 
 
 </RelativeLayout>

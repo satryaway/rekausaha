@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.reka.tour.hotel.fragment.FasilitasFragment;
 import com.reka.tour.hotel.fragment.FotoFragment;
 import com.reka.tour.hotel.fragment.InfoFragment;
 
@@ -28,7 +29,7 @@ public class TabAdapter extends FragmentPagerAdapter {
                 eventsFragment = InfoFragment.newInstance();
                 break;
             case 1:
-                eventsFragment = InfoFragment.newInstance();
+                eventsFragment = FasilitasFragment.newInstance();
                 break;
             case 2:
                 eventsFragment = FotoFragment.newInstance();

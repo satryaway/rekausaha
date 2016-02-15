@@ -51,7 +51,9 @@
         <activity android:name=".hotel.activity.ListHotelActivity" />
         <activity android:name=".hotel.activity.SortirHotelActivity" />
         <activity android:name=".hotel.activity.FilterHotelActivity" />
-        <activity android:name=".hotel.activity.ProfileHotelActivity"></activity>
+        <activity android:name=".hotel.activity.ProfileHotelActivity" />
+        <activity android:name=".hotel.activity.RoomHotelActivity" />
+        <activity android:name=".hotel.activity.OrderHotelActivity"></activity>
     </application>
 
 </manifest>
