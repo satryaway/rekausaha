@@ -1,4 +1,4 @@
-package com.reka.tour.model;
+package com.reka.tour.flight.model;
 
 /**
  * Created by fachrifebrian on 2/9/16.

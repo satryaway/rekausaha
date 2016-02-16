@@ -1,4 +1,4 @@
-package com.reka.tour.activity;
+package com.reka.tour.flight.activity;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;

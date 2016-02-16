@@ -1,4 +1,4 @@
-package com.reka.tour.adapter;
+package com.reka.tour.flight.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,7 +11,7 @@ import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.reka.tour.R;
-import com.reka.tour.model.Airport;
+import com.reka.tour.flight.model.Airport;
 
 import java.util.ArrayList;
 import java.util.List;

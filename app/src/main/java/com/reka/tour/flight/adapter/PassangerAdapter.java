@@ -1,4 +1,4 @@
-package com.reka.tour.adapter;
+package com.reka.tour.flight.adapter;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -19,8 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.reka.tour.R;
-import com.reka.tour.activity.InfoPassangerActivity;
-import com.reka.tour.model.Passanger;
+import com.reka.tour.flight.activity.InfoPassangerActivity;
+import com.reka.tour.flight.model.Passanger;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

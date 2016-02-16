@@ -1,4 +1,4 @@
-package com.reka.tour.activity;
+package com.reka.tour.flight.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -17,7 +17,8 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.reka.tour.R;
-import com.reka.tour.adapter.MyOrderAdapter;
+import com.reka.tour.activity.MethodPaymentActivity;
+import com.reka.tour.flight.adapter.MyOrderAdapter;
 import com.reka.tour.model.MyOrder;
 import com.reka.tour.utils.CommonConstants;
 

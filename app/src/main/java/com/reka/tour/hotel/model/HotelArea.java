@@ -1,4 +1,4 @@
-package com.reka.tour.model;
+package com.reka.tour.hotel.model;
 
 import com.google.gson.annotations.SerializedName;
 

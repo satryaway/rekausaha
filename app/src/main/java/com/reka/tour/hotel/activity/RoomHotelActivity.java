@@ -8,7 +8,7 @@ import android.widget.ListView;
 
 import com.reka.tour.R;
 import com.reka.tour.hotel.adapter.RoomAdapter;
-import com.reka.tour.model.Room;
+import com.reka.tour.hotel.model.Room;
 
 import java.util.ArrayList;
 

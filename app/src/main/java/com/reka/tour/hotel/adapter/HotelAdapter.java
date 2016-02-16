@@ -11,7 +11,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.reka.tour.R;
-import com.reka.tour.model.Hotel;
+import com.reka.tour.hotel.model.Hotel;
 import com.reka.tour.utils.Util;
 import com.squareup.picasso.Picasso;
 

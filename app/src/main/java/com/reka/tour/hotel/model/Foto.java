@@ -1,4 +1,4 @@
-package com.reka.tour.model;
+package com.reka.tour.hotel.model;
 
 public class Foto {
     String imageId,imageName;

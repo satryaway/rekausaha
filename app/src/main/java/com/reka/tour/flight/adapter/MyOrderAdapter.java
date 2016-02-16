@@ -1,4 +1,4 @@
-package com.reka.tour.adapter;
+package com.reka.tour.flight.adapter;
 
 import android.app.Activity;
 import android.content.Context;

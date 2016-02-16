@@ -9,7 +9,7 @@ import android.widget.GridView;
 
 import com.reka.tour.R;
 import com.reka.tour.hotel.adapter.FotoAdapter;
-import com.reka.tour.model.Foto;
+import com.reka.tour.hotel.model.Foto;
 
 import java.util.ArrayList;
 

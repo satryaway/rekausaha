@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical"
-    tools:context="com.reka.tour.activity.DepartureActivity">
+    tools:context=".flight.activity.DepartureActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"

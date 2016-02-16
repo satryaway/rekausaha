@@ -1,4 +1,4 @@
-package com.reka.tour.adapter;
+package com.reka.tour.flight.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.reka.tour.R;
-import com.reka.tour.model.Departures;
+import com.reka.tour.flight.model.Departures;
 import com.reka.tour.utils.Util;
 import com.squareup.picasso.Picasso;
 

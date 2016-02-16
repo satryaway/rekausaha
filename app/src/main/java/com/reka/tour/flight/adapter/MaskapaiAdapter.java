@@ -1,4 +1,4 @@
-package com.reka.tour.adapter;
+package com.reka.tour.flight.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 
 import com.reka.tour.R;
-import com.reka.tour.model.Maskapai;
+import com.reka.tour.flight.model.Maskapai;
 
 import java.util.ArrayList;
 

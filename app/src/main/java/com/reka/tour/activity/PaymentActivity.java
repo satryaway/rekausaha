@@ -10,7 +10,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.reka.tour.R;
-import com.reka.tour.model.DeparturesOrder;
+import com.reka.tour.flight.activity.DetailOrderActivity;
+import com.reka.tour.flight.model.DeparturesOrder;
 import com.reka.tour.utils.Util;
 import com.squareup.picasso.Picasso;
 

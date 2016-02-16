@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 import com.reka.tour.R;
-import com.reka.tour.model.Foto;
+import com.reka.tour.hotel.model.Foto;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

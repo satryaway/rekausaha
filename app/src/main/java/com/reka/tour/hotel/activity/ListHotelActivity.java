@@ -22,7 +22,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.reka.tour.R;
 import com.reka.tour.hotel.adapter.HotelAdapter;
-import com.reka.tour.model.Hotel;
+import com.reka.tour.hotel.model.Hotel;
 import com.reka.tour.utils.CommonConstants;
 
 import org.json.JSONArray;

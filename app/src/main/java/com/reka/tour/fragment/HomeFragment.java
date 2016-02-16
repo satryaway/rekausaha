@@ -11,8 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.reka.tour.R;
-import com.reka.tour.activity.FlightActivity;
 import com.reka.tour.adapter.HeaderAdapter;
+import com.reka.tour.flight.activity.FlightActivity;
 import com.reka.tour.hotel.activity.HotelActivity;
 import com.reka.tour.views.pagerindicator.AutoScrollViewPager;
 import com.reka.tour.views.pagerindicator.CirclePageIndicator;

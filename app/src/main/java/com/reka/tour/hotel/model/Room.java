@@ -1,4 +1,4 @@
-package com.reka.tour.model;
+package com.reka.tour.hotel.model;
 
 /**
  * Created by fachrifebrian on 2/15/16.

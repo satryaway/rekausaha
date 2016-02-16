@@ -11,7 +11,7 @@ import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.reka.tour.R;
-import com.reka.tour.model.HotelArea;
+import com.reka.tour.hotel.model.HotelArea;
 
 import java.util.ArrayList;
 import java.util.List;

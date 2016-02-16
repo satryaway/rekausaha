@@ -23,18 +23,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.AirportChooserActivity" />
-        <activity android:name=".activity.FlightActivity" />
-        <activity android:name=".activity.DepartureActivity" />
-        <activity android:name=".activity.ArrivalActivity" />
-        <activity android:name=".activity.DetailOrderActivity" />
+        <activity android:name=".flight.activity.AirportChooserActivity" />
+        <activity android:name=".flight.activity.FlightActivity" />
+        <activity android:name=".flight.activity.DepartureActivity" />
+        <activity android:name=".flight.activity.ArrivalActivity" />
+        <activity android:name=".flight.activity.DetailOrderActivity" />
         <activity
-            android:name=".activity.InfoPassangerActivity"
+            android:name=".flight.activity.InfoPassangerActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".activity.MethodPaymentActivity" />
         <activity android:name=".activity.PaymentActivity" />
-        <activity android:name=".activity.FilterActivity" />
-        <activity android:name=".activity.ListOrderActivity" />
+        <activity android:name=".flight.activity.FilterActivity" />
+        <activity android:name=".flight.activity.ListOrderActivity" />
         <activity
             android:name=".hotel.activity.HotelActivity"
             android:windowSoftInputMode="stateHidden" />

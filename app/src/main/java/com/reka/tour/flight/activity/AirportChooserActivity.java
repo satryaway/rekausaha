@@ -1,4 +1,4 @@
-package com.reka.tour.activity;
+package com.reka.tour.flight.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -21,8 +21,8 @@ import com.loopj.android.http.RequestParams;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.ValueAnimator;
 import com.reka.tour.R;
-import com.reka.tour.adapter.AirportListAdapter;
-import com.reka.tour.model.Airport;
+import com.reka.tour.flight.adapter.AirportListAdapter;
+import com.reka.tour.flight.model.Airport;
 import com.reka.tour.utils.CommonConstants;
 
 import org.json.JSONArray;

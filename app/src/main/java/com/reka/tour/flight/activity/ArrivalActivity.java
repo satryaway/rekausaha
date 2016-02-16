@@ -1,4 +1,4 @@
-package com.reka.tour.activity;
+package com.reka.tour.flight.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,10 +7,10 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.reka.tour.R;
-import com.reka.tour.adapter.FlightAdapter;
-import com.reka.tour.adapter.ScheduleAdapter;
-import com.reka.tour.model.Flight;
-import com.reka.tour.model.Schedule;
+import com.reka.tour.flight.adapter.FlightAdapter;
+import com.reka.tour.flight.adapter.ScheduleAdapter;
+import com.reka.tour.flight.model.Flight;
+import com.reka.tour.flight.model.Schedule;
 
 import org.lucasr.twowayview.TwoWayView;
 

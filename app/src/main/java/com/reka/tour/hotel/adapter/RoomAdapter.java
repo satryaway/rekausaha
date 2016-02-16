@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.reka.tour.R;
 import com.reka.tour.hotel.activity.OrderHotelActivity;
-import com.reka.tour.model.Room;
+import com.reka.tour.hotel.model.Room;
 
 import java.util.ArrayList;
 

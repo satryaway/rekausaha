@@ -23,7 +23,7 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.ValueAnimator;
 import com.reka.tour.R;
 import com.reka.tour.hotel.adapter.HotelAreaAdapter;
-import com.reka.tour.model.HotelArea;
+import com.reka.tour.hotel.model.HotelArea;
 import com.reka.tour.utils.CommonConstants;
 
 import org.json.JSONArray;

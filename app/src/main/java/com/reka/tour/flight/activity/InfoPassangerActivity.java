@@ -1,4 +1,4 @@
-package com.reka.tour.activity;
+package com.reka.tour.flight.activity;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -21,10 +21,10 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.reka.tour.R;
-import com.reka.tour.adapter.PassangerAdapter;
-import com.reka.tour.model.DeparturesOrder;
-import com.reka.tour.model.Passanger;
-import com.reka.tour.model.Resource;
+import com.reka.tour.flight.adapter.PassangerAdapter;
+import com.reka.tour.flight.model.DeparturesOrder;
+import com.reka.tour.flight.model.Passanger;
+import com.reka.tour.flight.model.Resource;
 import com.reka.tour.utils.CommonConstants;
 import com.reka.tour.utils.Util;
 

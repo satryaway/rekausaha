@@ -1,4 +1,4 @@
-package com.reka.tour.activity;
+package com.reka.tour.flight.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,9 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.reka.tour.R;
-import com.reka.tour.adapter.MaskapaiAdapter;
-import com.reka.tour.model.Departures;
-import com.reka.tour.model.Maskapai;
+import com.reka.tour.flight.adapter.MaskapaiAdapter;
+import com.reka.tour.flight.model.Departures;
+import com.reka.tour.flight.model.Maskapai;
 import com.reka.tour.utils.CommonConstants;
 import com.reka.tour.utils.Util;
 
