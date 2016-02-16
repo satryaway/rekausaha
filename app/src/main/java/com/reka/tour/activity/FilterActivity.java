@@ -79,7 +79,6 @@ public class FilterActivity extends AppCompatActivity {
                 rbPrice = (RadioButton) findViewById(selectedId);
                 Toast.makeText(FilterActivity.this, rbPrice.getText(), Toast.LENGTH_SHORT).show();
 
-
                 Intent myIntent = new Intent();
                 myIntent.putExtra(CommonConstants.DEPARTURES, departures);
                 myIntent.putExtra(CommonConstants.FILTER_MASKAPAI, filterMaskapai());

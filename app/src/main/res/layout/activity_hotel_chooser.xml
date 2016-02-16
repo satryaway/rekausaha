@@ -21,9 +21,32 @@
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:title="@string/pilih_kota_hotel">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_title_toolbar"
+                    style="@style/TextAppearance.AppCompat.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="?attr/actionBarSize"
+                    android:gravity="center"
+                    android:text="@string/pilih_kota_hotel"
+                    android:textColor="@android:color/white" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="?attr/actionBarSize"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="10dp"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
         </android.support.v7.widget.Toolbar>
 
         <EditText
+            android:id="@+id/et_search"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_margin="5dp"
@@ -33,5 +56,17 @@
             android:singleLine="true" />
 
     </android.support.design.widget.AppBarLayout>
+
+
+    <se.emilsjolander.stickylistheaders.ExpandableStickyListHeadersListView
+        android:id="@+id/lv_hotel_area"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/appbar"
+        android:clipToPadding="false"
+        android:drawSelectorOnTop="true"
+        android:fastScrollEnabled="true"
+        android:overScrollMode="never"
+        android:scrollbarStyle="outsideOverlay" />
 
 </RelativeLayout>

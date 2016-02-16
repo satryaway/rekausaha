@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.reka.tour.R;
+import com.reka.tour.utils.CommonConstants;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -25,7 +26,7 @@ import java.util.Locale;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class HotelActivity extends AppCompatActivity {
+public class HotelActivity extends AppCompatActivity implements View.OnClickListener {
     @Bind(R.id.ev_kota)
     EditText evKota;
 
@@ -64,6 +65,7 @@ public class HotelActivity extends AppCompatActivity {
 
     private String dateCheckin;
     private String dateCheckout;
+    private String VALUE_HOTEL_AREA = "id";
     private int HOTEL_KOTA = 400;
 
     @Override
@@ -87,6 +89,19 @@ public class HotelActivity extends AppCompatActivity {
         dateFormatter = new SimpleDateFormat("dd", new Locale("ind", "IDN"));
         monthYearFormatter = new SimpleDateFormat("MMM yyyy", new Locale("ind", "IDN"));
         dateDefaultFormatter = new SimpleDateFormat("yyyy-MM-dd");
+
+        //date now
+        tvDayCheckin.setText(dayFormatter.format(newCalendar.getTime()));
+        tvDateCheckin.setText(dateFormatter.format(newCalendar.getTime()));
+        tvMonthYearCheckin.setText(monthYearFormatter.format(newCalendar.getTime()));
+        dateCheckin = dateFormatter.format(newCalendar.getTime());
+
+        //date next week
+        newCalendar.add(Calendar.DATE, 1);
+        tvDayCheckout.setText(dayFormatter.format(newCalendar.getTime()));
+        tvDateCheckout.setText(dateFormatter.format(newCalendar.getTime()));
+        tvMonthYearCheckout.setText(monthYearFormatter.format(newCalendar.getTime()));
+        dateCheckout = dateFormatter.format(newCalendar.getTime());
 
 
         final String[] listTamu = new String[6];
@@ -135,15 +150,6 @@ public class HotelActivity extends AppCompatActivity {
 
 
     private void setCallBack() {
-        tvCariHotel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent pickIntent = new Intent(HotelActivity.this,
-                        ListHotelActivity.class);
-                startActivity(pickIntent);
-            }
-        });
-
         evKota.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -157,10 +163,18 @@ public class HotelActivity extends AppCompatActivity {
             }
         });
 
-        layoutCheckIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        layoutCheckIn.setOnClickListener(this);
+        layoutCheckOut.setOnClickListener(this);
+        tvCariHotel.setOnClickListener(this);
 
+    }
+
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.layout_checkin:
                 new DatePickerDialog(HotelActivity.this, new DatePickerDialog.OnDateSetListener() {
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         Calendar newDate = Calendar.getInstance();
@@ -173,13 +187,8 @@ public class HotelActivity extends AppCompatActivity {
 
                 }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH)).show();
 
-            }
-        });
-
-        layoutCheckOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
+                break;
+            case R.id.layout_checkout:
                 new DatePickerDialog(HotelActivity.this, new DatePickerDialog.OnDateSetListener() {
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         Calendar newDate = Calendar.getInstance();
@@ -192,10 +201,22 @@ public class HotelActivity extends AppCompatActivity {
 
                 }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH)).show();
 
-            }
-        });
-    }
+                break;
+            case R.id.tv_cari_hotel:
+                Intent pickIntent = new Intent(HotelActivity.this,
+                        ListHotelActivity.class);
+                pickIntent.putExtra(CommonConstants.Q, VALUE_HOTEL_AREA);
+                pickIntent.putExtra(CommonConstants.STARTDATE, dateCheckin);
+                pickIntent.putExtra(CommonConstants.ENDDATE, dateCheckout);
+                pickIntent.putExtra(CommonConstants.ROOM, evKamar.getText().toString());
+                pickIntent.putExtra(CommonConstants.ADULT, evTamu.getText().toString());
+                startActivity(pickIntent);
+                break;
 
+            default:
+                return;
+        }
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -204,11 +225,14 @@ public class HotelActivity extends AppCompatActivity {
         if (resultCode == Activity.RESULT_OK) {
 
             if (requestCode == HOTEL_KOTA) {
-//                AIRPORT_CODE_D = data.getStringExtra(CommonConstants.AIRPORT_CODE_D);
-//                AIRPORT_NAME_D = data.getStringExtra(CommonConstants.AIRPORT_NAME_D);
-//                AIRPORT_LOCATION_D = data.getStringExtra(CommonConstants.AIRPORT_LOCATION_D);
-//                dariAirportCode.setText(AIRPORT_CODE_D);
-//                dariAirportName.setText(AIRPORT_NAME_D + "\n" + AIRPORT_LOCATION_D);
+                String LABEL_HOTEL_AREA = data.getStringExtra(CommonConstants.LABEL_HOTEL_AREA);
+                VALUE_HOTEL_AREA = data.getStringExtra(CommonConstants.VALUE_HOTEL_AREA);
+
+                if (LABEL_HOTEL_AREA != null) {
+                    evKota.setText(LABEL_HOTEL_AREA);
+                } else {
+                    evKota.setText(VALUE_HOTEL_AREA);
+                }
             }
 
         }

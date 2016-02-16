@@ -24,6 +24,7 @@
         </android.support.v7.widget.Toolbar>
 
         <TextView
+            android:id="@+id/tv_hotel_area"
             style="@style/Base.TextAppearance.AppCompat.Title"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"

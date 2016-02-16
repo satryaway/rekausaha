@@ -22,38 +22,79 @@
             android:id="@+id/iv_image_hotel"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:padding="5dp"
             android:src="@drawable/ic_flyto" />
 
+        <TextView
+            android:id="@+id/tv_rating"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/draw_circle"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="8.2"
+            android:textColor="@android:color/white"
+            android:visibility="gone" />
+
         <RatingBar
-            android:id="@+id/rb_rate_hotel"
-            style="?android:attr/ratingBarStyleSmall"
+            android:id="@+id/rb_star_hotel"
+            style="?android:attr/ratingBarStyleIndicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:layout_toEndOf="@+id/iv_image_hotel"
             android:layout_toRightOf="@+id/iv_image_hotel"
             android:max="5"
             android:numStars="5"
+            android:progressDrawable="@drawable/ratingbar_gold"
             android:rating="0"
             android:stepSize="1" />
 
         <TextView
             android:id="@+id/tv_name_hotel"
+            style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rb_rate_hotel"
+            android:layout_below="@+id/rb_star_hotel"
             android:layout_toEndOf="@+id/iv_image_hotel"
             android:layout_toRightOf="@+id/iv_image_hotel"
-            android:text="Hotel Aston" />
+            android:text="Hotel Aston"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_price_hotel"
-            android:layout_width="match_parent"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_name_hotel"
             android:layout_toEndOf="@+id/iv_image_hotel"
             android:layout_toRightOf="@+id/iv_image_hotel"
-            android:text="150.000/malam" />
+            android:text="150.000"
+            android:textColor="@color/colorAccent" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_name_hotel"
+            android:layout_toRightOf="@+id/tv_price_hotel"
+            android:text="/malam" />
+
+        <TextView
+            android:id="@+id/tv_old_price_hotel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_price_hotel"
+            android:layout_toEndOf="@+id/iv_image_hotel"
+            android:layout_toRightOf="@+id/iv_image_hotel"
+            android:paddingBottom="5dp"
+            android:text="110.000" />
 
         <ImageView
             android:id="@+id/iv_promo"

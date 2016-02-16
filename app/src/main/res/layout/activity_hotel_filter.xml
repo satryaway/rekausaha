@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -29,13 +29,16 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/relativeLayout2"
+        android:layout_below="@+id/appbar"
+        android:background="@android:color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="5dp">
             <!--waktu-->
             <TextView
                 style="@style/Base.TextAppearance.AppCompat.Title"
@@ -46,163 +49,49 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp">
-
-                <CheckBox
-                    android:id="@+id/cb_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:checked="true" />
+                android:layout_height="wrap_content">
 
                 <RatingBar
-                    android:id="@+id/rb_1"
+                    android:id="@+id/rb_bintang_min"
                     style="?android:attr/ratingBarStyleIndicator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/cb_1"
+                    android:layout_alignParentLeft="true"
+                    android:layout_gravity="center"
                     android:max="5"
                     android:numStars="5"
-                    android:rating="1"
+                    android:progressDrawable="@drawable/ratingbar_gold"
+                    android:rating="0"
                     android:stepSize="1" />
 
-            </RelativeLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/gray" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp">
-
-
-                <CheckBox
-                    android:id="@+id/cb_2"
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:checked="true" />
+                    android:layout_centerInParent="true"
+                    android:padding="10dp"
+                    android:text="To" />
 
                 <RatingBar
-                    android:id="@+id/rb_2"
+                    android:id="@+id/rb_bintang_max"
                     style="?android:attr/ratingBarStyleIndicator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/cb_2"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center"
                     android:max="5"
                     android:numStars="5"
-                    android:rating="2"
-                    android:stepSize="1" />
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/gray" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp">
-
-
-                <CheckBox
-                    android:id="@+id/cb_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:checked="true" />
-
-                <RatingBar
-                    android:id="@+id/rb_3"
-                    style="?android:attr/ratingBarStyleIndicator"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/cb_3"
-                    android:max="5"
-                    android:numStars="5"
-                    android:rating="3"
-                    android:stepSize="1" />
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/gray" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp">
-
-
-                <CheckBox
-                    android:id="@+id/cb_4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:checked="true" />
-
-                <RatingBar
-                    android:id="@+id/rb_4"
-                    style="?android:attr/ratingBarStyleIndicator"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/cb_4"
-                    android:max="5"
-                    android:numStars="5"
-                    android:rating="4"
-                    android:stepSize="1" />
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/gray" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp">
-
-
-                <CheckBox
-                    android:id="@+id/cb_5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:checked="true" />
-
-                <RatingBar
-                    android:id="@+id/rb_5"
-                    style="?android:attr/ratingBarStyleIndicator"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/cb_5"
-                    android:max="5"
-                    android:numStars="5"
+                    android:progressDrawable="@drawable/ratingbar_gold"
                     android:rating="5"
                     android:stepSize="1" />
 
             </RelativeLayout>
 
-            <View
+
+            <com.edmodo.rangebar.RangeBar
+                android:id="@+id/rangebar_bintang"
                 android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/gray" />
+                android:layout_height="wrap_content" />
+
 
             <!--waktu-->
             <TextView
@@ -212,67 +101,58 @@
                 android:padding="10dp"
                 android:text="@string/harga" />
 
-            <CheckBox
-                android:id="@+id/cb_h1"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:checked="true"
-                android:gravity="center_vertical"
-                android:padding="10dp"
-                android:text="IDR 0 - 500.000"
-                android:textSize="16sp" />
+                android:orientation="horizontal">
 
-            <View
+                <TextView
+                    android:id="@+id/tv_harga_min"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="IDr" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:padding="10dp"
+                    android:text="To" />
+
+                <TextView
+                    android:id="@+id/tv_harga_max"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="IDR" />
+
+            </LinearLayout>
+
+
+            <com.edmodo.rangebar.RangeBar
+                android:id="@+id/rangebar_harga"
                 android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/gray" />
-
-            <CheckBox
-                android:id="@+id/cb_h2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:checked="true"
-
-                android:gravity="center_vertical"
-                android:padding="10dp"
-                android:text="IDR 500.000 - 1.000.000"
-                android:textSize="16sp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/gray" />
-
-            <CheckBox
-                android:id="@+id/cb_h3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:checked="true"
-
-                android:gravity="center_vertical"
-                android:padding="10dp"
-                android:text="IDR 1.000.000 - 5.000.000"
-                android:textSize="16sp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/gray" />
-
-            <CheckBox
-                android:id="@+id/cb_h4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:gravity="center_vertical"
-                android:padding="10dp"
-                android:text="IDR 5.000.000 - 15.000.000"
-                android:textSize="16sp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/gray" />
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/tv_save"
+            style="@style/Base.TextAppearance.AppCompat.Title"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:text="@string/simpan"
+            android:textAllCaps="true"
+            android:textColor="@android:color/white" />
+    </RelativeLayout>
+</RelativeLayout>

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.reka.tour.R;
 import com.reka.tour.model.Hotel;
+import com.reka.tour.utils.Util;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -49,15 +50,34 @@ public class HotelAdapter extends ArrayAdapter<Hotel> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        if(position%2==1){
-            holder.ivPromo.setVisibility(View.GONE);
+        holder.ivPromo.setVisibility(View.GONE);
+
+        Picasso.with(getContext()).load(hotel.photoPrimary).error(R.drawable.ic_fly_to).into(holder.ivImageHotel);
+
+        holder.rbStarHotel.setRating(Float.parseFloat(hotel.star_rating));
+        holder.rbStarHotel.setIsIndicator(true);
+
+//        holder.rbStarHotel.getProgressDrawable().setColorFilter(Color.parseColor("#f7961f"), PorterDuff.Mode.SRC_ATOP);
+//        holder.rbStarHotel.getBackground().setColorFilter(Color.parseColor("#eedd8b"), PorterDuff.Mode.SRC_ATOP);
+
+        if (hotel.rating != "") {
+            holder.tvRating.setVisibility(View.VISIBLE);
+            holder.tvRating.setText(hotel.rating);
         }
 
-        Picasso.with(getContext()).load(R.drawable.ic_fly_to).error(R.drawable.ic_fly_to).into(holder.ivImageHotel);
-        holder.rbRateHotel.setRating(Float.parseFloat(hotel.getRating()));
-        holder.rbRateHotel.setIsIndicator(true);
-        holder.tvNameHotel.setText(hotel.getName());
-        holder.tvPriceHotel.setText(hotel.getPrice());
+        holder.tvNameHotel.setText(hotel.name);
+
+        if (hotel.price != "") {
+            holder.tvPriceHotel.setText(Util.toRupiahFormat(hotel.price));
+            if (hotel.oldprice != "")
+                holder.tvOldPriceHotel.setText(Util.toRupiahFormat(hotel.oldprice));
+        } else {
+            holder.tvPriceHotel.setText("");
+            holder.tvOldPriceHotel.setText("");
+        }
+
+
+
 
         return convertView;
     }
@@ -66,12 +86,16 @@ public class HotelAdapter extends ArrayAdapter<Hotel> {
     static class ViewHolder {
         @Bind(R.id.iv_image_hotel)
         ImageView ivImageHotel;
-        @Bind(R.id.rb_rate_hotel)
-        RatingBar rbRateHotel;
+        @Bind(R.id.tv_rating)
+        TextView tvRating;
+        @Bind(R.id.rb_star_hotel)
+        RatingBar rbStarHotel;
         @Bind(R.id.tv_name_hotel)
         TextView tvNameHotel;
         @Bind(R.id.tv_price_hotel)
         TextView tvPriceHotel;
+        @Bind(R.id.tv_old_price_hotel)
+        TextView tvOldPriceHotel;
         @Bind(R.id.iv_promo)
         ImageView ivPromo;
 

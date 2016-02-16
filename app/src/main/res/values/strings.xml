@@ -162,4 +162,5 @@
     <string name="pesan_sekarang">Pesan Sekarang</string>
     <string name="pesanan_anda">Pesanan Anda</string>
     <string name="hotel_bintang">Hotel Bintang</string>
+    <string name="rating_terendah">terendah</string>
 </resources>

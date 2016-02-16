@@ -22,6 +22,8 @@
     <color name="white">#ffffff</color>
     <color name="gray">#636363</color>
     <color name="gray_light">#CCCCCC</color>
-    <color name="gold">#0064A8</color>
+
+    <color name="gold">#f3c021</color>
+    <color name="gold_empty">#eedd8b</color>
 
 </resources>

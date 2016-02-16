@@ -48,6 +48,20 @@ public class CommonConstants {
 
     public static String FLIGHT_ID = "flight_id";
 
+    public static String Q = "q";
+    public static String RESULTS = "results";
+    public static String UID = "uid";
+
+    public static String STARTDATE = "startdate";
+    public static String ENDDATE = "enddate";
+    public static String ROOM = "room";
+    public static String SORT = "sort";
+    public static String MINPRICE = "minprice";
+    public static String MAXPRICE = "maxprice";
+    public static String MINSTAR = "minstar";
+    public static String MAXSTAR = "maxstar";
+
+
     public static String HAS_FOOD = "HAS_FOOD";
     public static String AIRPORT_TAX = "AIRPORT_TAX";
     public static String BAGGAGE = "BAGGAGE";
@@ -69,6 +83,22 @@ public class CommonConstants {
     public static String FILTER_JAM = "FILTER_JAM";
     public static String FILTER_HARGA = "FILTER_HARGA";
     public static String FILTER_OPSI = "FILTER_OPSI";
+
+    public static String LABEL_HOTEL_AREA = "LABEL_HOTEL_AREA";
+    public static String VALUE_HOTEL_AREA = "VALUE_HOTEL_AREA";
+
+    public static String SORTIR_TERPOPULER = "VALUE_HOTEL_AREA";
+    public static String SORTIR_HARGA_TERMURAH = "SORTIR_HARGA_TERMURAH";
+    public static String SORTIR_HARGA_TERMAHAL = "SORTIR_HARGA_TERMAHAL";
+    public static String SORTIR_RATING_TERTINGGI = "SORTIR_RATING_TERTINGGI";
+    public static String SORTIR_RATING_TERENDAH = "SORTIR_RATING_TERENDAH";
+
+    public static String FILTER_MAX_BINTANG = "FILTER_MAX_BINTANG";
+    public static String FILTER_MIN_BINTANG = "FILTER_MIN_BINTANG";
+    public static String FILTER_MAX_PRICE = "FILTER_MAX_PRICE";
+    public static String FILTER_MIN_PRICE = "FILTER_MIN_PRICE";
+
+    public static String MAX_PRICE = "MAX_PRICE";
 
 
 }
