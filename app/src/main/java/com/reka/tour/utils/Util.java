@@ -30,8 +30,8 @@ public class Util {
         return "IDR " + result.substring(0, result.lastIndexOf(','));
     }
 
-    public static void setListview(ListView listMaskapai) {
-        listMaskapai.setOnTouchListener(new View.OnTouchListener() {
+    public static void setListview(ListView listView) {
+        listView.setOnTouchListener(new View.OnTouchListener() {
             // Setting on Touch Listener for handling the touch inside ScrollView
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -41,10 +41,10 @@ public class Util {
             }
         });
 
-        setListViewHeightBasedOnChildren(listMaskapai);
+        setListViewHeightBasedOnChildren(listView);
     }
 
-    public static void setListViewHeightBasedOnChildren(ListView listView) {
+    private static void setListViewHeightBasedOnChildren(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter == null)
             return;

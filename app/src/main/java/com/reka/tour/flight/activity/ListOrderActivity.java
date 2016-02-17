@@ -17,7 +17,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.reka.tour.R;
-import com.reka.tour.activity.MethodPaymentActivity;
+import com.reka.tour.activity.ListPaymentActivity;
 import com.reka.tour.flight.adapter.MyOrderAdapter;
 import com.reka.tour.model.MyOrder;
 import com.reka.tour.utils.CommonConstants;
@@ -33,11 +33,14 @@ import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 
 public class ListOrderActivity extends AppCompatActivity {
+    private static ArrayList<MyOrder> myOrders = new ArrayList<>();
     @Bind(R.id.list_order)
     ListView listOrder;
-
-    private ArrayList<MyOrder> myOrders = new ArrayList<>();
     private MyOrderAdapter myOrderAdapter;
+
+    public static ArrayList<MyOrder> getMyOrders() {
+        return myOrders;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +61,7 @@ public class ListOrderActivity extends AppCompatActivity {
             listOrder.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intentDeparture = new Intent(ListOrderActivity.this, MethodPaymentActivity.class);
+                    Intent intentDeparture = new Intent(ListOrderActivity.this, ListPaymentActivity.class);
                     startActivity(intentDeparture);
                 }
             });
@@ -71,7 +74,6 @@ public class ListOrderActivity extends AppCompatActivity {
             });
         }
     }
-
 
     private void getData() {
         String url = CommonConstants.BASE_URL + "order";
@@ -111,8 +113,8 @@ public class ListOrderActivity extends AppCompatActivity {
                     listOrder.setAdapter(myOrderAdapter);
 
                     if (myOrders.size() == 1) {
-                        Intent intentDeparture = new Intent(ListOrderActivity.this, MethodPaymentActivity.class);
-                        startActivity(intentDeparture);
+                        Intent intent = new Intent(ListOrderActivity.this, ListPaymentActivity.class);
+                        startActivity(intent);
                     }
 
                 } catch (JSONException e) {
@@ -188,7 +190,6 @@ public class ListOrderActivity extends AppCompatActivity {
             }
         });
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

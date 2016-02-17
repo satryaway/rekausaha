@@ -61,6 +61,14 @@ public class CommonConstants {
     public static String MINSTAR = "minstar";
     public static String MAXSTAR = "maxstar";
 
+    public static String AVAILABLE_PAYMENT = "available_payment";
+    public static String BTN_BOOKING = "btn_booking";
+    public static String CURRENCY = "currency";
+    public static String STEPS = "steps";
+    public static String STEP = "step";
+    public static String NAME = "name";
+
+
 
     public static String HAS_FOOD = "HAS_FOOD";
     public static String AIRPORT_TAX = "AIRPORT_TAX";
@@ -99,6 +107,8 @@ public class CommonConstants {
     public static String FILTER_MIN_PRICE = "FILTER_MIN_PRICE";
 
     public static String MAX_PRICE = "MAX_PRICE";
+
+    public static String LINK = "LINK";
 
 
 }

@@ -1,30 +1,58 @@
 package com.reka.tour.activity;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.reka.tour.R;
+import com.reka.tour.adapter.StepsAdapter;
 import com.reka.tour.flight.activity.DetailOrderActivity;
+import com.reka.tour.flight.activity.ListOrderActivity;
 import com.reka.tour.flight.model.DeparturesOrder;
+import com.reka.tour.model.MyOrder;
+import com.reka.tour.model.Steps;
+import com.reka.tour.utils.CommonConstants;
 import com.reka.tour.utils.Util;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import cz.msebera.android.httpclient.Header;
 
 public class PaymentActivity extends AppCompatActivity {
     @Bind(R.id.tv_orderid)
     TextView tvOrderId;
+
+    @Bind(R.id.tv_sisa_waktu)
+    TextView tvSisaWaktu;    @Bind(R.id.tv_upto)
+    TextView tvUpto;
+    @Bind(R.id.layout_time)
+    RelativeLayout layoutTime;
+    @Bind(R.id.list_step_payment)
+    ListView listStepPayment;
 
     @Bind(R.id.tv_date)
     TextView tvDate;
@@ -75,6 +103,11 @@ public class PaymentActivity extends AppCompatActivity {
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private SimpleDateFormat dateFormatter = new SimpleDateFormat("EEEE, dd MMMM yyyy", new Locale("ind", "IDN"));
     private String hasFood, airportTax, baggage, needBaggage, orderId;
+    private ArrayList<MyOrder> myOrders;
+    private ArrayList<Steps> stepses = new ArrayList<>();
+    private StepsAdapter stepsAdapter;
+    private String url;
+    private boolean finish = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +119,21 @@ public class PaymentActivity extends AppCompatActivity {
         ((Toolbar) findViewById(R.id.toolbar)).setNavigationIcon(R.drawable.back);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
+        url = getIntent().getExtras().getString(CommonConstants.LINK);
+        if (!url.equals("#")) {
+            getData(url);
+        }
+
         setValue();
+    }
+
+    @OnClick(R.id.tv_next)
+    void nextOnClick() {
+        if (finish) {
+            finish();
+        } else {
+            getFinishPayment(url);
+        }
     }
 
     private void setValue() {
@@ -95,9 +142,10 @@ public class PaymentActivity extends AppCompatActivity {
         airportTax = DetailOrderActivity.getAirportTax();
         needBaggage = DetailOrderActivity.getNeedBaggage();
         baggage = DetailOrderActivity.getBaggage();
-        orderId = MethodPaymentActivity.getOrderId();
+        myOrders = ListOrderActivity.getMyOrders();
 
-        tvOrderId.setText(orderId);
+
+        tvUpto.setText("HINGGA " + myOrders.get(0).orderExpireDatetime);
 
         if (hasFood.equals("0")) {
             ivFood.setVisibility(View.GONE);
@@ -149,6 +197,123 @@ public class PaymentActivity extends AppCompatActivity {
         }
 
         tvTotal.setText(Util.toRupiahFormat(departures.priceValue));
+    }
+
+    private void getData(String url) {
+        RequestParams requestParams = new RequestParams();
+        requestParams.put(CommonConstants.TOKEN, "19d0ceaca45f9ee27e3c51df52786f1d904280f9");
+        requestParams.put(CommonConstants.OUTPUT, CommonConstants.JSON);
+
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getString(R.string.please_wait));
+
+        AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
+        client.setTimeout(10000);
+        client.get(url, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onStart() {
+                progressDialog.show();
+            }
+
+            @Override
+            public void onFinish() {
+                progressDialog.hide();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Log.e("JSON METHOD PAYMENT", response.toString() + "");
+                try {
+                    orderId = response.getJSONObject(CommonConstants.RESULT).getString(CommonConstants.ORDER_ID);
+                    tvOrderId.setText(orderId);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Toast.makeText(PaymentActivity.this, R.string.RTO, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    Toast.makeText(PaymentActivity.this, errorResponse.getJSONObject(CommonConstants.DIAGNOSTIC).getString(CommonConstants.ERROR_MSGS), Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+
+    private void getFinishPayment(String url) {
+        RequestParams requestParams = new RequestParams();
+        requestParams.put(CommonConstants.TOKEN, "19d0ceaca45f9ee27e3c51df52786f1d904280f9");
+        requestParams.put(CommonConstants.OUTPUT, CommonConstants.JSON);
+
+        requestParams.put(CommonConstants.BTN_BOOKING, "1");
+        requestParams.put(CommonConstants.CURRENCY, "IDR");
+
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getString(R.string.please_wait));
+
+        AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
+        client.setTimeout(10000);
+        client.get(url, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onStart() {
+                progressDialog.show();
+            }
+
+            @Override
+            public void onFinish() {
+                progressDialog.hide();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Log.e("JSON METHOD PAYMENT", response.toString() + "");
+                try {
+                    Gson gson = new Gson();
+
+                    JSONArray stepsArray = response.getJSONArray(CommonConstants.STEPS);
+                    for (int i = 0; i < stepsArray.length(); i++) {
+                        stepses.add(gson.fromJson(stepsArray.getJSONObject(i).toString(), Steps.class));
+                    }
+
+                    stepsAdapter = new StepsAdapter(PaymentActivity.this, stepses);
+                    listStepPayment.setAdapter(stepsAdapter);
+                    Util.setListview(listStepPayment);
+
+                    ((Toolbar) findViewById(R.id.toolbar)).setNavigationIcon(null);
+                    ((TextView)findViewById(R.id.tv_next)).setText("Selesai");
+                    tvSisaWaktu.setVisibility(View.GONE);
+                    tvUpto.setVisibility(View.GONE);
+                    layoutTime.setVisibility(View.GONE);
+                    listStepPayment.setVisibility(View.VISIBLE);
+                    finish = true;
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Toast.makeText(PaymentActivity.this, R.string.RTO, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    Toast.makeText(PaymentActivity.this, errorResponse.getJSONObject(CommonConstants.DIAGNOSTIC).getString(CommonConstants.ERROR_MSGS), Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override

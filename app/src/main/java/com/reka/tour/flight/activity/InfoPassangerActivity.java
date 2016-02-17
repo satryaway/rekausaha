@@ -184,7 +184,7 @@ public class InfoPassangerActivity extends AppCompatActivity {
         tvNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intentDeparture = new Intent(InfoPassangerActivity.this, MethodPaymentActivity.class);
+//                Intent intentDeparture = new Intent(InfoPassangerActivity.this, ListPaymentActivity.class);
 ////                intentDeparture.putExtra(CommonConstants.DEPARTURES, depAirportArrayList.get(position));
 ////                intentDeparture.putExtra(CommonConstants.SEARCH_QUARIES, searchQueries);
 //                startActivity(intentDeparture);
@@ -317,6 +317,7 @@ public class InfoPassangerActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Log.e("JSON PASSANGER", errorResponse.toString() + "");
                 try {
                     Toast.makeText(InfoPassangerActivity.this, errorResponse.getJSONObject(CommonConstants.DIAGNOSTIC).getString(CommonConstants.ERROR_MSGS), Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {

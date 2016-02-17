@@ -31,7 +31,7 @@
         <activity
             android:name=".flight.activity.InfoPassangerActivity"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".activity.MethodPaymentActivity" />
+        <activity android:name=".activity.ListPaymentActivity" />
         <activity android:name=".activity.PaymentActivity" />
         <activity android:name=".flight.activity.FilterActivity" />
         <activity android:name=".flight.activity.ListOrderActivity" />
@@ -53,7 +53,8 @@
         <activity android:name=".hotel.activity.FilterHotelActivity" />
         <activity android:name=".hotel.activity.ProfileHotelActivity" />
         <activity android:name=".hotel.activity.RoomHotelActivity" />
-        <activity android:name=".hotel.activity.OrderHotelActivity"></activity>
+        <activity android:name=".hotel.activity.OrderHotelActivity" />
+        <activity android:name=".activity.MethodPaymentActivity"></activity>
     </application>
 
 </manifest>
