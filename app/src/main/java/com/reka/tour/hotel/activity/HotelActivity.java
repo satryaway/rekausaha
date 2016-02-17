@@ -76,6 +76,7 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
         ButterKnife.bind(this);
 
         ((Toolbar) findViewById(R.id.toolbar)).setNavigationIcon(R.drawable.back);
+
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
 
@@ -183,6 +184,13 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
                         tvDateCheckin.setText(dateFormatter.format(newDate.getTime()));
                         tvMonthYearCheckin.setText(monthYearFormatter.format(newDate.getTime()));
                         dateCheckin = dateDefaultFormatter.format(newDate.getTime());
+
+                        newDate.add(Calendar.DATE, 1);
+                        tvDayCheckout.setText(dayFormatter.format(newDate.getTime()));
+                        tvDateCheckout.setText(dateFormatter.format(newDate.getTime()));
+                        tvMonthYearCheckout.setText(monthYearFormatter.format(newDate.getTime()));
+                        dateCheckout = dateDefaultFormatter.format(newDate.getTime());
+
                     }
 
                 }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH)).show();

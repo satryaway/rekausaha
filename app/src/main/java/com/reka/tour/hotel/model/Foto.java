@@ -1,18 +1,12 @@
 package com.reka.tour.hotel.model;
 
-public class Foto {
-    String imageId,imageName;
+import com.google.gson.annotations.SerializedName;
 
-    public Foto(String imageId, String imageName) {
-        this.imageId = imageId;
-        this.imageName = imageName;
-    }
+import java.io.Serializable;
 
-    public String getImageId() {
-        return imageId;
-    }
-
-    public String getImageName() {
-        return imageName;
-    }
+public class Foto implements Serializable {
+    @SerializedName("file_name")
+    public String fileName;
+    @SerializedName("photo_type")
+    public String photoType;
 }

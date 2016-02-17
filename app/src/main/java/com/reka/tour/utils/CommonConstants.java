@@ -69,6 +69,15 @@ public class CommonConstants {
     public static String NAME = "name";
 
 
+    public static String ALL_PHOTO = "all_photo";
+    public static String PHOTO = "photo";
+    public static String BREADCRUMB = "breadcrumb";
+    public static String GENERAL = "general";
+    public static String PRIMARYPHOTO = "primaryPhotos";
+    public static String AVAIL_FACILITIES = "avail_facilities";
+    public static String AVAIL_FACILITY = "avail_facilitiy";
+
+
 
     public static String HAS_FOOD = "HAS_FOOD";
     public static String AIRPORT_TAX = "AIRPORT_TAX";

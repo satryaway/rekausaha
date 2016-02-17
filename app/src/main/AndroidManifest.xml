@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".hotel.activity.ProfileHotelActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
@@ -51,10 +51,10 @@
         <activity android:name=".hotel.activity.ListHotelActivity" />
         <activity android:name=".hotel.activity.SortirHotelActivity" />
         <activity android:name=".hotel.activity.FilterHotelActivity" />
-        <activity android:name=".hotel.activity.ProfileHotelActivity" />
+        <!--<activity android:name=".hotel.activity.ProfileHotelActivity" />-->
         <activity android:name=".hotel.activity.RoomHotelActivity" />
         <activity android:name=".hotel.activity.OrderHotelActivity" />
-        <activity android:name=".activity.MethodPaymentActivity"></activity>
+        <activity android:name=".activity.MethodPaymentActivity"/>
     </application>
 
 </manifest>

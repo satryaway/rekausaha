@@ -1,6 +1,7 @@
 package com.reka.tour.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -47,7 +48,8 @@ public class PaymentActivity extends AppCompatActivity {
     TextView tvOrderId;
 
     @Bind(R.id.tv_sisa_waktu)
-    TextView tvSisaWaktu;    @Bind(R.id.tv_upto)
+    TextView tvSisaWaktu;
+    @Bind(R.id.tv_upto)
     TextView tvUpto;
     @Bind(R.id.layout_time)
     RelativeLayout layoutTime;
@@ -130,7 +132,9 @@ public class PaymentActivity extends AppCompatActivity {
     @OnClick(R.id.tv_next)
     void nextOnClick() {
         if (finish) {
-            finish();
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         } else {
             getFinishPayment(url);
         }
@@ -288,7 +292,7 @@ public class PaymentActivity extends AppCompatActivity {
                     Util.setListview(listStepPayment);
 
                     ((Toolbar) findViewById(R.id.toolbar)).setNavigationIcon(null);
-                    ((TextView)findViewById(R.id.tv_next)).setText("Selesai");
+                    ((TextView) findViewById(R.id.tv_next)).setText("Selesai");
                     tvSisaWaktu.setVisibility(View.GONE);
                     tvUpto.setVisibility(View.GONE);
                     layoutTime.setVisibility(View.GONE);

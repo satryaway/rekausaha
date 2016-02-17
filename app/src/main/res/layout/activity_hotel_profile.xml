@@ -21,7 +21,7 @@
 
 
             <ImageView
-                android:id="@+id/backdrop"
+                android:id="@+id/iv_primaryphoto"
                 android:layout_width="match_parent"
                 android:layout_height="146dp"
                 android:layout_gravity="bottom"

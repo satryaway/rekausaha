@@ -6,11 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.reka.tour.R;
-import com.reka.tour.hotel.model.Foto;
-import com.squareup.picasso.Picasso;
+import com.reka.tour.hotel.model.Facilitiy;
 
 import java.util.ArrayList;
 
@@ -20,19 +19,19 @@ import butterknife.ButterKnife;
 /**
  * Created by fachrifebrian on 9/2/15.
  */
-public class FotoAdapter extends ArrayAdapter<Foto> {
+public class FasilitasAdapter extends ArrayAdapter<Facilitiy> {
 
     int itemLayout;
     private Context context;
 
-    public FotoAdapter(Context context, ArrayList<Foto> items) {
-        super(context, R.layout.item_foto, items);
-        this.itemLayout = R.layout.item_foto;
+    public FasilitasAdapter(Context context, ArrayList<Facilitiy> items) {
+        super(context, R.layout.item_facilitiy, items);
+        this.itemLayout = R.layout.item_facilitiy;
         this.context = context;
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {
-        final Foto foto = getItem(position);
+        final Facilitiy facilitiy = getItem(position);
 
         ViewHolder holder;
         LayoutInflater mInflater = (LayoutInflater) context
@@ -46,16 +45,14 @@ public class FotoAdapter extends ArrayAdapter<Foto> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        Picasso.with(context).load(foto.fileName)
-                .error(R.drawable.bg_sample)
-                .into(holder.ivFoto);
+        holder.tvFacilitiy.setText("✓ " + facilitiy.facilityType + " " + facilitiy.facilityName);
 
         return convertView;
     }
 
     static class ViewHolder {
-        @Bind(R.id.iv_foto)
-        ImageView ivFoto;
+        @Bind(R.id.tv_facilitiy)
+        TextView tvFacilitiy;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);

@@ -57,6 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/tv_jumlah_kamar"
+            android:visibility="gone"
             app:cardCornerRadius="2dp"
             app:cardUseCompatPadding="true">
 

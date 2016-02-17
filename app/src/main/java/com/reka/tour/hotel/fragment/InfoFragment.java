@@ -9,8 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
+import android.widget.TextView;
 
 import com.reka.tour.R;
+import com.reka.tour.hotel.activity.ProfileHotelActivity;
+import com.reka.tour.hotel.model.Breadcrumb;
+import com.reka.tour.hotel.model.General;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -20,6 +24,11 @@ public class InfoFragment extends Fragment {
 
     @Bind(R.id.rb_bintang)
     RatingBar rbBintang;
+    @Bind(R.id.tv_hotel_location)
+    TextView tvHotelLocation;
+
+    private Breadcrumb breadcrumb;
+    private General general;
 
     public static InfoFragment newInstance() {
         return new InfoFragment();
@@ -28,6 +37,8 @@ public class InfoFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        breadcrumb = ((ProfileHotelActivity)getActivity()).getBreadcrumb();
+        general = ((ProfileHotelActivity)getActivity()).getGeneral();
     }
 
     @Override
@@ -38,6 +49,7 @@ public class InfoFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         setInit();
+        setValue();
 
 
         return view;
@@ -48,4 +60,10 @@ public class InfoFragment extends Fragment {
         drawable.setColorFilter(Color.parseColor("#f7961f"), PorterDuff.Mode.SRC_ATOP);
 
     }
+
+    private void setValue() {
+        rbBintang.setRating(Float.parseFloat(breadcrumb.starRating));
+        tvHotelLocation.setText(general.address);
+    }
+
 }
