@@ -23,6 +23,7 @@ import com.loopj.android.http.RequestParams;
 import com.reka.tour.R;
 import com.reka.tour.hotel.adapter.HotelAdapter;
 import com.reka.tour.hotel.model.Hotel;
+import com.reka.tour.hotel.model.SearchQueriesHotel;
 import com.reka.tour.utils.CommonConstants;
 
 import org.json.JSONArray;
@@ -36,6 +37,7 @@ import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 
 public class ListHotelActivity extends AppCompatActivity {
+    private static SearchQueriesHotel searchQueriesHotel;
     private final int HOTEL_SORTIR = 110;
     private final int HOTEL_FILTER = 111;
     @Bind(R.id.list_hotel)
@@ -51,6 +53,10 @@ public class ListHotelActivity extends AppCompatActivity {
     private Bundle bundle;
     private double MAX_PRICE = 0;
     private String TYPE_SORT;
+
+    public static  SearchQueriesHotel getSearchQueriesHotel() {
+        return searchQueriesHotel;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +87,6 @@ public class ListHotelActivity extends AppCompatActivity {
         bundle = getIntent().getExtras();
         tvHotelArea.setText(bundle.getString(CommonConstants.Q));
     }
-
 
     private void getData(String sort) {
         Log.e("SORT", sort);
@@ -145,6 +150,9 @@ public class ListHotelActivity extends AppCompatActivity {
                         hotels.add(gson.fromJson(hotelAreaArray.getJSONObject(i).toString(), Hotel.class));
                     }
 
+                    JSONObject searchQueries = response.getJSONObject(CommonConstants.SEARCH_QUERIES);
+                    searchQueriesHotel = gson.fromJson(searchQueries.toString(), SearchQueriesHotel.class);
+
                     for (int i = 0; i < hotels.size(); i++) {
                         if (hotels.get(i).price != "") {
                             if (Double.parseDouble(hotels.get(i).price) > MAX_PRICE) {
@@ -175,7 +183,6 @@ public class ListHotelActivity extends AppCompatActivity {
             }
         });
     }
-
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -209,7 +216,6 @@ public class ListHotelActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -255,5 +261,4 @@ public class ListHotelActivity extends AppCompatActivity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-
 }

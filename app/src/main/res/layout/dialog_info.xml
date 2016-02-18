@@ -11,6 +11,9 @@
         style="@style/TextAppearance.AppCompat.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/iv_close"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:text="Superior Room" />
 
@@ -29,7 +32,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/tv_name_room">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -49,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/iv_room"
-                android:text="Superior Room" />
+                android:text="Deskripsi" />
 
             <TextView
                 android:id="@+id/tv_description"
@@ -57,8 +60,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_description_title"
-                android:text="@string/large_text" />
+                android:text="@string/sekali_jalan" />
 
-        </RelativeLayout>
+            <TextView
+                android:id="@+id/tv_fasilitas"
+                style="@style/TextAppearance.AppCompat.Caption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:lineSpacingExtra="2sp"
+                android:text="@string/fasilitas" />
+
+            <com.reka.tour.views.ExpandableHeightGridView
+                android:id="@+id/gv_fasilitas"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:horizontalSpacing="5dp"
+                android:numColumns="2"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="5dp" />
+        </LinearLayout>
     </ScrollView>
 </RelativeLayout>

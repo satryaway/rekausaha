@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by satryaway on 12/26/2015.
  * airport entity
  */
-public class SearchQueries implements Serializable {
+public class SearchQueriesFlight implements Serializable {
     @SerializedName("from")
     public String from;
     @SerializedName("to")

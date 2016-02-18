@@ -186,7 +186,7 @@ public class InfoPassangerActivity extends AppCompatActivity {
             public void onClick(View v) {
 //                Intent intentDeparture = new Intent(InfoPassangerActivity.this, ListPaymentActivity.class);
 ////                intentDeparture.putExtra(CommonConstants.DEPARTURES, depAirportArrayList.get(position));
-////                intentDeparture.putExtra(CommonConstants.SEARCH_QUARIES, searchQueries);
+////                intentDeparture.putExtra(CommonConstants.SEARCH_QUERIES, searchQueries);
 //                startActivity(intentDeparture);
 
                 try {
@@ -296,7 +296,7 @@ public class InfoPassangerActivity extends AppCompatActivity {
 
                 Intent intentDeparture = new Intent(InfoPassangerActivity.this, ListOrderActivity.class);
 //                intentDeparture.putExtra(CommonConstants.DEPARTURES, depAirportArrayList.get(position));
-//                intentDeparture.putExtra(CommonConstants.SEARCH_QUARIES, searchQueries);
+//                intentDeparture.putExtra(CommonConstants.SEARCH_QUERIES, searchQueries);
                 startActivity(intentDeparture);
 
 //                try {

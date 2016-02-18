@@ -39,7 +39,7 @@ public class CommonConstants {
     public static String CONEMAILADDRESS = "conEmailAddress";
     public static String FIELDTEXT = "FieldText";
     public static String RESOURCE = "resource";
-    public static String SEARCH_QUARIES = "search_queries";
+    public static String SEARCH_QUERIES = "search_queries";
 
     public static String MYORDER = "myorder";
     public static String ORDER_ID = "order_id";
@@ -76,6 +76,8 @@ public class CommonConstants {
     public static String PRIMARYPHOTO = "primaryPhotos";
     public static String AVAIL_FACILITIES = "avail_facilities";
     public static String AVAIL_FACILITY = "avail_facilitiy";
+
+    public static String BOOKURI = "bookUri";
 
 
 
@@ -118,6 +120,7 @@ public class CommonConstants {
     public static String MAX_PRICE = "MAX_PRICE";
 
     public static String LINK = "LINK";
+    public static String POSITION = "POSITION";
 
 
 }

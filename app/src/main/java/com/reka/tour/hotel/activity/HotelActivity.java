@@ -27,9 +27,12 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class HotelActivity extends AppCompatActivity implements View.OnClickListener {
+    private static String dateCheckin;
+    private static String dateCheckout;
+    private static String room;
+    private static String tamu;
     @Bind(R.id.ev_kota)
     EditText evKota;
-
     @Bind(R.id.layout_checkin)
     LinearLayout layoutCheckIn;
     @Bind(R.id.tv_day_checkin)
@@ -38,8 +41,6 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
     TextView tvDateCheckin;
     @Bind(R.id.tv_month_year_checkin)
     TextView tvMonthYearCheckin;
-
-
     @Bind(R.id.layout_checkout)
     LinearLayout layoutCheckOut;
     @Bind(R.id.tv_day_checkout)
@@ -48,25 +49,35 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
     TextView tvDateCheckout;
     @Bind(R.id.tv_month_year_checkout)
     TextView tvMonthYearCheckout;
-
     @Bind(R.id.ev_tamu)
     EditText evTamu;
     @Bind(R.id.ev_kamar)
     EditText evKamar;
-
     @Bind(R.id.tv_cari_hotel)
     TextView tvCariHotel;
-
     private SimpleDateFormat dayFormatter;
     private SimpleDateFormat dateFormatter;
     private SimpleDateFormat monthYearFormatter;
     private SimpleDateFormat dateDefaultFormatter;
     private Calendar newCalendar;
-
-    private String dateCheckin;
-    private String dateCheckout;
     private String VALUE_HOTEL_AREA = "id";
     private int HOTEL_KOTA = 400;
+
+    public static String getDateCheckin() {
+        return dateCheckin;
+    }
+
+    public static String getDateCheckout() {
+        return dateCheckout;
+    }
+
+    public static String getRoom() {
+        return room;
+    }
+
+    public static String getTamu() {
+        return tamu;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,7 +160,6 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-
     private void setCallBack() {
         evKota.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -169,7 +179,6 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
         tvCariHotel.setOnClickListener(this);
 
     }
-
 
     @Override
     public void onClick(View v) {
@@ -211,13 +220,17 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
 
                 break;
             case R.id.tv_cari_hotel:
+
+                room = evKamar.getText().toString();
+                tamu = evTamu.getText().toString();
+
                 Intent pickIntent = new Intent(HotelActivity.this,
                         ListHotelActivity.class);
                 pickIntent.putExtra(CommonConstants.Q, VALUE_HOTEL_AREA);
                 pickIntent.putExtra(CommonConstants.STARTDATE, dateCheckin);
                 pickIntent.putExtra(CommonConstants.ENDDATE, dateCheckout);
-                pickIntent.putExtra(CommonConstants.ROOM, evKamar.getText().toString());
-                pickIntent.putExtra(CommonConstants.ADULT, evTamu.getText().toString());
+                pickIntent.putExtra(CommonConstants.ROOM, room);
+                pickIntent.putExtra(CommonConstants.ADULT, tamu);
                 startActivity(pickIntent);
                 break;
 
@@ -246,7 +259,6 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

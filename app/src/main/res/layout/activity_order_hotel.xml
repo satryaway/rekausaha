@@ -74,7 +74,7 @@
                             android:textColor="@color/white" />
 
                         <TextView
-                            android:id="@+id/tv_date"
+                            android:id="@+id/tv_location_hotel"
                             style="@style/Base.TextAppearance.AppCompat.Caption"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -87,13 +87,14 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
                         android:orientation="horizontal">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="50"
-                            android:padding="10dp">
+                            android:layout_weight="33"
+                            >
 
                             <ImageView
                                 android:id="@+id/iv_date_checkin"
@@ -125,8 +126,8 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="50"
-                            android:padding="10dp">
+                            android:layout_weight="33"
+                            >
 
                             <ImageView
                                 android:id="@+id/iv_date_checout"
@@ -154,11 +155,43 @@
 
 
                         </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="33">
+
+                            <ImageView
+                                android:id="@+id/iv_room"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/ic_search_black" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_toRightOf="@+id/iv_room">
+
+                                <TextView
+                                    android:id="@+id/tv_room"
+                                    style="@style/TextViewRoomStyleBlack"
+                                    android:text="@string/kamar" />
+
+                                <TextView
+                                    android:id="@+id/tv_count_room"
+                                    style="@style/TextViewRoomBoldStyleBlack"
+                                    android:layout_below="@+id/tv_room"
+                                    android:text="2" />
+                            </RelativeLayout>
+
+
+                        </RelativeLayout>
                     </LinearLayout>
 
 
                     <TextView
-                        android:id="@+id/tv_room"
+                        android:id="@+id/tv_room_name"
                         style="@style/Base.TextAppearance.AppCompat.Subhead"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -270,7 +303,7 @@
                         android:background="@color/colorPrimary"
                         android:gravity="center"
                         android:padding="10dp"
-                        android:text="Pembayaran"
+                        android:text="Next"
                         android:textAllCaps="true"
                         android:textColor="@android:color/white" />
                 </RelativeLayout>
