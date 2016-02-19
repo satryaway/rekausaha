@@ -164,4 +164,6 @@
     <string name="hotel_bintang">Hotel Bintang</string>
     <string name="rating_terendah">terendah</string>
     <string name="fasilitas">Fasilitas</string>
+    <string name="not_customer">Saya tidak menginap di hotel. saya membuat pemesanan ini untuk orang lain.</string>
+    <string name="informasi_kontak_tamu">Informasi tamu</string>
 </resources>

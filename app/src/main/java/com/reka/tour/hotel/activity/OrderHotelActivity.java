@@ -1,6 +1,7 @@
 package com.reka.tour.hotel.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +14,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.reka.tour.R;
+import com.reka.tour.activity.ListOrderActivity;
 import com.reka.tour.hotel.model.Breadcrumb;
 import com.reka.tour.hotel.model.Room;
 import com.reka.tour.hotel.model.SearchQueriesHotel;
@@ -40,9 +42,9 @@ public class OrderHotelActivity extends AppCompatActivity {
     private Bundle bundle;
     private ArrayList<Room> rooms = new ArrayList<>();
     private String url;
-    private Room roomObject;
-    private Breadcrumb breadcrumb;
-    private SearchQueriesHotel searchQueriesHotel;
+    private static Room roomObject;
+    private static Breadcrumb breadcrumb;
+    private static SearchQueriesHotel searchQueriesHotel;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd MMMM yyyy", new Locale("ind", "IDN"));
 
@@ -82,6 +84,7 @@ public class OrderHotelActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        ((TextView) findViewById(R.id.tv_count_tamu)).setText(tamu +" Tamu");
         ((TextView) findViewById(R.id.tv_room_night)).setText(room + " Kamar X " + searchQueriesHotel.night + " Malam");
         ((TextView) findViewById(R.id.tv_adult_price)).setText(" X " + Util.toRupiahFormat(roomObject.price));
         ((TextView) findViewById(R.id.tv_total)).setText(Util.toRupiahFormat(roomObject.price));
@@ -118,9 +121,11 @@ public class OrderHotelActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.e("JSON FLIGHT", response.toString() + "");
+                Log.e("JSON HOTEL", response.toString() + "");
 
-
+                Intent intent = new Intent(OrderHotelActivity.this, ListOrderActivity.class);
+                intent.putExtra(CommonConstants.WHAT_ORDER, "HOTEL");
+                startActivity(intent);
             }
 
             @Override
@@ -151,5 +156,32 @@ public class OrderHotelActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public static Breadcrumb getBreadcrumb() {
+        return breadcrumb;
+    }
 
+    public static Room getRoomObject() {
+        return roomObject;
+    }
+
+    public static SearchQueriesHotel getSearchQueriesHotel() {
+        return searchQueriesHotel;
+    }
+
+
+    public static String getDateCheckin() {
+        return dateCheckin;
+    }
+
+    public static String getDateCheckout() {
+        return dateCheckout;
+    }
+
+    public static String getRoom() {
+        return room;
+    }
+
+    public static String getTamu() {
+        return tamu;
+    }
 }

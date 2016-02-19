@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.reka.tour.R;
 import com.reka.tour.utils.CommonConstants;
+import com.reka.tour.utils.Util;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -254,6 +255,7 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
                 } else {
                     evKota.setText(VALUE_HOTEL_AREA);
                 }
+                Util.hideKeyboard(this);
             }
 
         }

@@ -54,7 +54,7 @@ public class ListHotelActivity extends AppCompatActivity {
     private double MAX_PRICE = 0;
     private String TYPE_SORT;
 
-    public static  SearchQueriesHotel getSearchQueriesHotel() {
+    public static SearchQueriesHotel getSearchQueriesHotel() {
         return searchQueriesHotel;
     }
 
@@ -76,9 +76,11 @@ public class ListHotelActivity extends AppCompatActivity {
         listHotel.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intentSortir = new Intent(ListHotelActivity.this,
+                Intent intent = new Intent(ListHotelActivity.this,
                         ProfileHotelActivity.class);
-                startActivity(intentSortir);
+                intent.putExtra(CommonConstants.BUSSINESSURI, hotels.get(position).businessUri);
+                intent.putExtra(CommonConstants.PRICE_START, hotels.get(position).price);
+                startActivity(intent);
             }
         });
     }

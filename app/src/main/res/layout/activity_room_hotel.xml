@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -30,7 +30,14 @@
                     style="@style/TextAppearance.AppCompat.Title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Crystal Lotus Hotel" />
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:freezesText="true"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:text="Crystal Lotus Hotel"/>
 
                 <TextView
                     android:id="@+id/location_hotel"
@@ -38,7 +45,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/title_hotel"
-                    android:text="Yogyakarta, Indonesia" />
+                    android:singleLine="true"
+                    android:text="Yogyakarta, Indonesia"/>
             </RelativeLayout>
 
         </android.support.v7.widget.Toolbar>
@@ -59,7 +67,8 @@
                     android:id="@+id/iv_date_checkin"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_filter" />
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/ic_calendar_white"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -70,13 +79,20 @@
                     <TextView
                         android:id="@+id/tv_checkin"
                         style="@style/TextViewRoomStyle"
-                        android:text="@string/check_in" />
+                        android:text="@string/check_in"/>
 
                     <TextView
                         android:id="@+id/tv_date_checkin"
                         style="@style/TextViewRoomBoldStyle"
                         android:layout_below="@+id/tv_checkin"
-                        android:text="28 Des 2015" />
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:freezesText="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"
+                        android:text="28 Des 2015"/>
                 </RelativeLayout>
 
 
@@ -91,7 +107,8 @@
                     android:id="@+id/iv_date_checout"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_filter" />
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/ic_calendar_white"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -102,13 +119,20 @@
                     <TextView
                         android:id="@+id/tv_checkout"
                         style="@style/TextViewRoomStyle"
-                        android:text="@string/check_in" />
+                        android:text="@string/check_in"/>
 
                     <TextView
                         android:id="@+id/tv_date_checkout"
                         style="@style/TextViewRoomBoldStyle"
                         android:layout_below="@+id/tv_checkout"
-                        android:text="29 Des 2015" />
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:freezesText="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"
+                        android:text="29 Des 2015"/>
                 </RelativeLayout>
 
 
@@ -123,7 +147,8 @@
                     android:id="@+id/iv_room"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_filter" />
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/ic_hotel_room"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -134,13 +159,13 @@
                     <TextView
                         android:id="@+id/tv_room"
                         style="@style/TextViewRoomStyle"
-                        android:text="@string/kamar" />
+                        android:text="@string/kamar"/>
 
                     <TextView
                         android:id="@+id/tv_count_room"
                         style="@style/TextViewRoomBoldStyle"
                         android:layout_below="@+id/tv_room"
-                        android:text="2" />
+                        android:text="2"/>
                 </RelativeLayout>
 
 
@@ -156,6 +181,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/appbar"
-        android:padding="5dp" />
+        android:padding="5dp"/>
 
 </RelativeLayout>

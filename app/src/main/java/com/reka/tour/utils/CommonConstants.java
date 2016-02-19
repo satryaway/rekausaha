@@ -73,12 +73,19 @@ public class CommonConstants {
     public static String PHOTO = "photo";
     public static String BREADCRUMB = "breadcrumb";
     public static String GENERAL = "general";
-    public static String PRIMARYPHOTO = "primaryPhotos";
+    public static String PRIMARYPHOTO = "primaryPhotos_large";
     public static String AVAIL_FACILITIES = "avail_facilities";
     public static String AVAIL_FACILITY = "avail_facilitiy";
 
     public static String BOOKURI = "bookUri";
 
+    public static String SALUTATION = "salutation";
+    public static String FIRSTNAME = "firstName";
+    public static String LASTNAME = "lastName";
+    public static String PHONE = "Phone";
+    public static String EMAILADDRESS = "emailAddress";
+    public static String DETAIL_ID = "detailId";
+    public static String COUNTRY = "country";
 
 
     public static String HAS_FOOD = "HAS_FOOD";
@@ -121,6 +128,9 @@ public class CommonConstants {
 
     public static String LINK = "LINK";
     public static String POSITION = "POSITION";
+    public static String BUSSINESSURI = "BUSSINESSURI";
+    public static String PRICE_START = "PRICE_START";
+    public static String WHAT_ORDER = "WHAT_ORDER";
 
 
 }

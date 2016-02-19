@@ -36,7 +36,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 
-public class DetailOrderActivity extends AppCompatActivity {
+public class OrderFlightActivity extends AppCompatActivity {
     private static String flightID, dateValue, hasFood, airportTax, baggage, needBaggage;
     private static DeparturesOrder departuresReturn;
     @Bind(R.id.tv_date)
@@ -178,13 +178,13 @@ public class DetailOrderActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Toast.makeText(DetailOrderActivity.this, R.string.RTO, Toast.LENGTH_SHORT).show();
+                Toast.makeText(OrderFlightActivity.this, R.string.RTO, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 try {
-                    Toast.makeText(DetailOrderActivity.this, errorResponse.getJSONObject(CommonConstants.DIAGNOSTIC).getString(CommonConstants.ERROR_MSGS), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OrderFlightActivity.this, errorResponse.getJSONObject(CommonConstants.DIAGNOSTIC).getString(CommonConstants.ERROR_MSGS), Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -196,7 +196,7 @@ public class DetailOrderActivity extends AppCompatActivity {
         findViewById(R.id.tv_next).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentDeparture = new Intent(DetailOrderActivity.this, InfoPassangerActivity.class);
+                Intent intentDeparture = new Intent(OrderFlightActivity.this, InfoPassangerActivity.class);
                 intentDeparture.putExtra(CommonConstants.RESPONE, getResponeString());
                 startActivity(intentDeparture);
             }

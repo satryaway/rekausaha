@@ -1,4 +1,4 @@
-package com.reka.tour.flight.activity;
+package com.reka.tour.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -17,8 +17,8 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.reka.tour.R;
-import com.reka.tour.activity.ListPaymentActivity;
 import com.reka.tour.flight.adapter.MyOrderAdapter;
+import com.reka.tour.hotel.activity.InfoCustomerHotelActivity;
 import com.reka.tour.model.MyOrder;
 import com.reka.tour.utils.CommonConstants;
 
@@ -37,6 +37,8 @@ public class ListOrderActivity extends AppCompatActivity {
     @Bind(R.id.list_order)
     ListView listOrder;
     private MyOrderAdapter myOrderAdapter;
+    private Bundle bundle;
+    private static String whatOrder;
 
     public static ArrayList<MyOrder> getMyOrders() {
         return myOrders;
@@ -51,8 +53,18 @@ public class ListOrderActivity extends AppCompatActivity {
         ((Toolbar) findViewById(R.id.toolbar)).setNavigationIcon(R.drawable.back);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
+
+        bundle = getIntent().getExtras();
+        whatOrder = bundle.getString(CommonConstants.WHAT_ORDER);
+
+        Log.e("whatOrder", whatOrder + "");
+
         getData();
         setCallBack();
+    }
+
+    public static String getWhatOrder() {
+        return whatOrder;
     }
 
     private void setCallBack() {
@@ -61,8 +73,14 @@ public class ListOrderActivity extends AppCompatActivity {
             listOrder.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intentDeparture = new Intent(ListOrderActivity.this, ListPaymentActivity.class);
-                    startActivity(intentDeparture);
+                    if (whatOrder.equals("FLIGHT")) {
+                        Intent intent = new Intent(ListOrderActivity.this, ListPaymentActivity.class);
+                        startActivity(intent);
+                    } else if (whatOrder.equals("HOTEL")) {
+                        Intent intent = new Intent(ListOrderActivity.this, InfoCustomerHotelActivity.class);
+                        intent.putExtra(CommonConstants.DETAIL_ID, myOrders.get(0).orderDetailId);
+                        startActivity(intent);
+                    }
                 }
             });
         } else {
@@ -113,8 +131,15 @@ public class ListOrderActivity extends AppCompatActivity {
                     listOrder.setAdapter(myOrderAdapter);
 
                     if (myOrders.size() == 1) {
-                        Intent intent = new Intent(ListOrderActivity.this, ListPaymentActivity.class);
-                        startActivity(intent);
+                        if (whatOrder.equals("FLIGHT")) {
+                            Intent intent = new Intent(ListOrderActivity.this, ListPaymentActivity.class);
+                            startActivity(intent);
+                        } else if (whatOrder.equals("HOTEL")) {
+                            Intent intent = new Intent(ListOrderActivity.this, InfoCustomerHotelActivity.class);
+                            intent.putExtra(CommonConstants.DETAIL_ID, myOrders.get(0).orderDetailId);
+                            startActivity(intent);
+                        }
+
                     }
 
                 } catch (JSONException e) {

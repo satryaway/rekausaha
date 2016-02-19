@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".flight.activity.DetailOrderActivity">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context=".flight.activity.OrderFlightActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -69,9 +69,8 @@
                             style="@style/Base.TextAppearance.AppCompat.Title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
                             android:text="Crystal Lotus Hotel"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/white"/>
 
                         <TextView
                             android:id="@+id/tv_location_hotel"
@@ -81,26 +80,29 @@
                             android:layout_below="@+id/tv_name_hotel"
                             android:gravity="center"
                             android:text="20 Januari 2016"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/white"/>
                     </RelativeLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/activity_vertical_margin"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:padding="5dp">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="33"
+                            android:layout_weight="50"
                             >
 
                             <ImageView
                                 android:id="@+id/iv_date_checkin"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:src="@drawable/ic_search_black" />
+                                android:layout_marginRight="5dp"
+                                android:src="@drawable/ic_calendar"
+                                />
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -111,13 +113,13 @@
                                 <TextView
                                     android:id="@+id/tv_checkin"
                                     style="@style/TextViewRoomStyleBlack"
-                                    android:text="@string/check_in" />
+                                    android:text="@string/check_in"/>
 
                                 <TextView
                                     android:id="@+id/tv_date_checkin"
                                     style="@style/TextViewRoomBoldStyleBlack"
                                     android:layout_below="@+id/tv_checkin"
-                                    android:text="28 Des 2015" />
+                                    android:text="28 Des 2015"/>
                             </RelativeLayout>
 
 
@@ -126,14 +128,15 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="33"
+                            android:layout_weight="50"
                             >
 
                             <ImageView
                                 android:id="@+id/iv_date_checout"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:src="@drawable/ic_search_black" />
+                                android:layout_marginRight="5dp"
+                                android:src="@drawable/ic_calendar"/>
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -144,49 +147,18 @@
                                 <TextView
                                     android:id="@+id/tv_checkout"
                                     style="@style/TextViewRoomStyleBlack"
-                                    android:text="@string/check_in" />
+                                    android:text="@string/check_in"/>
 
                                 <TextView
                                     android:id="@+id/tv_date_checkout"
                                     style="@style/TextViewRoomBoldStyleBlack"
                                     android:layout_below="@+id/tv_checkout"
-                                    android:text="29 Des 2015" />
+                                    android:text="29 Des 2015"/>
                             </RelativeLayout>
 
 
                         </RelativeLayout>
 
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="33">
-
-                            <ImageView
-                                android:id="@+id/iv_room"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:src="@drawable/ic_search_black" />
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:layout_toRightOf="@+id/iv_room">
-
-                                <TextView
-                                    android:id="@+id/tv_room"
-                                    style="@style/TextViewRoomStyleBlack"
-                                    android:text="@string/kamar" />
-
-                                <TextView
-                                    android:id="@+id/tv_count_room"
-                                    style="@style/TextViewRoomBoldStyleBlack"
-                                    android:layout_below="@+id/tv_room"
-                                    android:text="2" />
-                            </RelativeLayout>
-
-
-                        </RelativeLayout>
                     </LinearLayout>
 
 
@@ -196,7 +168,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:text="Hanya Pesan Superior Room" />
+                        android:text="Hanya Pesan Superior Room"/>
+
+                    <TextView
+                        android:id="@+id/tv_count_tamu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="1 Tamu"/>
 
 
                     <LinearLayout
@@ -216,7 +195,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_toLeftOf="@+id/tv_adult_price"
                                 android:layout_toStartOf="@+id/tv_adult_price"
-                                android:text="2 kamar x 1 malam x " />
+                                android:text="2 kamar x 1 malam x "/>
 
                             <TextView
                                 android:id="@+id/tv_adult_price"
@@ -226,7 +205,7 @@
                                 android:layout_alignParentRight="true"
                                 android:layout_alignParentTop="true"
                                 android:gravity="right"
-                                android:text=" IDR 1.234.532" />
+                                android:text=" IDR 1.234.532"/>
                         </RelativeLayout>
 
 
@@ -247,7 +226,7 @@
                             android:layout_alignParentTop="true"
                             android:gravity="right"
                             android:text="TOTAL"
-                            android:textColor="@android:color/white" />
+                            android:textColor="@android:color/white"/>
 
                         <TextView
                             android:id="@+id/tv_total"
@@ -258,7 +237,7 @@
                             android:layout_alignParentTop="true"
                             android:gravity="right"
                             android:text="IDR 2.234.533"
-                            android:textColor="@android:color/white" />
+                            android:textColor="@android:color/white"/>
 
                     </RelativeLayout>
 
@@ -272,14 +251,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
-                android:text="*Bebas biaya transaksi" />
+                android:text="*Bebas biaya transaksi"/>
 
             <TextView
                 style="@style/Base.TextAppearance.AppCompat.Caption"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
-                android:text="**Termasuk pajak dan servis" />
+                android:text="**Termasuk pajak dan servis"/>
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -305,7 +284,7 @@
                         android:padding="10dp"
                         android:text="Next"
                         android:textAllCaps="true"
-                        android:textColor="@android:color/white" />
+                        android:textColor="@android:color/white"/>
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
         </LinearLayout>

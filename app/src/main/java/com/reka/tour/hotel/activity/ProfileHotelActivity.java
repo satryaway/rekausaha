@@ -27,6 +27,7 @@ import com.reka.tour.hotel.model.Foto;
 import com.reka.tour.hotel.model.General;
 import com.reka.tour.hotel.model.Room;
 import com.reka.tour.utils.CommonConstants;
+import com.reka.tour.utils.Util;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -37,6 +38,7 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 
 public class ProfileHotelActivity extends AppCompatActivity {
@@ -44,12 +46,18 @@ public class ProfileHotelActivity extends AppCompatActivity {
 
     private static ArrayList<Room> rooms = new ArrayList<>();
     private static Breadcrumb breadcrumb;
+
     @Bind(R.id.collapsing_toolbar) CollapsingToolbarLayout collapsingToolbarLayout;
     @Bind(R.id.tabLayout) TabLayout tabLayout;
     @Bind(R.id.viewpager) ViewPager viewPager;
+
     private ArrayList<Foto> fotos = new ArrayList<>();
     private ArrayList<Facilitiy> facilitiys = new ArrayList<>();
     private General general;
+
+    private String url;
+    private Bundle bundle;
+
 
     public static Breadcrumb getBreadcrumb() {
         return breadcrumb;
@@ -76,20 +84,20 @@ public class ProfileHotelActivity extends AppCompatActivity {
         });
 
         setupCollapsingToolbarLayout();
-        setCallBack();
+        setValue();
         getData();
     }
 
-    private void setCallBack() {
+    private void setValue() {
+        bundle = getIntent().getExtras();
+        ((TextView) findViewById(R.id.tv_harga_hotel)).setText(Util.toRupiahFormat(bundle.getString(CommonConstants.PRICE_START)) + " /malam");
+    }
 
-        findViewById(R.id.tv_lihatkamar).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intentSortir = new Intent(ProfileHotelActivity.this,
-                        RoomHotelActivity.class);
-                startActivity(intentSortir);
-            }
-        });
+    @OnClick(R.id.tv_lihatkamar)
+    public void onClickLihatKamar() {
+        Intent intentSortir = new Intent(ProfileHotelActivity.this,
+                RoomHotelActivity.class);
+        startActivity(intentSortir);
     }
 
     private void setupCollapsingToolbarLayout() {
@@ -114,25 +122,18 @@ public class ProfileHotelActivity extends AppCompatActivity {
     }
 
     private void getData() {
-//        String url = CommonConstants.BASE_URL + "search/hotel";
-        String url = "https://api-sandbox.tiket.com/hotel/indonesia/bali/legian/the-sunset-hotel-restaurant?" +
-                "startdate=2016-02-18&enddate=2016-02-19&night=1&room=1&adult=2&child=0&is_partner=0&latitude=0&" +
-                "longitude=0&distance=0&uid=business%3A3623&token=19d0ceaca45f9ee27e3c51df52786f1d904280f9&output=json";
+        url = bundle.getString(CommonConstants.BUSSINESSURI);
 
         RequestParams requestParams = new RequestParams();
-//        requestParams.put(CommonConstants.STARTDATE, bundle.getString(CommonConstants.Q));
-//        requestParams.put(CommonConstants.ENDDATE, bundle.getString(CommonConstants.STARTDATE));
-//        requestParams.put(CommonConstants.ROOM, bundle.getString(CommonConstants.ROOM));
-//        requestParams.put(CommonConstants.ADULT, bundle.getString(CommonConstants.ADULT));
-//        requestParams.put(CommonConstants.TOKEN, "19d0ceaca45f9ee27e3c51df52786f1d904280f9");
-//        requestParams.put(CommonConstants.OUTPUT, CommonConstants.JSON);
+        requestParams.put(CommonConstants.TOKEN, "19d0ceaca45f9ee27e3c51df52786f1d904280f9");
+        requestParams.put(CommonConstants.OUTPUT, CommonConstants.JSON);
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.please_wait));
 
         AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
         client.setTimeout(10000);
-        client.get(url, null, new JsonHttpResponseHandler() {
+        client.get(url, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onStart() {
                 progressDialog.show();
@@ -172,7 +173,6 @@ public class ProfileHotelActivity extends AppCompatActivity {
                     general = gson.fromJson(generalObject.toString(), General.class);
 
                     String primaryPhotos = response.getString(CommonConstants.PRIMARYPHOTO);
-
 
                     //setValue
                     ((TextView) findViewById(R.id.title_hotel)).setText(breadcrumb.businessName);

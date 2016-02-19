@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -20,9 +21,12 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.reka.tour.R;
 import com.reka.tour.adapter.StepsAdapter;
-import com.reka.tour.flight.activity.DetailOrderActivity;
-import com.reka.tour.flight.activity.ListOrderActivity;
+import com.reka.tour.flight.activity.OrderFlightActivity;
 import com.reka.tour.flight.model.DeparturesOrder;
+import com.reka.tour.hotel.activity.OrderHotelActivity;
+import com.reka.tour.hotel.model.Breadcrumb;
+import com.reka.tour.hotel.model.Room;
+import com.reka.tour.hotel.model.SearchQueriesHotel;
 import com.reka.tour.model.MyOrder;
 import com.reka.tour.model.Steps;
 import com.reka.tour.utils.CommonConstants;
@@ -97,6 +101,9 @@ public class PaymentActivity extends AppCompatActivity {
     @Bind(R.id.tv_baby_price)
     TextView tvInfrantPrice;
 
+    @Bind(R.id.layout_flight) LinearLayout layoutFlight;
+    @Bind(R.id.layout_hotel) LinearLayout layoutHotel;
+
     @Bind(R.id.tv_total)
     TextView tvTotal;
 
@@ -110,6 +117,16 @@ public class PaymentActivity extends AppCompatActivity {
     private StepsAdapter stepsAdapter;
     private String url;
     private boolean finish = false;
+    private String whatOrder;
+
+    private String dateCheckin;
+    private String dateCheckout;
+    private String room;
+    private String tamu;
+
+    private Room roomObject;
+    private SearchQueriesHotel searchQueriesHotel;
+    private Breadcrumb breadcrumb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,7 +143,39 @@ public class PaymentActivity extends AppCompatActivity {
             getData(url);
         }
 
-        setValue();
+        whatOrder = ListOrderActivity.getWhatOrder();
+        if (whatOrder.equals("FLIGHT")) {
+            layoutHotel.setVisibility(View.GONE);
+            setValueFlight();
+        } else if (whatOrder.equals("HOTEL")) {
+            layoutFlight.setVisibility(View.GONE);
+            setValueHotel();
+        }
+
+    }
+
+    private void setValueHotel() {
+        dateCheckin = OrderHotelActivity.getDateCheckin();
+        dateCheckout = OrderHotelActivity.getDateCheckout();
+        room = OrderHotelActivity.getRoom();
+        tamu = OrderHotelActivity.getTamu();
+        roomObject = OrderHotelActivity.getRoomObject();
+        searchQueriesHotel = OrderHotelActivity.getSearchQueriesHotel();
+        breadcrumb = OrderHotelActivity.getBreadcrumb();
+
+        ((TextView) findViewById(R.id.tv_name_hotel)).setText(breadcrumb.businessName);
+        ((TextView) findViewById(R.id.tv_location_hotel)).setText(breadcrumb.areaName);
+        try {
+            ((TextView) findViewById(R.id.tv_date_checkin)).setText(dateFormatter.format(dateFormat.parse(dateCheckin)));
+            ((TextView) findViewById(R.id.tv_date_checkout)).setText(dateFormatter.format(dateFormat.parse(dateCheckout)));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        ((TextView) findViewById(R.id.tv_count_tamu)).setText(tamu + " Tamu");
+        ((TextView) findViewById(R.id.tv_room_night)).setText(room + " Kamar X " + searchQueriesHotel.night + " Malam");
+        ((TextView) findViewById(R.id.tv_adult_price_hotel)).setText(" X " + Util.toRupiahFormat(roomObject.price));
+        ((TextView) findViewById(R.id.tv_total)).setText(Util.toRupiahFormat(roomObject.price));
+        ((TextView) findViewById(R.id.tv_room_name)).setText(roomObject.roomName);
     }
 
     @OnClick(R.id.tv_next)
@@ -140,12 +189,12 @@ public class PaymentActivity extends AppCompatActivity {
         }
     }
 
-    private void setValue() {
-        departures = DetailOrderActivity.getDepartures();
-        hasFood = DetailOrderActivity.getHasFood();
-        airportTax = DetailOrderActivity.getAirportTax();
-        needBaggage = DetailOrderActivity.getNeedBaggage();
-        baggage = DetailOrderActivity.getBaggage();
+    private void setValueFlight() {
+        departures = OrderFlightActivity.getDepartures();
+        hasFood = OrderFlightActivity.getHasFood();
+        airportTax = OrderFlightActivity.getAirportTax();
+        needBaggage = OrderFlightActivity.getNeedBaggage();
+        baggage = OrderFlightActivity.getBaggage();
         myOrders = ListOrderActivity.getMyOrders();
 
 
@@ -311,11 +360,15 @@ public class PaymentActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                try {
-                    Toast.makeText(PaymentActivity.this, errorResponse.getJSONObject(CommonConstants.DIAGNOSTIC).getString(CommonConstants.ERROR_MSGS), Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                System.out.println("errorResponse: " + errorResponse);
+                if (errorResponse != null) {
+                    try {
+                        Toast.makeText(PaymentActivity.this, errorResponse.getJSONObject(CommonConstants.DIAGNOSTIC).getString(CommonConstants.ERROR_MSGS), Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
+
             }
         });
     }

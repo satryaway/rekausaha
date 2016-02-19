@@ -86,8 +86,8 @@ public class DepartureActivity extends AppCompatActivity {
         menujuAirportCode.setText(bundle.getString(CommonConstants.AIRPORT_CODE_A));
         menujuAirportName.setText(bundle.getString(CommonConstants.AIRPORT_LOCATION_A));
 
-        dateValue = "2014-05-25";
-//        dateValue = bundle.getString(CommonConstants.DATE);
+//        dateValue = "2014-05-25";
+        dateValue = bundle.getString(CommonConstants.DATE);
         retDateValue = bundle.getString(CommonConstants.RET_DATE);
     }
 
@@ -97,7 +97,7 @@ public class DepartureActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 view.setSelected(true);
                 dateValue = nearbyGoDateArrayList.get(position).date;
-                //                retDate = nearbyGoDateArrayList.get(position).date;
+//                                retDate = nearbyGoDateArrayList.get(position).date;
                 getData();
 
             }
@@ -106,7 +106,7 @@ public class DepartureActivity extends AppCompatActivity {
         listFlight.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intentDeparture = new Intent(DepartureActivity.this, DetailOrderActivity.class);
+                Intent intentDeparture = new Intent(DepartureActivity.this, OrderFlightActivity.class);
 
                 if(departures!=null){
                     intentDeparture.putExtra(CommonConstants.FLIGHT_ID, departures.get(position).flightId);
@@ -186,12 +186,14 @@ public class DepartureActivity extends AppCompatActivity {
     }
 
     private void getData() {
-//        String url = CommonConstants.BASE_URL + "search/flight?V=3";
-        String url = "http://api-sandbox.tiket.com/search/flight?d=CGK&a=DPS&date=" + dateValue +
-                "&ret_date=2014-05-30&adult=" + bundle.getString(CommonConstants.ADULT) +
-                "&child=" + bundle.getString(CommonConstants.CHILD) +
-                "&infant=" + bundle.getString(CommonConstants.INFRANT) +
-                "&token=19d0ceaca45f9ee27e3c51df52786f1d904280f9&v=3&output=json";
+        String url = CommonConstants.BASE_URL + "search/flight?V=3";
+//        String url = "http://api-sandbox.tiket.com/search/flight?d=CGK&a=DPS&date=" + dateValue +
+//                "&ret_date=2014-05-30&adult=" + bundle.getString(CommonConstants.ADULT) +
+//                "&child=" + bundle.getString(CommonConstants.CHILD) +
+//                "&infant=" + bundle.getString(CommonConstants.INFRANT) +
+//                "&token=19d0ceaca45f9ee27e3c51df52786f1d904280f9&v=3&output=json";
+
+        Log.e("dateValue",dateValue+" "+ retDateValue);
 
         RequestParams requestParams = new RequestParams();
         requestParams.put(CommonConstants.D, bundle.getString(CommonConstants.AIRPORT_CODE_D));
@@ -200,7 +202,7 @@ public class DepartureActivity extends AppCompatActivity {
         requestParams.put(CommonConstants.CHILD, bundle.getString(CommonConstants.CHILD));
         requestParams.put(CommonConstants.INFRANT, bundle.getString(CommonConstants.INFRANT));
         requestParams.put(CommonConstants.DATE, dateValue);
-        requestParams.put(CommonConstants.RET_DATE, bundle.getString(CommonConstants.RET_DATE));
+        requestParams.put(CommonConstants.RET_DATE, retDateValue);
         requestParams.put(CommonConstants.TOKEN, "19d0ceaca45f9ee27e3c51df52786f1d904280f9");
         requestParams.put(CommonConstants.OUTPUT, CommonConstants.JSON);
 
@@ -209,7 +211,7 @@ public class DepartureActivity extends AppCompatActivity {
 
         AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
         client.setTimeout(10000);
-        client.get(url, null, new JsonHttpResponseHandler() {
+        client.get(url, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onStart() {
                 progressDialog.show();

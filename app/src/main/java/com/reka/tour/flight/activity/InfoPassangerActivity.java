@@ -21,6 +21,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.reka.tour.R;
+import com.reka.tour.activity.ListOrderActivity;
 import com.reka.tour.flight.adapter.PassangerAdapter;
 import com.reka.tour.flight.model.DeparturesOrder;
 import com.reka.tour.flight.model.Passanger;
@@ -294,10 +295,9 @@ public class InfoPassangerActivity extends AppCompatActivity {
                 Log.e("JSON PASSANGER", response.toString() + "");
                 responeString = response.toString();
 
-                Intent intentDeparture = new Intent(InfoPassangerActivity.this, ListOrderActivity.class);
-//                intentDeparture.putExtra(CommonConstants.DEPARTURES, depAirportArrayList.get(position));
-//                intentDeparture.putExtra(CommonConstants.SEARCH_QUERIES, searchQueries);
-                startActivity(intentDeparture);
+                Intent intent = new Intent(InfoPassangerActivity.this, ListOrderActivity.class);
+                intent.putExtra(CommonConstants.WHAT_ORDER,"FLIGHT");
+                startActivity(intent);
 
 //                try {
 //                    Gson gson = new Gson();

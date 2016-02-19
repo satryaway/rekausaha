@@ -77,7 +77,6 @@ public class RoomAdapter extends ArrayAdapter<Room> {
 
                 setInitDialog(dialog);
 
-
                 dialog.show();
 
             }
