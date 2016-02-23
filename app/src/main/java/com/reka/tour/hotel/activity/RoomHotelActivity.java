@@ -1,5 +1,6 @@
 package com.reka.tour.hotel.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +12,7 @@ import com.reka.tour.R;
 import com.reka.tour.hotel.adapter.RoomAdapter;
 import com.reka.tour.hotel.model.Breadcrumb;
 import com.reka.tour.hotel.model.Room;
+import com.reka.tour.utils.CommonConstants;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,15 +21,15 @@ import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnItemClick;
 
 public class RoomHotelActivity extends AppCompatActivity {
-    private static  ArrayList<Room> rooms = new ArrayList<>();
+    private static ArrayList<Room> rooms = new ArrayList<>();
     private static String dateCheckin;
     private static String dateCheckout;
     private static String room;
     private static String tamu;
-    @Bind(R.id.list_room)
-    ListView listRoom;
+    @Bind(R.id.list_room) ListView listRoom;
     private RoomAdapter roomAdapter;
     private Breadcrumb breadcrumb;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -52,6 +54,15 @@ public class RoomHotelActivity extends AppCompatActivity {
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
         setValue();
+    }
+
+    @OnItemClick(R.id.list_room)
+    public void onItemClickRoom(int position) {
+        Intent intentSortir = new Intent(RoomHotelActivity.this,
+                OrderHotelActivity.class);
+        intentSortir.putExtra(CommonConstants.BOOKURI, rooms.get(position).bookUri);
+        intentSortir.putExtra(CommonConstants.POSITION, position);
+        startActivity(intentSortir);
     }
 
     private void setValue() {

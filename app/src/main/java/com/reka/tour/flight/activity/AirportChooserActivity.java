@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import com.reka.tour.R;
 import com.reka.tour.flight.adapter.AirportListAdapter;
 import com.reka.tour.flight.model.Airport;
 import com.reka.tour.utils.CommonConstants;
+import com.reka.tour.utils.ErrorException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -184,11 +186,8 @@ public class AirportChooserActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                try {
-                    Toast.makeText(AirportChooserActivity.this, errorResponse.getJSONObject(CommonConstants.DIAGNOSTIC).getString(CommonConstants.ERROR_MSGS), Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                Log.e("JSON AirportChooser", errorResponse + "");
+                ErrorException.getError(AirportChooserActivity.this, errorResponse);
             }
         });
     }

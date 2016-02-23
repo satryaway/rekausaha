@@ -22,6 +22,7 @@ import com.reka.tour.R;
 import com.reka.tour.flight.model.DeparturesOrder;
 import com.reka.tour.flight.model.Resource;
 import com.reka.tour.utils.CommonConstants;
+import com.reka.tour.utils.ErrorException;
 import com.reka.tour.utils.Util;
 import com.squareup.picasso.Picasso;
 
@@ -183,11 +184,8 @@ public class OrderFlightActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                try {
-                    Toast.makeText(OrderFlightActivity.this, errorResponse.getJSONObject(CommonConstants.DIAGNOSTIC).getString(CommonConstants.ERROR_MSGS), Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                Log.e("JSON OrderFlight", errorResponse + "");
+                ErrorException.getError(OrderFlightActivity.this, errorResponse);
             }
         });
     }

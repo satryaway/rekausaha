@@ -3,7 +3,6 @@ package com.reka.tour.hotel.adapter;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.reka.tour.R;
-import com.reka.tour.hotel.activity.OrderHotelActivity;
 import com.reka.tour.hotel.model.Room;
-import com.reka.tour.utils.CommonConstants;
 import com.reka.tour.utils.Util;
 import com.reka.tour.views.ExpandableHeightGridView;
 import com.squareup.picasso.Picasso;
@@ -82,16 +79,16 @@ public class RoomAdapter extends ArrayAdapter<Room> {
             }
         });
 
-        holder.tvorder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intentSortir = new Intent(getContext(),
-                        OrderHotelActivity.class);
-                intentSortir.putExtra(CommonConstants.BOOKURI, room.bookUri);
-                intentSortir.putExtra(CommonConstants.POSITION, position);
-                getContext().startActivity(intentSortir);
-            }
-        });
+//        holder.tvorder.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intentSortir = new Intent(getContext(),
+//                        OrderHotelActivity.class);
+//                intentSortir.putExtra(CommonConstants.BOOKURI, room.bookUri);
+//                intentSortir.putExtra(CommonConstants.POSITION, position);
+//                getContext().startActivity(intentSortir);
+//            }
+//        });
     }
 
     private void setInitDialog(final Dialog dialog) {

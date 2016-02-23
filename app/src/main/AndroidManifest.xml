@@ -25,7 +25,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.MethodPaymentActivity"/>
         <activity android:name=".activity.ListPaymentActivity"/>
         <activity android:name=".activity.PaymentActivity"/>
         <activity android:name=".activity.ListOrderActivity"/>

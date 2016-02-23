@@ -64,6 +64,7 @@ public class CommonConstants {
     public static String AVAILABLE_PAYMENT = "available_payment";
     public static String BTN_BOOKING = "btn_booking";
     public static String CURRENCY = "currency";
+    public static String USER_BCA = "user_bca";
     public static String STEPS = "steps";
     public static String STEP = "step";
     public static String NAME = "name";
@@ -126,11 +127,23 @@ public class CommonConstants {
 
     public static String MAX_PRICE = "MAX_PRICE";
 
+    public static String TEXT = "TEXT";
+    public static String TYPE = "TYPE";
     public static String LINK = "LINK";
     public static String POSITION = "POSITION";
     public static String BUSSINESSURI = "BUSSINESSURI";
     public static String PRICE_START = "PRICE_START";
     public static String WHAT_ORDER = "WHAT_ORDER";
 
+//    TYPE payment
+    public static String JATIS = "JATIS";
+    public static String CIMBCLICKS = "CIMBCLICKS";
+    public static String KLIKBCA = "KLIKBCA";
+    public static String CREDITCARD = "CREDITCARD";
+    public static String RINTIS = "RINTIS";
+    public static String MANDIRI_CLICKPAY = "MANDIRI_CLICKPAY";
+    public static String BANKTRANSFER = "BANKTRANSFER";
+    public static String EPAYBRI = "EPAYBRI";
+    public static String KLIKPAY = "KLIKPAY";
 
 }

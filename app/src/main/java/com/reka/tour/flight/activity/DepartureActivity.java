@@ -26,6 +26,7 @@ import com.reka.tour.flight.adapter.ScheduleAdapter;
 import com.reka.tour.flight.model.Departures;
 import com.reka.tour.flight.model.NearbyGoDate;
 import com.reka.tour.utils.CommonConstants;
+import com.reka.tour.utils.ErrorException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -265,11 +266,8 @@ public class DepartureActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                try {
-                    Toast.makeText(DepartureActivity.this, errorResponse.getJSONObject(CommonConstants.DIAGNOSTIC).getString(CommonConstants.ERROR_MSGS), Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                Log.e("JSON Departure", errorResponse + "");
+                ErrorException.getError(DepartureActivity.this, errorResponse);
             }
         });
     }

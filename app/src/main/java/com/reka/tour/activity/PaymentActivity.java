@@ -4,10 +4,12 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -30,6 +32,7 @@ import com.reka.tour.hotel.model.SearchQueriesHotel;
 import com.reka.tour.model.MyOrder;
 import com.reka.tour.model.Steps;
 import com.reka.tour.utils.CommonConstants;
+import com.reka.tour.utils.ErrorException;
 import com.reka.tour.utils.Util;
 import com.squareup.picasso.Picasso;
 
@@ -48,64 +51,45 @@ import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 
 public class PaymentActivity extends AppCompatActivity {
-    @Bind(R.id.tv_orderid)
-    TextView tvOrderId;
+    @Bind(R.id.tv_orderid) TextView tvOrderId;
 
-    @Bind(R.id.tv_sisa_waktu)
-    TextView tvSisaWaktu;
-    @Bind(R.id.tv_upto)
-    TextView tvUpto;
-    @Bind(R.id.layout_time)
-    RelativeLayout layoutTime;
-    @Bind(R.id.list_step_payment)
-    ListView listStepPayment;
+    @Bind(R.id.tv_sisa_waktu) TextView tvSisaWaktu;
+    @Bind(R.id.tv_upto) TextView tvUpto;
+    @Bind(R.id.layout_time) RelativeLayout layoutTime;
+    @Bind(R.id.list_step_payment) ListView listStepPayment;
 
-    @Bind(R.id.tv_date)
-    TextView tvDate;
+    @Bind(R.id.tv_date) TextView tvDate;
 
-    @Bind(R.id.iv_flight)
-    ImageView ivFlight;
-    @Bind(R.id.tv_name)
-    TextView tvAirlinesName;
-    @Bind(R.id.tv_flight_number)
-    TextView tvFlightNumber;
+    @Bind(R.id.iv_flight) ImageView ivFlight;
+    @Bind(R.id.tv_name) TextView tvAirlinesName;
+    @Bind(R.id.tv_flight_number) TextView tvFlightNumber;
 
-    @Bind(R.id.iv_baggage)
-    ImageView ivBaggage;
-    @Bind(R.id.iv_food)
-    ImageView ivFood;
-    @Bind(R.id.iv_tax)
-    ImageView ivTax;
+    @Bind(R.id.iv_baggage) ImageView ivBaggage;
+    @Bind(R.id.iv_food) ImageView ivFood;
+    @Bind(R.id.iv_tax) ImageView ivTax;
 
-    @Bind(R.id.tv_rute)
-    TextView tvRute;
-    @Bind(R.id.tv_duration)
-    TextView tvDuration;
+    @Bind(R.id.tv_rute) TextView tvRute;
+    @Bind(R.id.tv_duration) TextView tvDuration;
 
-    @Bind(R.id.tv_adult)
-    TextView tvAdult;
-    @Bind(R.id.tv_adult_price)
-    TextView tvAdultPrice;
+    @Bind(R.id.tv_adult) TextView tvAdult;
+    @Bind(R.id.tv_adult_price) TextView tvAdultPrice;
 
-    @Bind(R.id.layout_child)
-    RelativeLayout layoutChild;
-    @Bind(R.id.tv_child)
-    TextView tvChild;
-    @Bind(R.id.tv_child_price)
-    TextView tvChildPrice;
+    @Bind(R.id.layout_child) RelativeLayout layoutChild;
+    @Bind(R.id.tv_child) TextView tvChild;
+    @Bind(R.id.tv_child_price) TextView tvChildPrice;
 
-    @Bind(R.id.layout_baby)
-    RelativeLayout layoutInfrant;
-    @Bind(R.id.tv_baby)
-    TextView tvInfrant;
-    @Bind(R.id.tv_baby_price)
-    TextView tvInfrantPrice;
+    @Bind(R.id.layout_baby) RelativeLayout layoutInfrant;
+    @Bind(R.id.tv_baby) TextView tvInfrant;
+    @Bind(R.id.tv_baby_price) TextView tvInfrantPrice;
+
+    @Bind(R.id.ev_klikbca) EditText evKlikbca;
+    @Bind(R.id.tv_step_payment) TextView tvStepPayment;
 
     @Bind(R.id.layout_flight) LinearLayout layoutFlight;
     @Bind(R.id.layout_hotel) LinearLayout layoutHotel;
+    @Bind(R.id.layout_klikbca) CardView layoutKlikbca;
 
-    @Bind(R.id.tv_total)
-    TextView tvTotal;
+    @Bind(R.id.tv_total) TextView tvTotal;
 
     private DeparturesOrder departures;
 
@@ -117,7 +101,7 @@ public class PaymentActivity extends AppCompatActivity {
     private ArrayList<MyOrder> myOrders;
     private ArrayList<Steps> stepses = new ArrayList<>();
     private StepsAdapter stepsAdapter;
-    private String url;
+    private String url, type;
     private boolean finish = false;
     private String whatOrder;
 
@@ -141,11 +125,20 @@ public class PaymentActivity extends AppCompatActivity {
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
         url = getIntent().getExtras().getString(CommonConstants.LINK);
+        type = getIntent().getExtras().getString(CommonConstants.TYPE);
+
         if (!url.equals("#")) {
             getData(url);
         }
-
         Log.e("URL", url);
+
+        String text = getIntent().getExtras().getString(CommonConstants.TEXT);
+        ((Toolbar) findViewById(R.id.toolbar)).setTitle(text);
+
+
+        if (type.equals(CommonConstants.KLIKBCA.toLowerCase())) {
+            layoutKlikbca.setVisibility(View.VISIBLE);
+        }
 
         whatOrder = ListOrderActivity.getWhatOrder();
         if (whatOrder.equals("FLIGHT")) {
@@ -300,11 +293,8 @@ public class PaymentActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                try {
-                    Toast.makeText(PaymentActivity.this, errorResponse.getJSONObject(CommonConstants.DIAGNOSTIC).getString(CommonConstants.ERROR_MSGS), Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                Log.e("JSON Payment", errorResponse + "");
+                ErrorException.getError(PaymentActivity.this, errorResponse);
             }
         });
     }
@@ -317,6 +307,11 @@ public class PaymentActivity extends AppCompatActivity {
 
         requestParams.put(CommonConstants.BTN_BOOKING, "1");
         requestParams.put(CommonConstants.CURRENCY, "IDR");
+
+        if (type.equals(CommonConstants.KLIKBCA.toLowerCase())) {
+            requestParams.put(CommonConstants.USER_BCA, evKlikbca.getText().toString());
+            tvStepPayment.setVisibility(View.VISIBLE);
+        }
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.please_wait));
@@ -349,17 +344,32 @@ public class PaymentActivity extends AppCompatActivity {
                     listStepPayment.setAdapter(stepsAdapter);
                     Util.setListview(listStepPayment);
 
-                    ((Toolbar) findViewById(R.id.toolbar)).setNavigationIcon(null);
-                    ((TextView) findViewById(R.id.tv_next)).setText("Selesai");
-                    tvSisaWaktu.setVisibility(View.GONE);
-                    tvUpto.setVisibility(View.GONE);
-                    layoutTime.setVisibility(View.GONE);
-                    listStepPayment.setVisibility(View.VISIBLE);
-                    finish = true;
-
                 } catch (JSONException e) {
                     e.printStackTrace();
+
+                    try {
+                        JSONArray stepArray = response.getJSONObject(CommonConstants.STEPS).getJSONArray(CommonConstants.STEP);
+                        String step = "";
+                        for (int i = 0; i < stepArray.length(); i++) {
+                            step += "- " + stepArray.getString(i) + "\n";
+                        }
+                        if (type.equals(CommonConstants.KLIKBCA.toLowerCase())) {
+                            tvStepPayment.setText(step);
+                            tvStepPayment.setVisibility(View.VISIBLE);
+                            layoutKlikbca.setVisibility(View.GONE);
+                        }
+                    } catch (JSONException e1) {
+                        e1.printStackTrace();
+                    }
                 }
+
+                ((Toolbar) findViewById(R.id.toolbar)).setNavigationIcon(null);
+                ((TextView) findViewById(R.id.tv_next)).setText("Selesai");
+                tvSisaWaktu.setVisibility(View.GONE);
+                tvUpto.setVisibility(View.GONE);
+                layoutTime.setVisibility(View.GONE);
+                listStepPayment.setVisibility(View.VISIBLE);
+                finish = true;
             }
 
             @Override
@@ -369,15 +379,8 @@ public class PaymentActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                System.out.println("errorResponse: " + errorResponse);
-                if (errorResponse != null) {
-                    try {
-                        Toast.makeText(PaymentActivity.this, errorResponse.getJSONObject(CommonConstants.DIAGNOSTIC).getString(CommonConstants.ERROR_MSGS), Toast.LENGTH_SHORT).show();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
+                Log.e("JSON Payment", errorResponse + "");
+                ErrorException.getError(PaymentActivity.this, errorResponse);
             }
         });
     }

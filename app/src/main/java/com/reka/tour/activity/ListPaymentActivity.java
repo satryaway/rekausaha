@@ -18,6 +18,7 @@ import com.reka.tour.R;
 import com.reka.tour.adapter.MethodPaymentAdapter;
 import com.reka.tour.model.MethodPayment;
 import com.reka.tour.utils.CommonConstants;
+import com.reka.tour.utils.ErrorException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,9 +55,14 @@ public class ListPaymentActivity extends AppCompatActivity {
 
     @OnItemClick(R.id.list_method_payment)
     void onItemMethodPaymentClick(int position) {
-        Intent intent = new Intent(ListPaymentActivity.this, PaymentActivity.class);
-        intent.putExtra(CommonConstants.LINK, methodPayments.get(position).link);
-        startActivity(intent);
+
+        if (!methodPayments.get(position).link.equals("#")) {
+            Intent intent = new Intent(ListPaymentActivity.this, PaymentActivity.class);
+            intent.putExtra(CommonConstants.LINK, methodPayments.get(position).link);
+            intent.putExtra(CommonConstants.TYPE, methodPayments.get(position).type);
+            intent.putExtra(CommonConstants.TEXT, methodPayments.get(position).text);
+            startActivity(intent);
+        }
     }
 
 
@@ -108,11 +114,8 @@ public class ListPaymentActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                try {
-                    Toast.makeText(ListPaymentActivity.this, errorResponse.getJSONObject(CommonConstants.DIAGNOSTIC).getString(CommonConstants.ERROR_MSGS), Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                Log.e("JSON ListPayment", errorResponse + "");
+                ErrorException.getError(ListPaymentActivity.this, errorResponse);
             }
         });
     }

@@ -48,13 +48,17 @@ public class MethodPaymentAdapter extends ArrayAdapter<MethodPayment> {
         }
 
         holder.tvMethodPayment.setText(methodPayment.text);
+        if(!methodPayment.message.equals("")){
+            holder.tvMessagge.setVisibility(View.VISIBLE);
+            holder.tvMessagge.setText(methodPayment.message);
+        }
         return convertView;
     }
 
     static class ViewHolder {
 
-        @Bind(R.id.tv_method_payment)
-        TextView tvMethodPayment;
+        @Bind(R.id.tv_method_payment) TextView tvMethodPayment;
+        @Bind(R.id.tv_messagge) TextView tvMessagge;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);

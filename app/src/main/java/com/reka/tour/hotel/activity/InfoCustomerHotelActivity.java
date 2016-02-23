@@ -24,8 +24,8 @@ import com.loopj.android.http.RequestParams;
 import com.reka.tour.R;
 import com.reka.tour.activity.ListPaymentActivity;
 import com.reka.tour.utils.CommonConstants;
+import com.reka.tour.utils.ErrorException;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
@@ -199,12 +199,8 @@ public class InfoCustomerHotelActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.e("JSON CUSTOMER", errorResponse.toString() + "");
-                try {
-                    Toast.makeText(InfoCustomerHotelActivity.this, errorResponse.getJSONObject(CommonConstants.DIAGNOSTIC).getString(CommonConstants.ERROR_MSGS), Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                Log.e("JSON InfoCustomerHotel", errorResponse + "");
+                ErrorException.getError(InfoCustomerHotelActivity.this, errorResponse);
             }
         });
     }

@@ -166,4 +166,6 @@
     <string name="fasilitas">Fasilitas</string>
     <string name="not_customer">Saya tidak menginap di hotel. saya membuat pemesanan ini untuk orang lain.</string>
     <string name="informasi_kontak_tamu">Informasi tamu</string>
+    <string name="userid_klikbca">User ID KlikBCA</string>
+    <string name="rincian_pembayaran">Rincian Pembayaran</string>
 </resources>
