@@ -111,6 +111,8 @@ public class PaymentActivity extends AppCompatActivity {
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private SimpleDateFormat dateFormatter = new SimpleDateFormat("EEEE, dd MMMM yyyy", new Locale("ind", "IDN"));
+    private SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    private SimpleDateFormat dateHourFormatter = new SimpleDateFormat("HH:mm");
     private String hasFood, airportTax, baggage, needBaggage, orderId;
     private ArrayList<MyOrder> myOrders;
     private ArrayList<Steps> stepses = new ArrayList<>();
@@ -143,12 +145,16 @@ public class PaymentActivity extends AppCompatActivity {
             getData(url);
         }
 
+        Log.e("URL", url);
+
         whatOrder = ListOrderActivity.getWhatOrder();
         if (whatOrder.equals("FLIGHT")) {
+            layoutFlight.setVisibility(View.VISIBLE);
             layoutHotel.setVisibility(View.GONE);
             setValueFlight();
         } else if (whatOrder.equals("HOTEL")) {
             layoutFlight.setVisibility(View.GONE);
+            layoutHotel.setVisibility(View.VISIBLE);
             setValueHotel();
         }
 
@@ -196,9 +202,12 @@ public class PaymentActivity extends AppCompatActivity {
         needBaggage = OrderFlightActivity.getNeedBaggage();
         baggage = OrderFlightActivity.getBaggage();
         myOrders = ListOrderActivity.getMyOrders();
+        try {
+            tvUpto.setText("HINGGA " + dateHourFormatter.format(dateTimeFormatter.parse(myOrders.get(0).orderExpireDatetime)));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-
-        tvUpto.setText("HINGGA " + myOrders.get(0).orderExpireDatetime);
 
         if (hasFood.equals("0")) {
             ivFood.setVisibility(View.GONE);
@@ -327,7 +336,7 @@ public class PaymentActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.e("JSON METHOD PAYMENT", response.toString() + "");
+                Log.e("JSON FINISH PAYMENT", response.toString() + "");
                 try {
                     Gson gson = new Gson();
 

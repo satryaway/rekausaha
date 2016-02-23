@@ -1,10 +1,9 @@
 package com.reka.tour.flight.adapter;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -13,11 +12,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialogFragment;
 import com.reka.tour.R;
 import com.reka.tour.flight.activity.InfoPassangerActivity;
 import com.reka.tour.flight.model.Passanger;
@@ -38,7 +37,7 @@ import butterknife.ButterKnife;
 public class PassangerAdapter extends ArrayAdapter<Passanger> {
 
     private int layoutResourceId;
-    private Context context;
+    private InfoPassangerActivity context;
     private ArrayList<Passanger> passangers;
     private Passanger passanger;
     private ArrayList<String> titleList;
@@ -46,7 +45,7 @@ public class PassangerAdapter extends ArrayAdapter<Passanger> {
     private SimpleDateFormat dateDayFormatter;
     private Calendar newCalendar;
 
-    public PassangerAdapter(Context context, ArrayList<Passanger> passangers, ArrayList<String> titleList) {
+    public PassangerAdapter(InfoPassangerActivity context, ArrayList<Passanger> passangers, ArrayList<String> titleList) {
         super(context, R.layout.item_passanger, passangers);
         this.context = context;
         this.layoutResourceId = R.layout.item_passanger;
@@ -70,7 +69,6 @@ public class PassangerAdapter extends ArrayAdapter<Passanger> {
         LayoutInflater mInflater = (LayoutInflater) context
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
-//        ViewHolder holder;
         if (convertView == null) {
             convertView = mInflater.inflate(layoutResourceId, null);
             holder = new ViewHolder(convertView);
@@ -89,8 +87,12 @@ public class PassangerAdapter extends ArrayAdapter<Passanger> {
             setCheckBox(holder);
         }
 
+        holder.evTanggaLahir.setInputType(InputType.TYPE_NULL);
+
         return convertView;
     }
+
+
 
     private void setEvTitel(final ViewHolder holder) {
         if (passanger.getType().toLowerCase().contains("dewasa")) {
@@ -101,7 +103,7 @@ public class PassangerAdapter extends ArrayAdapter<Passanger> {
 
                         final String[] titelDewasa = new String[titleList.size()];
                         for (int i = 0; i < titleList.size(); i++) {
-                            titelDewasa[i]=titleList.get(i);
+                            titelDewasa[i] = titleList.get(i);
                         }
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -126,7 +128,7 @@ public class PassangerAdapter extends ArrayAdapter<Passanger> {
 
                         final String[] titelAnakBayi = new String[titleListRemove.size()];
                         for (int i = 0; i < titleListRemove.size(); i++) {
-                            titelAnakBayi[i]=titleListRemove.get(i);
+                            titelAnakBayi[i] = titleListRemove.get(i);
                         }
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -177,8 +179,10 @@ public class PassangerAdapter extends ArrayAdapter<Passanger> {
             holder.evTanggaLahir.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
-                        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+                    new CalendarDatePickerDialogFragment().setOnDateSetListener(new CalendarDatePickerDialogFragment.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
                             Calendar newDate = Calendar.getInstance();
                             newDate.set(year, monthOfYear, dayOfMonth);
                             holder.evTanggaLahir.setText(dateDayFormatter.format(newDate.getTime()));
@@ -188,15 +192,16 @@ public class PassangerAdapter extends ArrayAdapter<Passanger> {
                                 Toast.makeText(getContext(), "Umur  Dewasa harus lebih dari 12 tahun", Toast.LENGTH_LONG).show();
                             }
                         }
-                    }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                    }).show(context.getSupportFragmentManager(), "DATEPICKER");
                 }
             });
         } else if (passanger.getType().toLowerCase().contains("anak")) {
             holder.evTanggaLahir.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
-                        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                    new CalendarDatePickerDialogFragment().setOnDateSetListener(new CalendarDatePickerDialogFragment.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
                             Calendar newDate = Calendar.getInstance();
                             newDate.set(year, monthOfYear, dayOfMonth);
                             holder.evTanggaLahir.setText(dateDayFormatter.format(newDate.getTime()));
@@ -206,16 +211,16 @@ public class PassangerAdapter extends ArrayAdapter<Passanger> {
                                 Toast.makeText(getContext(), "Umur  Anak harus lebih dari 2-12 tahun", Toast.LENGTH_LONG).show();
                             }
                         }
-
-                    }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                    }).show(context.getSupportFragmentManager(), "DATEPICKER");
                 }
             });
         } else if (passanger.getType().toLowerCase().contains("bayi")) {
             holder.evTanggaLahir.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
-                        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                    new CalendarDatePickerDialogFragment().setOnDateSetListener(new CalendarDatePickerDialogFragment.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
                             Calendar newDate = Calendar.getInstance();
                             newDate.set(year, monthOfYear, dayOfMonth);
                             holder.evTanggaLahir.setText(dateDayFormatter.format(newDate.getTime()));
@@ -225,7 +230,7 @@ public class PassangerAdapter extends ArrayAdapter<Passanger> {
                                 Toast.makeText(getContext(), "Umur Bayi harus dari 3-12 bulan", Toast.LENGTH_LONG).show();
                             }
                         }
-                    }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                    }).show(context.getSupportFragmentManager(), "DATEPICKER");
                 }
             });
         }
@@ -259,7 +264,6 @@ public class PassangerAdapter extends ArrayAdapter<Passanger> {
         age[1] = diffYear * 12 + endCalendar.get(Calendar.MONTH) - startCalendar.get(Calendar.MONTH);
 
         System.out.println("AGE : " + age[0] + " year, " + age[1] + " month");
-
 
         return age;
     }

@@ -27,6 +27,7 @@ import com.reka.tour.flight.model.DeparturesOrder;
 import com.reka.tour.flight.model.Passanger;
 import com.reka.tour.flight.model.Resource;
 import com.reka.tour.utils.CommonConstants;
+import com.reka.tour.utils.ErrorException;
 import com.reka.tour.utils.Util;
 
 import org.json.JSONArray;
@@ -156,7 +157,7 @@ public class InfoPassangerActivity extends AppCompatActivity {
             itemTitel.add(resources.get(i).name);
         }
 
-        passangerAdapter = new PassangerAdapter(this, passangers, itemTitel);
+        passangerAdapter = new PassangerAdapter(InfoPassangerActivity.this, passangers, itemTitel);
         listPassanger.setAdapter(passangerAdapter);
     }
 
@@ -168,7 +169,7 @@ public class InfoPassangerActivity extends AppCompatActivity {
 
                     final String[] titelDewasa = new String[itemTitel.size()];
                     for (int i = 0; i < itemTitel.size(); i++) {
-                        titelDewasa[i]=itemTitel.get(i);
+                        titelDewasa[i] = itemTitel.get(i);
                     }
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(InfoPassangerActivity.this);
@@ -185,11 +186,6 @@ public class InfoPassangerActivity extends AppCompatActivity {
         tvNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intentDeparture = new Intent(InfoPassangerActivity.this, ListPaymentActivity.class);
-////                intentDeparture.putExtra(CommonConstants.DEPARTURES, depAirportArrayList.get(position));
-////                intentDeparture.putExtra(CommonConstants.SEARCH_QUERIES, searchQueries);
-//                startActivity(intentDeparture);
-
                 try {
                     submitOrder();
                 } catch (ParseException e) {
@@ -296,7 +292,7 @@ public class InfoPassangerActivity extends AppCompatActivity {
                 responeString = response.toString();
 
                 Intent intent = new Intent(InfoPassangerActivity.this, ListOrderActivity.class);
-                intent.putExtra(CommonConstants.WHAT_ORDER,"FLIGHT");
+                intent.putExtra(CommonConstants.WHAT_ORDER, "FLIGHT");
                 startActivity(intent);
 
 //                try {
@@ -317,12 +313,8 @@ public class InfoPassangerActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.e("JSON PASSANGER", errorResponse.toString() + "");
-                try {
-                    Toast.makeText(InfoPassangerActivity.this, errorResponse.getJSONObject(CommonConstants.DIAGNOSTIC).getString(CommonConstants.ERROR_MSGS), Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                Log.e("JSON PASSANGER", errorResponse + "");
+                ErrorException.getError(InfoPassangerActivity.this, errorResponse);
             }
         });
     }

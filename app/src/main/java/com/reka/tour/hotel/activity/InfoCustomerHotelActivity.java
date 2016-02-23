@@ -73,7 +73,7 @@ public class InfoCustomerHotelActivity extends AppCompatActivity {
         (findViewById(R.id.toolbar)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                evTitel.setText("Tuan");
+                evTitel.setText("Mr");
                 evFirstName.setText("Randi");
                 evLastName.setText("Perma");
                 evNotelp.setText("6289931262955");

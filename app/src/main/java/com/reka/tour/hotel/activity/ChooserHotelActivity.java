@@ -25,6 +25,7 @@ import com.reka.tour.R;
 import com.reka.tour.hotel.adapter.HotelAreaAdapter;
 import com.reka.tour.hotel.model.HotelArea;
 import com.reka.tour.utils.CommonConstants;
+import com.reka.tour.utils.Util;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -125,6 +126,8 @@ public class ChooserHotelActivity extends AppCompatActivity {
                 myIntent.putExtra(CommonConstants.VALUE_HOTEL_AREA, hotelArea.value);
                 setResult(RESULT_OK, myIntent);
                 finish();
+                Util.hideKeyboard(ChooserHotelActivity.this);
+
             }
         });
     }

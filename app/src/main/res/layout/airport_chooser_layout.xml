@@ -32,6 +32,7 @@
         android:layout_height="wrap_content"
         android:background="@null"
         android:hint="@string/search_airport"
+        android:singleLine="true"
         android:padding="16dp" />
 
     <se.emilsjolander.stickylistheaders.ExpandableStickyListHeadersListView

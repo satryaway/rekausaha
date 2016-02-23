@@ -48,7 +48,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/kota_hotel"
-                    android:inputType="text"
+                    android:inputType="none"
+                    android:textIsSelectable="false"
                     android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>

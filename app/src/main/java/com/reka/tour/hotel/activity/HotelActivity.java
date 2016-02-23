@@ -1,21 +1,21 @@
 package com.reka.tour.hotel.activity;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialogFragment;
 import com.reka.tour.R;
 import com.reka.tour.utils.CommonConstants;
 import com.reka.tour.utils.Util;
@@ -162,6 +162,7 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void setCallBack() {
+        evKota.setInputType(InputType.TYPE_NULL);
         evKota.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -186,8 +187,10 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
 
         switch (v.getId()) {
             case R.id.layout_checkin:
-                new DatePickerDialog(HotelActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+                new CalendarDatePickerDialogFragment().setOnDateSetListener(new CalendarDatePickerDialogFragment.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
                         Calendar newDate = Calendar.getInstance();
                         newDate.set(year, monthOfYear, dayOfMonth);
                         tvDayCheckin.setText(dayFormatter.format(newDate.getTime()));
@@ -200,15 +203,15 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
                         tvDateCheckout.setText(dateFormatter.format(newDate.getTime()));
                         tvMonthYearCheckout.setText(monthYearFormatter.format(newDate.getTime()));
                         dateCheckout = dateDefaultFormatter.format(newDate.getTime());
-
                     }
-
-                }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                }).show(getSupportFragmentManager(), "DATEPICKER");
 
                 break;
             case R.id.layout_checkout:
-                new DatePickerDialog(HotelActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+                new CalendarDatePickerDialogFragment().setOnDateSetListener(new CalendarDatePickerDialogFragment.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
                         Calendar newDate = Calendar.getInstance();
                         newDate.set(year, monthOfYear, dayOfMonth);
                         tvDayCheckout.setText(dayFormatter.format(newDate.getTime()));
@@ -216,8 +219,7 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
                         tvMonthYearCheckout.setText(monthYearFormatter.format(newDate.getTime()));
                         dateCheckout = dateDefaultFormatter.format(newDate.getTime());
                     }
-
-                }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                }).show(getSupportFragmentManager(), "DATEPICKER");
 
                 break;
             case R.id.tv_cari_hotel:

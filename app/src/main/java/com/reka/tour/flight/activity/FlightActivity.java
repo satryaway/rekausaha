@@ -1,7 +1,6 @@
 package com.reka.tour.flight.activity;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -10,11 +9,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialogFragment;
 import com.reka.tour.R;
 import com.reka.tour.utils.CommonConstants;
 
@@ -80,10 +79,6 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
 
     @Bind(R.id.cari_pesawat)
     TextView cariPesawat;
-
-    private DatePickerDialog fromDatePickerDialog;
-    private DatePickerDialog toDatePickerDialog;
-
 
     private int DARI_AIRPORT = 100;
     private int MENUJU_AIRPORT = 200;
@@ -207,26 +202,26 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
                 break;
 
             case R.id.choose_berangkat:
-                new DatePickerDialog(FlightActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                new CalendarDatePickerDialogFragment().setOnDateSetListener(new CalendarDatePickerDialogFragment.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
                         Calendar newDate = Calendar.getInstance();
                         newDate.set(year, monthOfYear, dayOfMonth);
                         tvDeparture.setText(dateDayFormatter.format(newDate.getTime()));
                         dateDeparture = dateFormatter.format(newDate.getTime());
                     }
-
-                }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                }).show(getSupportFragmentManager(), "DATEPICKER");
                 break;
             case R.id.choose_pulang:
-                new DatePickerDialog(FlightActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                new CalendarDatePickerDialogFragment().setOnDateSetListener(new CalendarDatePickerDialogFragment.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
                         Calendar newDate = Calendar.getInstance();
                         newDate.set(year, monthOfYear, dayOfMonth);
                         tvArrival.setText(dateDayFormatter.format(newDate.getTime()));
                         dateArrival = dateFormatter.format(newDate.getTime());
                     }
-
-                }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                }).show(getSupportFragmentManager(), "DATEPICKER");
                 break;
 
             case R.id.btn_adult_minus:

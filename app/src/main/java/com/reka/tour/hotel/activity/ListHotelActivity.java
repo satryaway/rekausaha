@@ -25,6 +25,7 @@ import com.reka.tour.hotel.adapter.HotelAdapter;
 import com.reka.tour.hotel.model.Hotel;
 import com.reka.tour.hotel.model.SearchQueriesHotel;
 import com.reka.tour.utils.CommonConstants;
+import com.reka.tour.utils.ErrorException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -177,11 +178,8 @@ public class ListHotelActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                try {
-                    Toast.makeText(ListHotelActivity.this, errorResponse.getJSONObject(CommonConstants.DIAGNOSTIC).getString(CommonConstants.ERROR_MSGS), Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                Log.e("JSON ListHotelActivity", errorResponse + "");
+                ErrorException.getError(ListHotelActivity.this, errorResponse);
             }
         });
     }
