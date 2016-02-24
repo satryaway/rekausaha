@@ -108,6 +108,8 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
 
     private void initUI() {
 
+        dariAirportName.setSelected(true);
+        menujuAirportName.setSelected(true);
 
         newCalendar = Calendar.getInstance();
         dateDayFormatter = new SimpleDateFormat("EEEE , dd MMMM yyyy", new Locale("ind", "IDN"));

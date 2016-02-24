@@ -13,7 +13,7 @@
     app:cardUseCompatPadding="true">
 
     <LinearLayout
-        android:layout_width="100dp"
+        android:layout_width="120dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
         android:background="@android:color/white"
@@ -24,7 +24,7 @@
             style="@style/Base.TextAppearance.AppCompat.Caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/selector_schedule"
+            android:background="@color/gray"
             android:gravity="center"
             android:padding="5dp"
             android:singleLine="true"

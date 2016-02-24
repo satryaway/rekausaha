@@ -74,6 +74,9 @@ public class DepartureActivity extends AppCompatActivity {
         ((Toolbar) findViewById(R.id.toolbar)).setNavigationIcon(R.drawable.back);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
+        dariAirportName.setSelected(true);
+        menujuAirportName.setSelected(true);
+
         setValue();
         getData();
         setCallback();
@@ -229,13 +232,29 @@ public class DepartureActivity extends AppCompatActivity {
                 try {
                     Gson gson = new Gson();
 
+                    if(nearbyGoDateArrayList.size()>0){
+                        listSchedule.setAdapter(null);
+                        scheduleAdapter.notifyDataSetChanged();
+                        nearbyGoDateArrayList.clear();
+                    }
+
                     JSONArray nearbyDateArrayList = response.getJSONObject(CommonConstants.NEARBY_GO_DATE).getJSONArray(CommonConstants.NEARBY);
                     for (int i = 0; i < nearbyDateArrayList.length(); i++) {
                         nearbyGoDateArrayList.add(gson.fromJson(nearbyDateArrayList.getJSONObject(i).toString(), NearbyGoDate.class));
                     }
 
-                    scheduleAdapter = new ScheduleAdapter(DepartureActivity.this, nearbyGoDateArrayList);
+                    scheduleAdapter = new ScheduleAdapter(DepartureActivity.this, nearbyGoDateArrayList,dateValue);
                     listSchedule.setAdapter(scheduleAdapter);
+
+                    for (int i=0;i<nearbyGoDateArrayList.size();i++){
+                        if(nearbyGoDateArrayList.get(i).date.equals(dateValue)){
+                            if(i-1>0){
+                                listSchedule.setSelection(i-1);
+                            }else {
+                                listSchedule.setSelection(i);
+                            }
+                        }
+                    }
 
                     JSONArray airportArrayList = response.getJSONObject(CommonConstants.DEPARTURES).getJSONArray(CommonConstants.RESULT);
                     for (int i = 0; i < airportArrayList.length(); i++) {

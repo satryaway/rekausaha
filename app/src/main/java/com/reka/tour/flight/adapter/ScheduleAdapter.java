@@ -26,11 +26,13 @@ public class ScheduleAdapter extends ArrayAdapter<NearbyGoDate> {
     private int layoutResourceId;
     private Context context;
     private ViewHolder holder;
+    private String dateValue;
 
-    public ScheduleAdapter(Context context, ArrayList<NearbyGoDate> scheduleArrayList) {
+    public ScheduleAdapter(Context context, ArrayList<NearbyGoDate> scheduleArrayList, String dateValue) {
         super(context, R.layout.item_schedule, scheduleArrayList);
         this.context = context;
         this.layoutResourceId = R.layout.item_schedule;
+        this.dateValue=dateValue;
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -68,6 +70,13 @@ public class ScheduleAdapter extends ArrayAdapter<NearbyGoDate> {
         if(schedule.price!=null){
             holder.tvPrice.setText(Util.toRupiahFormat(schedule.price));
         }
+
+        if(schedule.date.equals(dateValue)){
+            holder.tvDay.setBackgroundColor(getContext().getResources().getColor(R.color.colorPrimary));
+        }else {
+            holder.tvDay.setBackgroundColor(getContext().getResources().getColor(R.color.gray));
+        }
+
         return convertView;
     }
 
