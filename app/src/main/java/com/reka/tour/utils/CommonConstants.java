@@ -88,6 +88,9 @@ public class CommonConstants {
     public static String DETAIL_ID = "detailId";
     public static String COUNTRY = "country";
 
+    public static String diagnostic="diagnostic";
+    public static String error_msgs="error_msgs";
+
 
     public static String HAS_FOOD = "HAS_FOOD";
     public static String AIRPORT_TAX = "AIRPORT_TAX";

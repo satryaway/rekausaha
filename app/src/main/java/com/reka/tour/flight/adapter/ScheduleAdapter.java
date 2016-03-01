@@ -2,6 +2,7 @@ package com.reka.tour.flight.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,7 @@ public class ScheduleAdapter extends ArrayAdapter<NearbyGoDate> {
         super(context, R.layout.item_schedule, scheduleArrayList);
         this.context = context;
         this.layoutResourceId = R.layout.item_schedule;
-        this.dateValue=dateValue;
+        this.dateValue = dateValue;
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -67,13 +68,17 @@ public class ScheduleAdapter extends ArrayAdapter<NearbyGoDate> {
             e.printStackTrace();
         }
 
-        if(schedule.price!=null){
-            holder.tvPrice.setText(Util.toRupiahFormat(schedule.price));
+        if (schedule.price != null) {
+            if (!schedule.price.equals("0.00")) {
+                holder.tvPrice.setText(Util.toRupiahFormat(schedule.price));
+            }
         }
 
-        if(schedule.date.equals(dateValue)){
+        Log.e("scheduleprice", schedule.price + "");
+
+        if (schedule.date.equals(dateValue)) {
             holder.tvDay.setBackgroundColor(getContext().getResources().getColor(R.color.colorPrimary));
-        }else {
+        } else {
             holder.tvDay.setBackgroundColor(getContext().getResources().getColor(R.color.gray));
         }
 

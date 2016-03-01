@@ -2,7 +2,6 @@ package com.reka.tour.flight.activity;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -21,7 +20,6 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.reka.tour.R;
-import com.reka.tour.activity.ListOrderActivity;
 import com.reka.tour.flight.adapter.PassangerAdapter;
 import com.reka.tour.flight.model.DeparturesOrder;
 import com.reka.tour.flight.model.Passanger;
@@ -291,9 +289,17 @@ public class InfoPassangerActivity extends AppCompatActivity {
                 Log.e("JSON PASSANGER", response.toString() + "");
                 responeString = response.toString();
 
-                Intent intent = new Intent(InfoPassangerActivity.this, ListOrderActivity.class);
-                intent.putExtra(CommonConstants.WHAT_ORDER, "FLIGHT");
-                startActivity(intent);
+                try {
+                    JSONObject errorMsgs = response.getJSONObject(CommonConstants.diagnostic);
+                    String message = errorMsgs.getString(CommonConstants.error_msgs);
+                    showAlertDialog(message);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+//                Intent intent = new Intent(InfoPassangerActivity.this, ListOrderActivity.class);
+//                intent.putExtra(CommonConstants.WHAT_ORDER, "FLIGHT");
+//                startActivity(intent);
 
 //                try {
 //                    Gson gson = new Gson();
@@ -329,5 +335,24 @@ public class InfoPassangerActivity extends AppCompatActivity {
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showAlertDialog(String message) {
+        android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(
+                InfoPassangerActivity.this).create();
+
+        // Setting Dialog Message
+        alertDialog.setMessage(message);
+
+        // Setting OK Button
+        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Write your code here to execute after dialog closed
+                finish();
+            }
+        });
+
+        // Showing Alert Message
+        alertDialog.show();
     }
 }

@@ -1,6 +1,8 @@
 package com.reka.tour.flight.activity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -55,7 +57,6 @@ public class AirportChooserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.airport_chooser_layout);
-
 
         getData();
         initUI();
@@ -188,6 +189,7 @@ public class AirportChooserActivity extends AppCompatActivity {
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Log.e("JSON AirportChooser", errorResponse + "");
                 ErrorException.getError(AirportChooserActivity.this, errorResponse);
+                showDialog();
             }
         });
     }
@@ -249,5 +251,28 @@ public class AirportChooserActivity extends AppCompatActivity {
             animator.start();
 
         }
+    }
+
+    private void showDialog(){
+        AlertDialog alertDialog = new AlertDialog.Builder(
+                AirportChooserActivity.this).create();
+
+        alertDialog.setTitle("Connection Problem");
+
+        // Setting Dialog Message
+        alertDialog.setMessage("Please try again");
+
+        // Setting OK Button
+        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Write your code here to execute after dialog closed
+                getData();
+                initUI();
+                setCallBack();
+            }
+        });
+
+        // Showing Alert Message
+        alertDialog.show();
     }
 }

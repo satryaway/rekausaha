@@ -68,13 +68,13 @@
             android:layout_below="@+id/dari_airport_code"
             android:layout_toLeftOf="@+id/imageView"
             android:layout_toStartOf="@+id/imageView"
-            android:singleLine="true"
-            android:scrollHorizontally="true"
             android:ellipsize="marquee"
-            android:marqueeRepeatLimit ="marquee_forever"
             android:focusable="true"
             android:focusableInTouchMode="true"
+            android:marqueeRepeatLimit="marquee_forever"
             android:paddingBottom="10dp"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
             android:text="Soekarno Hatta\nJakarta"
             android:textColor="@android:color/white"/>
 
@@ -117,13 +117,13 @@
             android:layout_below="@+id/menuju_airport_code"
             android:layout_toEndOf="@+id/imageView"
             android:layout_toRightOf="@+id/imageView"
-            android:singleLine="true"
-            android:scrollHorizontally="true"
             android:ellipsize="marquee"
-            android:marqueeRepeatLimit ="marquee_forever"
             android:focusable="true"
             android:focusableInTouchMode="true"
+            android:marqueeRepeatLimit="marquee_forever"
             android:paddingBottom="10dp"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
             android:text="Ngurah Rai Bali"
             android:textColor="@android:color/white"/>
 
@@ -144,6 +144,16 @@
         android:padding="10dp"
         android:text="@string/pilih_penerbangan"
         android:textColor="@android:color/white"/>
+
+    <TextView
+        android:id="@+id/tv_noflight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:gravity="center"
+        android:text="@string/no_flight"
+        android:visibility="gone"/>
 
     <ListView
         android:id="@+id/list_flight"
