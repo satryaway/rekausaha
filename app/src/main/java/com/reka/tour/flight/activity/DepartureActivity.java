@@ -261,10 +261,11 @@ public class DepartureActivity extends AppCompatActivity {
                                 listSchedule.setSelection(i);
                             }
                         }
-
-                        if (nearbyGoDateArrayList.get(i).price.equals("0.00")) {
-                            noFlight(View.VISIBLE);
-                            listFlight(View.GONE);
+                        if (nearbyGoDateArrayList.get(i).price != null) {
+                            if (nearbyGoDateArrayList.get(i).price.equals("0.00")) {
+                                noFlight(View.VISIBLE);
+                                listFlight(View.GONE);
+                            }
                         }
                     }
 
