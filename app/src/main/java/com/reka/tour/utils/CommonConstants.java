@@ -90,6 +90,7 @@ public class CommonConstants {
 
     public static String diagnostic="diagnostic";
     public static String error_msgs="error_msgs";
+    public static String status="status";
 
 
     public static String HAS_FOOD = "HAS_FOOD";

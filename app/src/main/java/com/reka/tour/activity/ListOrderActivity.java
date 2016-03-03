@@ -7,8 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -31,12 +29,12 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 
 public class ListOrderActivity extends AppCompatActivity {
     private static ArrayList<MyOrder> myOrders = new ArrayList<>();
-    @Bind(R.id.list_order)
-    ListView listOrder;
+    @Bind(R.id.list_order) ListView listOrder;
     private MyOrderAdapter myOrderAdapter;
     private Bundle bundle;
     private static String whatOrder;
@@ -69,28 +67,20 @@ public class ListOrderActivity extends AppCompatActivity {
     }
 
     private void setCallBack() {
-        if (myOrders.size() == 1) {
 
-            listOrder.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if (whatOrder.equals("FLIGHT")) {
-                        Intent intent = new Intent(ListOrderActivity.this, ListPaymentActivity.class);
-                        startActivity(intent);
-                    } else if (whatOrder.equals("HOTEL")) {
-                        Intent intent = new Intent(ListOrderActivity.this, InfoCustomerHotelActivity.class);
-                        intent.putExtra(CommonConstants.DETAIL_ID, myOrders.get(0).orderDetailId);
-                        startActivity(intent);
-                    }
-                }
-            });
-        } else {
-            listOrder.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    deleteOrderId(position);
-                }
-            });
+    }
+
+    @OnClick(R.id.tv_checkout)
+    public void checkout() {
+        if (myOrders.size() == 1) {
+            if (whatOrder.equals("FLIGHT")) {
+                Intent intent = new Intent(ListOrderActivity.this, ListPaymentActivity.class);
+                startActivity(intent);
+            } else if (whatOrder.equals("HOTEL")) {
+                Intent intent = new Intent(ListOrderActivity.this, InfoCustomerHotelActivity.class);
+                intent.putExtra(CommonConstants.DETAIL_ID, myOrders.get(0).orderDetailId);
+                startActivity(intent);
+            }
         }
     }
 
@@ -128,7 +118,7 @@ public class ListOrderActivity extends AppCompatActivity {
                         myOrders.add(gson.fromJson(myOrderArrayList.getJSONObject(i).toString(), MyOrder.class));
                     }
 
-                    myOrderAdapter = new MyOrderAdapter(ListOrderActivity.this, myOrders);
+                    myOrderAdapter = new MyOrderAdapter(ListOrderActivity.this, myOrders, ListOrderActivity.this);
                     listOrder.setAdapter(myOrderAdapter);
 
                     if (myOrders.size() == 1) {
@@ -161,7 +151,7 @@ public class ListOrderActivity extends AppCompatActivity {
         });
     }
 
-    private void deleteOrderId(final int position) {
+    public void deleteOrderId(final int position) {
         String url = CommonConstants.BASE_URL + "order/delete_order";
 
         RequestParams requestParams = new RequestParams();

@@ -14,6 +14,9 @@ import android.widget.RelativeLayout;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by fachrifebrian on 2/4/16.
@@ -33,6 +36,47 @@ public class Util {
         String result = kursIndonesia.format(Double.parseDouble(nominal)).substring(4);
 
         return "IDR " + result.substring(0, result.lastIndexOf(','));
+    }
+
+    public static String printDifference(String endDateTime) {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //get current date time with Date()
+        Date startDate = new Date();
+        Date endDate = null;
+
+        try {
+            startDate = dateFormat.parse(dateFormat.format(startDate));
+            endDate = dateFormat.parse(endDateTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        //milliseconds
+        long different = endDate.getTime() - startDate.getTime();
+
+        long secondsInMilli = 1000;
+        long minutesInMilli = secondsInMilli * 60;
+        long hoursInMilli = minutesInMilli * 60;
+        long daysInMilli = hoursInMilli * 24;
+
+        long elapsedDays = different / daysInMilli;
+        different = different % daysInMilli;
+
+        long elapsedHours = different / hoursInMilli;
+        different = different % hoursInMilli;
+
+        long elapsedMinutes = different / minutesInMilli;
+        different = different % minutesInMilli;
+
+        long elapsedSeconds = different / secondsInMilli;
+
+        if (elapsedSeconds < 0) {
+            return "expired";
+        } else {
+            return elapsedHours + ":" + elapsedMinutes + ":" + elapsedSeconds;
+        }
+
     }
 
     public static void setListview(ListView listView) {

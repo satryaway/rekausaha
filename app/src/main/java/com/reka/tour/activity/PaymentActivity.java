@@ -55,6 +55,7 @@ public class PaymentActivity extends AppCompatActivity {
 
     @Bind(R.id.tv_sisa_waktu) TextView tvSisaWaktu;
     @Bind(R.id.tv_upto) TextView tvUpto;
+    @Bind(R.id.tv_expire_time) TextView tvExpiredTime;
     @Bind(R.id.layout_time) RelativeLayout layoutTime;
     @Bind(R.id.list_step_payment) ListView listStepPayment;
 
@@ -97,6 +98,7 @@ public class PaymentActivity extends AppCompatActivity {
     private SimpleDateFormat dateFormatter = new SimpleDateFormat("EEEE, dd MMMM yyyy", new Locale("ind", "IDN"));
     private SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
     private SimpleDateFormat dateHourFormatter = new SimpleDateFormat("HH:mm");
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/M/yyyy hh:mm:ss");
     private String hasFood, airportTax, baggage, needBaggage, orderId;
     private ArrayList<MyOrder> myOrders;
     private ArrayList<Steps> stepses = new ArrayList<>();
@@ -175,6 +177,7 @@ public class PaymentActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.tv_adult_price_hotel)).setText(" X " + Util.toRupiahFormat(roomObject.price));
         ((TextView) findViewById(R.id.tv_total)).setText(Util.toRupiahFormat(roomObject.price));
         ((TextView) findViewById(R.id.tv_room_name)).setText(roomObject.roomName);
+
     }
 
     @OnClick(R.id.tv_next)
@@ -197,6 +200,27 @@ public class PaymentActivity extends AppCompatActivity {
         myOrders = ListOrderActivity.getMyOrders();
         try {
             tvUpto.setText("HINGGA " + dateHourFormatter.format(dateTimeFormatter.parse(myOrders.get(0).orderExpireDatetime)));
+            final String interval = Util.printDifference(myOrders.get(0).orderExpireDatetime);
+
+            if(interval.equals("expired")){
+                tvExpiredTime.setText("Time Expired");
+            }else {
+                tvExpiredTime.postDelayed(new Runnable() {
+                    public void run() {
+                        String interval = Util.printDifference(myOrders.get(0).orderExpireDatetime);
+                        tvExpiredTime.setText(interval);
+                        tvExpiredTime.postDelayed(this, 1000);
+
+                        if (interval.equals("expired")) {
+                            tvExpiredTime.setText("Time Expired");
+                            tvExpiredTime.removeCallbacks(this);
+                        }
+                    }
+                }, 1000);
+
+            }
+
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
