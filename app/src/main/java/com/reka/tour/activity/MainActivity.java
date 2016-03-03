@@ -10,15 +10,21 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.reka.tour.R;
+import com.reka.tour.Session.CountrySessionManager;
 import com.reka.tour.fragment.AboutFragment;
 import com.reka.tour.fragment.FeedbackFragment;
 import com.reka.tour.fragment.HomeFragment;
 import com.reka.tour.fragment.NewsFragment;
+import com.reka.tour.model.Country;
+import com.reka.tour.utils.Builder;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -32,6 +38,7 @@ public class MainActivity extends AppCompatActivity
     Toolbar toolbar;
 
     private Fragment fragment;
+    private CountrySessionManager countrySessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +46,11 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+
+        countrySessionManager = new CountrySessionManager(this);
+        if (countrySessionManager.getCountry(this) == null) {
+            getCountry();
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -53,6 +65,16 @@ public class MainActivity extends AppCompatActivity
         if (fragment != null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
         }
+    }
+
+    private void getCountry() {
+        Builder.getInstance(this).getCountry(new Builder.CallBackCountry() {
+            @Override
+            public void onSucces(ArrayList<Country> countries) {
+                Log.e("countries", countries.size() + "");
+                countrySessionManager.saveCountry(MainActivity.this, countries);
+            }
+        });
     }
 
     @Override
