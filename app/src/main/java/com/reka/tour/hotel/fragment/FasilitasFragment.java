@@ -14,6 +14,8 @@ import com.reka.tour.hotel.model.Facilitiy;
 import com.reka.tour.hotel.model.General;
 import com.reka.tour.views.ExpandableHeightGridView;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -50,7 +52,15 @@ public class FasilitasFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-        tvDescription.setText(general.description);
+        String description = general.description;
+
+        try {
+            description = URLDecoder.decode(description, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        tvDescription.setText(description);
         fasilitasAdapter = new FasilitasAdapter(getActivity(), facilitiys);
         gvFasilitas.setAdapter(fasilitasAdapter);
         gvFasilitas.setNumColumns(2);
