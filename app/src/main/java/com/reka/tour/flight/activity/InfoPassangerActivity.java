@@ -11,8 +11,10 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,11 +23,14 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.reka.tour.R;
+import com.reka.tour.Session.CountrySessionManager;
 import com.reka.tour.activity.ListOrderActivity;
+import com.reka.tour.adapter.CustomAdapter;
 import com.reka.tour.flight.adapter.PassangerAdapter;
 import com.reka.tour.flight.model.DeparturesOrder;
 import com.reka.tour.flight.model.Passanger;
 import com.reka.tour.flight.model.Resource;
+import com.reka.tour.model.Country;
 import com.reka.tour.utils.CommonConstants;
 import com.reka.tour.utils.ErrorException;
 import com.reka.tour.utils.Util;
@@ -38,6 +43,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.Bind;
@@ -55,6 +61,9 @@ public class InfoPassangerActivity extends AppCompatActivity {
     EditText evNotelp;
     @Bind(R.id.ev_email)
     EditText evEmail;
+
+    @Bind(R.id.spinner_number)
+    Spinner spinnerNumber;
 
     @Bind(R.id.tv_info_kontak)
     TextView tvInfoKontak;
@@ -80,11 +89,20 @@ public class InfoPassangerActivity extends AppCompatActivity {
     private int countChild;
     private int countInfant;
 
+    private CountrySessionManager countrySessionManager;
+    private ArrayList<Country> countries;
+    private String countryAreacode;
+    private boolean enableSpinnerCountry = false;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_passanger);
         ButterKnife.bind(this);
+
+        countrySessionManager = new CountrySessionManager(this);
+
 
         ((Toolbar) findViewById(R.id.toolbar)).setNavigationIcon(R.drawable.back);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
@@ -94,7 +112,7 @@ public class InfoPassangerActivity extends AppCompatActivity {
                 evTitel.setText("Tuan");
                 evFirstName.setText("Randi");
                 evLastName.setText("Perma");
-                evNotelp.setText("6289931262955");
+                evNotelp.setText("89931262955");
                 evEmail.setText("reka.usaha@gmail.com");
             }
         });
@@ -110,6 +128,9 @@ public class InfoPassangerActivity extends AppCompatActivity {
 
 
     private void setValue() {
+
+        getCountry();
+
         try {
             Gson gson = new Gson();
             JSONObject requiredObject = new JSONObject(responeString).getJSONObject(CommonConstants.REQUIRED);
@@ -125,6 +146,10 @@ public class InfoPassangerActivity extends AppCompatActivity {
 
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+
+        if (departures.airlinesName.toUpperCase().equals("AIRASIA")) {
+            enableSpinnerCountry = true;
         }
 
         countAdult = Integer.parseInt(departures.countAdult);
@@ -157,8 +182,37 @@ public class InfoPassangerActivity extends AppCompatActivity {
             itemTitel.add(resources.get(i).name);
         }
 
-        passangerAdapter = new PassangerAdapter(InfoPassangerActivity.this, passangers, itemTitel);
+        passangerAdapter = new PassangerAdapter(InfoPassangerActivity.this, passangers, itemTitel, countries,enableSpinnerCountry);
         listPassanger.setAdapter(passangerAdapter);
+    }
+
+    private void getCountry() {
+        if (countrySessionManager.getCountry(this) != null) {
+            countries = countrySessionManager.getCountry(this);
+            final List<String> listCountry = new ArrayList<>();
+
+            for (int i = 0; i < countries.size(); i++) {
+                listCountry.add(countries.get(i).countryAreacode);
+            }
+            spinnerNumber.setAdapter(new CustomAdapter(this, R.layout.simple_spinner_item, listCountry, countries));
+        }
+
+        for (int i = 0; i < countries.size(); i++) {
+            if ("+62".equals(countries.get(i).countryAreacode)) {
+                spinnerNumber.setSelection(i);
+                countryAreacode = countries.get(i).countryAreacode.replace("+", "%2B");
+            }
+        }
+        spinnerNumber.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long arg3) {
+                countryAreacode = parent.getItemAtPosition(position).toString().replace("+", "%2B");
+            }
+
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
     }
 
     private void setCallBack() {
@@ -223,7 +277,7 @@ public class InfoPassangerActivity extends AppCompatActivity {
         requestParams.put(CommonConstants.CONSALUTATION, evTitel.getText().toString());
         requestParams.put(CommonConstants.CONFIRSTNAME, evFirstName.getText().toString());
         requestParams.put(CommonConstants.CONLASTNAME, evLastName.getText().toString());
-        requestParams.put(CommonConstants.CONPHONE, "%2B" + evNotelp.getText().toString());
+        requestParams.put(CommonConstants.CONPHONE, countryAreacode + evNotelp.getText().toString());
         requestParams.put(CommonConstants.CONEMAILADDRESS, evEmail.getText().toString());
 
         for (int i = 0; i < passangerAdapter.getCount(); i++) {
@@ -232,6 +286,7 @@ public class InfoPassangerActivity extends AppCompatActivity {
             EditText evTitel = (EditText) view.findViewById(R.id.ev_titel);
             EditText evFirstName = (EditText) view.findViewById(R.id.ev_first_name);
             EditText evLastName = (EditText) view.findViewById(R.id.ev_last_name);
+            Spinner spinnerCountryId = (Spinner) view.findViewById(R.id.spinner_country);
             EditText evTanggalLahir = (EditText) view.findViewById(R.id.ev_tanggal_lahir);
             String id = String.valueOf(passangerAdapter.getItem(i).getId());
 
@@ -244,6 +299,11 @@ public class InfoPassangerActivity extends AppCompatActivity {
                 requestParams.put("firstnamea" + id, evFirstName.getText().toString());
                 requestParams.put("lastnamea" + id, evLastName.getText().toString());
                 requestParams.put("birthdatea" + id, dateFormatter.format(dateDayFormatter.parse(evTanggalLahir.getText().toString())));
+
+                if (enableSpinnerCountry) {
+                    requestParams.put("passportnationalitya" + id, getCoutryId(spinnerCountryId.getSelectedItem().toString()));
+                }
+
             } else {
                 if (countChild != 0) {
                     if (i >= countAdult && i < countAdult + countChild) {//2-3
@@ -251,6 +311,10 @@ public class InfoPassangerActivity extends AppCompatActivity {
                         requestParams.put("firstnamec" + id, evFirstName.getText().toString());
                         requestParams.put("lastnamec" + id, evLastName.getText().toString());
                         requestParams.put("birthdatec" + id, dateFormatter.format(dateDayFormatter.parse(evTanggalLahir.getText().toString())));
+
+                        if (enableSpinnerCountry) {
+                            requestParams.put("passportnationalityc" + id, getCoutryId(spinnerCountryId.getSelectedItem().toString()));
+                        }
                     }
                 }
 
@@ -260,6 +324,10 @@ public class InfoPassangerActivity extends AppCompatActivity {
                         requestParams.put("firstnamei" + id, evFirstName.getText().toString());
                         requestParams.put("lastnamei" + id, evLastName.getText().toString());
                         requestParams.put("birthdatei" + id, dateFormatter.format(dateDayFormatter.parse(evTanggalLahir.getText().toString())));
+
+                        if (enableSpinnerCountry) {
+                            requestParams.put("passportnationalityi" + id, getCoutryId(spinnerCountryId.getSelectedItem().toString()));
+                        }
                     }
                 }
 
@@ -369,5 +437,15 @@ public class InfoPassangerActivity extends AppCompatActivity {
 
         // Showing Alert Message
         alertDialog.show();
+    }
+
+    private String getCoutryId(String countryName) {
+        String countryId = "";
+        for (int i = 0; i < countries.size(); i++) {
+            if (countryName.toUpperCase().equals(countries.get(i).countryName.toUpperCase())) {
+                countryId = countries.get(i).countryId;
+            }
+        }
+        return countryId;
     }
 }

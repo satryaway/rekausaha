@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white">
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,7 +38,7 @@
                     android:singleLine="true"
                     android:text="@string/informasi_kontak"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"/>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -55,7 +55,7 @@
                         android:inputType="text"
                         android:focusable="false"
                         android:singleLine="true"
-                        android:tag="@string/titel" />
+                        android:tag="@string/titel"/>
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -71,7 +71,7 @@
                         android:hint="@string/nama_depan"
                         android:inputType="text"
                         android:singleLine="true"
-                        android:tag="@string/titel" />
+                        android:tag="@string/titel"/>
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -87,26 +87,41 @@
                         android:hint="@string/nama_belakang"
                         android:inputType="text"
                         android:singleLine="true"
-                        android:tag="@string/titel" />
+                        android:tag="@string/titel"/>
 
                 </android.support.design.widget.TextInputLayout>
 
 
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
-                    <EditText
-                        android:id="@+id/ev_notelp"
+                    <Spinner
+                        android:id="@+id/spinner_number"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        />
+
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/no_telp"
-                        android:inputType="number"
-                        android:singleLine="true"
-                        android:tag="@string/titel" />
+                        android:layout_marginBottom="4dp"
+                        android:layout_toRightOf="@id/spinner_number">
 
-                </android.support.design.widget.TextInputLayout>
+                        <EditText
+                            android:id="@+id/ev_notelp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/no_telp"
+                            android:inputType="number"
+                            android:singleLine="true"
+                            android:tag="@string/titel"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+                </RelativeLayout>
 
 
                 <android.support.design.widget.TextInputLayout
@@ -121,7 +136,7 @@
                         android:hint="@string/email"
                         android:inputType="textEmailAddress"
                         android:singleLine="true"
-                        android:tag="@string/titel" />
+                        android:tag="@string/titel"/>
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -134,7 +149,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp" />
+            android:layout_marginTop="5dp"/>
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
@@ -159,7 +174,7 @@
                     android:padding="10dp"
                     android:text="Next"
                     android:textAllCaps="true"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"/>
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 

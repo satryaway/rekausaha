@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,11 +21,13 @@ import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialo
 import com.reka.tour.R;
 import com.reka.tour.flight.activity.InfoPassangerActivity;
 import com.reka.tour.flight.model.Passanger;
+import com.reka.tour.model.Country;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.Bind;
@@ -44,13 +47,21 @@ public class PassangerAdapter extends ArrayAdapter<Passanger> {
     private ViewHolder holder;
     private SimpleDateFormat dateDayFormatter;
     private Calendar newCalendar;
+    private ArrayList<Country> countries = new ArrayList<>();
+    private String countryId;
+    private boolean enableSpinnerCountry;
 
-    public PassangerAdapter(InfoPassangerActivity context, ArrayList<Passanger> passangers, ArrayList<String> titleList) {
+    public PassangerAdapter(InfoPassangerActivity context,
+                            ArrayList<Passanger> passangers,
+                            ArrayList<String> titleList,
+                            ArrayList<Country> countries, boolean enableSpinnerCountry) {
         super(context, R.layout.item_passanger, passangers);
         this.context = context;
         this.layoutResourceId = R.layout.item_passanger;
         this.titleList = titleList;
         this.passangers = passangers;
+        this.countries = countries;
+        this.enableSpinnerCountry=enableSpinnerCountry;
     }
 
     @Override
@@ -82,6 +93,13 @@ public class PassangerAdapter extends ArrayAdapter<Passanger> {
         setEvTitel(holder);
         setDate(holder);
 
+        if(enableSpinnerCountry){
+            setCountry(holder);
+        }else {
+            holder.spinnerCountry.setVisibility(View.GONE);
+            holder.tvCountry.setVisibility(View.GONE);
+        }
+
         if (position == 0) {
             holder.checkboxDuplicate.setVisibility(View.VISIBLE);
             setCheckBox(holder);
@@ -92,6 +110,43 @@ public class PassangerAdapter extends ArrayAdapter<Passanger> {
         return convertView;
     }
 
+    private void setCountry(ViewHolder holder) {
+        final List<String> listCountry = new ArrayList<>();
+
+        for (int i = 0; i < countries.size(); i++) {
+            listCountry.add(countries.get(i).countryName);
+        }
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(context,
+                android.R.layout.simple_spinner_item, listCountry);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        holder.spinnerCountry.setAdapter(dataAdapter);
+
+        for (int i = 0; i < countries.size(); i++) {
+            if ("INDONESIA".equals(countries.get(i).countryName.toUpperCase())) {
+                holder.spinnerCountry.setSelection(i);
+                countryId = countries.get(i).countryId;
+            }
+        }
+
+//        holder.spinnerCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            public void onItemSelected(AdapterView<?> parent, View view,
+//                                       int position, long arg3) {
+//                countryId = parent.getItemAtPosition(position).toString();
+//
+//                for (int i = 0; i < countries.size(); i++) {
+//                    if (countryId.equals(countries.get(i).countryName.toUpperCase())) {
+//                        countryId = countries.get(i).countryId;
+//                    }
+//                }
+//            }
+//
+//            public void onNothingSelected(AdapterView<?> arg0) {
+//                // TODO Auto-generated method stub
+//            }
+//        });
+    }
 
 
     private void setEvTitel(final ViewHolder holder) {
@@ -270,19 +325,15 @@ public class PassangerAdapter extends ArrayAdapter<Passanger> {
 
 
     static class ViewHolder {
-        @Bind(R.id.ev_titel)
-        EditText evTitel;
-        @Bind(R.id.ev_first_name)
-        EditText evFirstName;
-        @Bind(R.id.ev_last_name)
-        EditText evLastName;
-        @Bind(R.id.ev_tanggal_lahir)
-        EditText evTanggaLahir;
+        @Bind(R.id.ev_titel) EditText evTitel;
+        @Bind(R.id.ev_first_name) EditText evFirstName;
+        @Bind(R.id.ev_last_name) EditText evLastName;
+        @Bind(R.id.ev_tanggal_lahir) EditText evTanggaLahir;
+        @Bind(R.id.tv_country) TextView tvCountry;
+        @Bind(R.id.spinner_country) Spinner spinnerCountry;
 
-        @Bind(R.id.title_passanger)
-        TextView titlePassanger;
-        @Bind(R.id.checkboxDuplicate)
-        CheckBox checkboxDuplicate;
+        @Bind(R.id.title_passanger) TextView titlePassanger;
+        @Bind(R.id.checkboxDuplicate) CheckBox checkboxDuplicate;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);
