@@ -72,7 +72,8 @@ public class ScheduleAdapter extends ArrayAdapter<NearbyGoDate> {
             if (!schedule.price.equals("0.00")) {
                 holder.tvPrice.setText(Util.toRupiahFormat(schedule.price));
             }
-        }
+        }else
+            holder.tvPrice.setText("");
 
         Log.e("scheduleprice", schedule.price + "");
 
