@@ -77,6 +77,10 @@ public class ListHotelActivity extends AppCompatActivity {
         listHotel.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (hotels.get(position).price.equals("")){
+                    Toast.makeText(ListHotelActivity.this, "Invalid price", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Intent intent = new Intent(ListHotelActivity.this,
                         ProfileHotelActivity.class);
                 intent.putExtra(CommonConstants.BUSSINESSURI, hotels.get(position).businessUri);
