@@ -53,6 +53,7 @@
                         android:drawableRight="@drawable/ic_dropdown"
                         android:hint="@string/pilih_titel"
                         android:inputType="text"
+                        android:focusable="false"
                         android:singleLine="true"
                         android:tag="@string/titel" />
 
