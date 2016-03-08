@@ -2,6 +2,7 @@ package com.reka.tour.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -140,6 +141,8 @@ public class PaymentActivity extends AppCompatActivity {
 
         if (type.equals(CommonConstants.KLIKBCA.toLowerCase())) {
             layoutKlikbca.setVisibility(View.VISIBLE);
+        }else if (type.equals("creditcard")){
+            showPayment();
         }
 
         whatOrder = ListOrderActivity.getWhatOrder();
@@ -152,7 +155,11 @@ public class PaymentActivity extends AppCompatActivity {
             layoutHotel.setVisibility(View.VISIBLE);
             setValueHotel();
         }
+    }
 
+    private void showPayment(){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://sandbox.tiket.com/payment/checkout_payment?checkouttoken=19d0ceaca45f9ee27e3c51df52786f1d904280f9"));
+        startActivity(browserIntent);
     }
 
     private void setValueHotel() {
