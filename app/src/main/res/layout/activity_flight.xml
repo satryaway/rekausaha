@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -32,7 +32,7 @@
             android:scrollbars="horizontal"
             app:tabIndicatorColor="@color/colorPrimaryDark"
             app:tabSelectedTextColor="@color/colorPrimaryDark"
-            app:tabTextColor="@color/colorPrimary"/>
+            app:tabTextColor="@color/colorPrimary" />
 
     </android.support.design.widget.AppBarLayout>
 
@@ -54,45 +54,53 @@
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_horizontal_margin">
 
-                <TextView
-                    android:id="@+id/dari"
+                <LinearLayout
+                    android:id="@+id/flight_from_wrapper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:text="@string/dari"
-                    android:textColor="@android:color/white"/>
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/dari_airport_code"
-                    style="@style/Base.TextAppearance.AppCompat.Title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_below="@+id/dari"
-                    android:layout_toLeftOf="@+id/imageView"
-                    android:layout_toStartOf="@+id/imageView"
-                    android:text="---------"
-                    android:textAllCaps="true"
-                    android:textColor="@android:color/white"/>
+                    <TextView
+                        android:id="@+id/dari"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="@string/dari"
+                        android:textColor="@android:color/white" />
 
-                <TextView
-                    android:id="@+id/dari_airport_name"
-                    style="@style/TextAppearance.AppCompat.Subhead"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/dari_airport_code"
-                    android:layout_toLeftOf="@+id/imageView"
-                    android:layout_toStartOf="@+id/imageView"
-                    android:singleLine="true"
-                    android:scrollHorizontally="true"
-                    android:ellipsize="marquee"
-                    android:marqueeRepeatLimit ="marquee_forever"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:text="-------------------"
-                    android:textColor="@android:color/white"/>
+                    <TextView
+                        android:id="@+id/dari_airport_code"
+                        style="@style/Base.TextAppearance.AppCompat.Title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@+id/dari"
+                        android:layout_toLeftOf="@+id/imageView"
+                        android:layout_toStartOf="@+id/imageView"
+                        android:text="---------"
+                        android:textAllCaps="true"
+                        android:textColor="@android:color/white" />
+
+                    <TextView
+                        android:id="@+id/dari_airport_name"
+                        style="@style/TextAppearance.AppCompat.Subhead"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/dari_airport_code"
+                        android:layout_toLeftOf="@+id/imageView"
+                        android:layout_toStartOf="@+id/imageView"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"
+                        android:text="-------------------"
+                        android:textColor="@android:color/white" />
+
+                </LinearLayout>
 
                 <ImageView
                     android:id="@+id/imageView"
@@ -100,50 +108,63 @@
                     android:layout_height="80dp"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/ic_flyto"/>
+                    android:src="@drawable/ic_flyto" />
 
-                <TextView
-                    android:id="@+id/menuju"
+
+                <LinearLayout
+                    android:id="@+id/flight_to_wrapper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="@string/menuju"
-                    android:textColor="@android:color/white"/>
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/menuju_airport_code"
-                    style="@style/Base.TextAppearance.AppCompat.Title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/menuju"
-                    android:layout_toEndOf="@+id/imageView"
-                    android:layout_toRightOf="@+id/imageView"
-                    android:gravity="right|end"
-                    android:text="---------"
-                    android:textAllCaps="true"
-                    android:textColor="@android:color/white"/>
+                    <TextView
+                        android:id="@+id/menuju"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="right"
+                        android:text="@string/menuju"
+                        android:textColor="@android:color/white" />
 
-                <TextView
-                    android:id="@+id/menuju_airport_name"
-                    style="@style/TextAppearance.AppCompat.Subhead"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/menuju_airport_code"
-                    android:layout_toEndOf="@+id/imageView"
-                    android:layout_toRightOf="@+id/imageView"
-                    android:singleLine="true"
-                    android:scrollHorizontally="true"
-                    android:ellipsize="marquee"
-                    android:marqueeRepeatLimit ="marquee_forever"
-                    android:focusable="true"
-                    android:gravity="right"
-                    android:focusableInTouchMode="true"
-                    android:text="-------------------"
-                    android:textColor="@android:color/white"/>
+                    <TextView
+                        android:id="@+id/menuju_airport_code"
+                        style="@style/Base.TextAppearance.AppCompat.Title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/menuju"
+                        android:layout_gravity="right"
+                        android:layout_toEndOf="@+id/imageView"
+                        android:layout_toRightOf="@+id/imageView"
+                        android:gravity="right|end"
+                        android:text="---------"
+                        android:textAllCaps="true"
+                        android:textColor="@android:color/white" />
+
+                    <TextView
+                        android:id="@+id/menuju_airport_name"
+                        style="@style/TextAppearance.AppCompat.Subhead"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/menuju_airport_code"
+                        android:layout_gravity="right"
+                        android:layout_toEndOf="@+id/imageView"
+                        android:layout_toRightOf="@+id/imageView"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:gravity="right"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"
+                        android:text="-------------------"
+                        android:textColor="@android:color/white" />
+
+                </LinearLayout>
 
             </RelativeLayout>
 
@@ -164,14 +185,14 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/activity_vertical_margin"
-                    android:src="@drawable/ic_calendar"/>
+                    android:src="@drawable/ic_calendar" />
 
                 <TextView
                     android:id="@+id/berangkat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/image_berangkat"
-                    android:text="@string/berangkat"/>
+                    android:text="@string/berangkat" />
 
                 <TextView
                     android:id="@+id/date_berangkat"
@@ -180,7 +201,7 @@
                     android:layout_below="@+id/berangkat"
                     android:layout_toRightOf="@+id/image_berangkat"
                     android:text="Sabtu, 9 Januari 2016"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
 
             </RelativeLayout>
@@ -191,7 +212,7 @@
                 android:layout_below="@+id/choose_berangkat"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:background="@android:color/darker_gray"/>
+                android:background="@android:color/darker_gray" />
 
             <RelativeLayout
                 android:id="@+id/choose_pulang"
@@ -211,14 +232,14 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/activity_vertical_margin"
-                    android:src="@drawable/ic_calendar"/>
+                    android:src="@drawable/ic_calendar" />
 
                 <TextView
                     android:id="@+id/pulang"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/image_pulang"
-                    android:text="@string/pulang"/>
+                    android:text="@string/pulang" />
 
                 <TextView
                     android:id="@+id/date_pulang"
@@ -227,7 +248,7 @@
                     android:layout_below="@+id/pulang"
                     android:layout_toRightOf="@+id/image_pulang"
                     android:text="Senin, 11 Januari 2016"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
 
             </RelativeLayout>
@@ -239,7 +260,7 @@
                 android:layout_below="@+id/choose_pulang"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:background="@android:color/darker_gray"/>
+                android:background="@android:color/darker_gray" />
 
             <TextView
                 android:id="@+id/penumpang"
@@ -248,7 +269,7 @@
                 android:layout_below="@+id/choose_pulang"
                 android:layout_margin="@dimen/activity_horizontal_margin"
                 android:text="@string/penumpang"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:id="@+id/penumpang_description"
@@ -274,7 +295,7 @@
                         android:gravity="center"
                         android:text="1"
                         android:textSize="30sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/adult"
@@ -284,7 +305,7 @@
                         android:layout_centerHorizontal="true"
                         android:gravity="center"
                         android:lines="2"
-                        android:text="@string/dewasa"/>
+                        android:text="@string/dewasa" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -298,14 +319,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="50"
-                            android:text="-"/>
+                            android:text="-" />
 
                         <Button
                             android:id="@+id/btn_adult_plus"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="50"
-                            android:text="+"/>
+                            android:text="+" />
                     </LinearLayout>
 
 
@@ -315,7 +336,7 @@
                     android:layout_width="1px"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
-                    android:background="@android:color/darker_gray"/>
+                    android:background="@android:color/darker_gray" />
 
 
                 <com.reka.tour.views.SquareView
@@ -334,7 +355,7 @@
                         android:gravity="center"
                         android:text="0"
                         android:textSize="30sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/child"
@@ -344,7 +365,7 @@
                         android:layout_centerHorizontal="true"
                         android:gravity="center"
                         android:lines="2"
-                        android:text="@string/anak"/>
+                        android:text="@string/anak" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -357,14 +378,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="50"
-                            android:text="-"/>
+                            android:text="-" />
 
                         <Button
                             android:id="@+id/btn_child_plus"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="50"
-                            android:text="+"/>
+                            android:text="+" />
                     </LinearLayout>
 
 
@@ -374,7 +395,7 @@
                     android:layout_width="1px"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
-                    android:background="@android:color/darker_gray"/>
+                    android:background="@android:color/darker_gray" />
 
                 <com.reka.tour.views.SquareView
                     android:layout_width="0dp"
@@ -392,7 +413,7 @@
                         android:gravity="center"
                         android:text="0"
                         android:textSize="30sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/baby"
@@ -402,7 +423,7 @@
                         android:layout_centerHorizontal="true"
                         android:gravity="center"
                         android:lines="2"
-                        android:text="@string/bayi"/>
+                        android:text="@string/bayi" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -416,14 +437,14 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="50"
                             android:text="-"
-                            android:visibility="visible"/>
+                            android:visibility="visible" />
 
                         <Button
                             android:id="@+id/btn_baby_plus"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="50"
-                            android:text="+"/>
+                            android:text="+" />
                     </LinearLayout>
 
 
@@ -455,7 +476,7 @@
                         android:gravity="center"
                         android:padding="10dp"
                         android:text="@string/cari_pesawat"
-                        android:textColor="@android:color/white"/>
+                        android:textColor="@android:color/white" />
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
 

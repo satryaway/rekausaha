@@ -184,14 +184,14 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
         totalBaby = Integer.parseInt(tvBabyTotal.getText().toString());
 
         switch (v.getId()) {
-            case R.id.dari_airport_code:
+            case R.id.flight_from_wrapper:
                 pickIntent = new Intent(FlightActivity.this,
                         AirportChooserActivity.class);
                 pickIntent.putExtra("title", getString(R.string.pilih_kota_keberangkatan));
                 pickIntent.putExtra(CommonConstants.FLIGHT, CommonConstants.DEPARTURE);
                 startActivityForResult(pickIntent, DARI_AIRPORT);
                 break;
-            case R.id.menuju_airport_code:
+            case R.id.flight_to_wrapper:
                 pickIntent = new Intent(FlightActivity.this,
                         AirportChooserActivity.class);
                 pickIntent.putExtra("title", getString(R.string.pilih_kota_tujuan));
@@ -261,6 +261,8 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.cari_pesawat:
                 if (AIRPORT_CODE_A.isEmpty() || AIRPORT_CODE_D.isEmpty()) {
                     Toast.makeText(FlightActivity.this, "Silahkan pilih bandara keberangkatan dan tujuan", Toast.LENGTH_LONG).show();
+                } else if (AIRPORT_CODE_A.equals(AIRPORT_CODE_D)) {
+                    Toast.makeText(FlightActivity.this, "Kota keberangkatan dan kota tujuan harus berbeda", Toast.LENGTH_LONG).show();
                 } else {
                     Intent findFlightIntent = new Intent(FlightActivity.this, DepartureActivity.class);
                     findFlightIntent.putExtra(CommonConstants.AIRPORT_CODE_D, AIRPORT_CODE_D);
