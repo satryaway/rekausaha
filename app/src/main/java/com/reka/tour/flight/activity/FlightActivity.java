@@ -94,6 +94,7 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
     private Calendar flightDate;
     private Calendar nextWeekCalendar;
     private Date todayDate;
+    private Calendar departureDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,12 +122,13 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
         todayDate = newCalendar.getTime();
         tvDeparture.setText(dateDayFormatter.format(newCalendar.getTime()));
         dateDeparture = dateFormatter.format(newCalendar.getTime());
-        flightDate = newCalendar;
+        flightDate = Calendar.getInstance();
 
         //date next week
         nextWeekCalendar = newCalendar;
         nextWeekCalendar.add(Calendar.DATE, 6);
         tvArrival.setText(dateDayFormatter.format(nextWeekCalendar.getTime()));
+        departureDate = nextWeekCalendar;
 
         tabLayout.addTab(tabLayout.newTab().setText(R.string.sekali_jalan));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.pulang_pergi));
@@ -221,10 +223,10 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
                 new CalendarDatePickerDialogFragment().setOnDateSetListener(new CalendarDatePickerDialogFragment.OnDateSetListener() {
                     @Override
                     public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
-                        Calendar newDate = Calendar.getInstance();
-                        newDate.set(year, monthOfYear, dayOfMonth);
-                        tvArrival.setText(dateDayFormatter.format(newDate.getTime()));
-                        dateArrival = dateFormatter.format(newDate.getTime());
+                        departureDate = Calendar.getInstance();
+                        departureDate.set(year, monthOfYear, dayOfMonth);
+                        tvArrival.setText(dateDayFormatter.format(departureDate.getTime()));
+                        dateArrival = dateFormatter.format(departureDate.getTime());
                     }
                 }).show(getSupportFragmentManager(), "DATEPICKER");
                 break;
@@ -279,6 +281,8 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
                     Toast.makeText(FlightActivity.this, "Penumpang dewasa minimal 1 orang", Toast.LENGTH_LONG).show();
                 } else if (selectedDate < todayData) {
                     Toast.makeText(FlightActivity.this, "Maaf, tanggal yang dipilih sudah lewat. Silahkan pilih tanggal lain", Toast.LENGTH_LONG).show();
+                } else if (departureDate.getTime().getTime() < flightDate.getTime().getTime()) {
+                    Toast.makeText(FlightActivity.this, "Tanggal pulang minimal harus sama atau lebih besar dari tanggal pergi. Silahkan pilih tanggal lain\n", Toast.LENGTH_LONG).show();
                 } else {
                     Intent findFlightIntent = new Intent(FlightActivity.this, DepartureActivity.class);
                     findFlightIntent.putExtra(CommonConstants.AIRPORT_CODE_D, AIRPORT_CODE_D);
