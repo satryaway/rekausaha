@@ -298,6 +298,8 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
                     Toast.makeText(FlightActivity.this, "Tanggal pulang minimal harus sama atau lebih besar dari tanggal pergi. Silahkan pilih tanggal lain", Toast.LENGTH_LONG).show();
                 } else if (Integer.valueOf(dayDifference) > 547) {
                     Toast.makeText(FlightActivity.this, "Tanggal keberangkatan tidak lebih dari 547 hari", Toast.LENGTH_LONG).show();
+                } else if (totalAdult < totalBaby) {
+                    Toast.makeText(FlightActivity.this, "Jumlah bayi tidak lebih dari jumlah dewasa", Toast.LENGTH_LONG).show();
                 } else {
                     Intent findFlightIntent = new Intent(FlightActivity.this, DepartureActivity.class);
                     findFlightIntent.putExtra(CommonConstants.AIRPORT_CODE_D, AIRPORT_CODE_D);
