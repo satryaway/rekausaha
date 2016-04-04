@@ -41,45 +41,30 @@
         android:text="Diskon Eksklusif Tiket Pesawat. Khusus pelanggan Info Promo, nikmati diskon untuk tiket pesawat dengan 17+ maskapai rute domestik dan internasional."
         android:textColor="@android:color/white" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/layout_navmenu"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="-30dp">
+        android:orientation="horizontal"
+        android:weightSum="2">
 
         <ImageView
             android:id="@+id/nav_flight"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_above="@+id/nav_hotel"
-            android:layout_marginRight="-50dp"
-            android:layout_toLeftOf="@+id/nav_hotel"
-            android:layout_toStartOf="@+id/nav_hotel"
-            android:padding="10dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_weight="1"
+            android:padding="20dp"
             android:src="@drawable/flight_ic" />
 
         <ImageView
-            android:id="@+id/nav_train"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_above="@+id/nav_hotel"
-            android:layout_marginLeft="-50dp"
-            android:layout_toEndOf="@+id/nav_hotel"
-            android:layout_toRightOf="@+id/nav_hotel"
-            android:padding="10dp"
-            android:src="@drawable/train_ic" />
-
-        <ImageView
             android:id="@+id/nav_hotel"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="-30dp"
-            android:padding="10dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_weight="1"
+            android:padding="20dp"
             android:src="@drawable/hotel_ic" />
-    </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>
