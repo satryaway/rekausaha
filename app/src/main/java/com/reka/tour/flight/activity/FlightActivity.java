@@ -102,8 +102,6 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
 
         initUI();
         setCallBack();
-
-
     }
 
     private void initUI() {
@@ -181,8 +179,6 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         Intent pickIntent;
-
-
         totalAdult = Integer.parseInt(tvAdultTotal.getText().toString());
         totalChild = Integer.parseInt(tvChildTotal.getText().toString());
         totalBaby = Integer.parseInt(tvBabyTotal.getText().toString());
@@ -263,8 +259,8 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
                 }
                 break;
             case R.id.cari_pesawat:
-                if (dariAirportCode.getText().toString().isEmpty() || menujuAirportCode.getText().toString().isEmpty()) {
-                    Toast.makeText(FlightActivity.this, "Isi yang masih kosong", Toast.LENGTH_LONG).show();
+                if (AIRPORT_CODE_A.isEmpty() || AIRPORT_CODE_D.isEmpty()) {
+                    Toast.makeText(FlightActivity.this, "Silahkan pilih bandara keberangkatan dan tujuan", Toast.LENGTH_LONG).show();
                 } else {
                     Intent findFlightIntent = new Intent(FlightActivity.this, DepartureActivity.class);
                     findFlightIntent.putExtra(CommonConstants.AIRPORT_CODE_D, AIRPORT_CODE_D);
@@ -299,7 +295,7 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
                 AIRPORT_NAME_D = data.getStringExtra(CommonConstants.AIRPORT_NAME_D);
                 AIRPORT_LOCATION_D = data.getStringExtra(CommonConstants.AIRPORT_LOCATION_D);
                 dariAirportCode.setText(AIRPORT_CODE_D);
-                dariAirportName.setText(AIRPORT_NAME_D + "\n" + AIRPORT_LOCATION_D);
+                dariAirportName.setText(String.format("%s\n%s", AIRPORT_NAME_D, AIRPORT_LOCATION_D));
             }
 
             if (requestCode == MENUJU_AIRPORT) {
