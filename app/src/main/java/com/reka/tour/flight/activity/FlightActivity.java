@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -95,6 +96,7 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
     private Calendar nextWeekCalendar;
     private Date todayDate;
     private Calendar departureDate;
+    private boolean isBackForth = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,9 +139,11 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
                 if (position == 0) {
+                    isBackForth = false;
                     dpArrival.setVisibility(View.GONE);
                     dateArrival = "";
                 } else if (position == 1) {
+                    isBackForth = true;
                     dpArrival.setVisibility(View.VISIBLE);
                     dateArrival = dateFormatter.format(nextWeekCalendar.getTime());
                 }
@@ -271,6 +275,15 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
                 long selectedDate = flightDate.getTime().getTime();
                 long todayData = todayDate.getTime();
 
+                //Comparing dates
+                long difference = Math.abs(flightDate.getTime().getTime() - todayDate.getTime());
+                long differenceDates = difference / (24 * 60 * 60 * 1000);
+
+                //Convert long to String
+                String dayDifference = Long.toString(differenceDates);
+
+                Log.e("HERE", "HERE: " + dayDifference);
+
                 if (AIRPORT_CODE_A.isEmpty() || AIRPORT_CODE_D.isEmpty()) {
                     Toast.makeText(FlightActivity.this, "Silahkan pilih bandara keberangkatan dan tujuan", Toast.LENGTH_LONG).show();
                 } else if (AIRPORT_CODE_A.equals(AIRPORT_CODE_D)) {
@@ -281,8 +294,10 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
                     Toast.makeText(FlightActivity.this, "Penumpang dewasa minimal 1 orang", Toast.LENGTH_LONG).show();
                 } else if (selectedDate < todayData) {
                     Toast.makeText(FlightActivity.this, "Maaf, tanggal yang dipilih sudah lewat. Silahkan pilih tanggal lain", Toast.LENGTH_LONG).show();
-                } else if (departureDate.getTime().getTime() < flightDate.getTime().getTime()) {
-                    Toast.makeText(FlightActivity.this, "Tanggal pulang minimal harus sama atau lebih besar dari tanggal pergi. Silahkan pilih tanggal lain\n", Toast.LENGTH_LONG).show();
+                } else if (isBackForth && (departureDate.getTime().getTime() < flightDate.getTime().getTime())) {
+                    Toast.makeText(FlightActivity.this, "Tanggal pulang minimal harus sama atau lebih besar dari tanggal pergi. Silahkan pilih tanggal lain", Toast.LENGTH_LONG).show();
+                } else if (Integer.valueOf(dayDifference) > 547) {
+                    Toast.makeText(FlightActivity.this, "Tanggal keberangkatan tidak lebih dari 547 hari", Toast.LENGTH_LONG).show();
                 } else {
                     Intent findFlightIntent = new Intent(FlightActivity.this, DepartureActivity.class);
                     findFlightIntent.putExtra(CommonConstants.AIRPORT_CODE_D, AIRPORT_CODE_D);
