@@ -265,6 +265,8 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
                     Toast.makeText(FlightActivity.this, "Kota keberangkatan dan kota tujuan harus berbeda", Toast.LENGTH_LONG).show();
                 } else if (totalAdult == 0 && totalChild == 0 && totalBaby == 0) {
                     Toast.makeText(FlightActivity.this, "Harap pilih jumlah penumpang", Toast.LENGTH_LONG).show();
+                }else if (totalAdult == 0) {
+                    Toast.makeText(FlightActivity.this, "Penumpang dewasa minimal 1 orang", Toast.LENGTH_LONG).show();
                 } else {
                     Intent findFlightIntent = new Intent(FlightActivity.this, DepartureActivity.class);
                     findFlightIntent.putExtra(CommonConstants.AIRPORT_CODE_D, AIRPORT_CODE_D);
