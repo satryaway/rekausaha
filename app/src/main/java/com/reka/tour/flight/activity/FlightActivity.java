@@ -19,6 +19,7 @@ import com.reka.tour.utils.CommonConstants;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import butterknife.Bind;
@@ -90,6 +91,9 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
     private SimpleDateFormat dateDayFormatter;
     private SimpleDateFormat dateFormatter;
     private Calendar newCalendar;
+    private Calendar flightDate;
+    private Calendar nextWeekCalendar;
+    private Date todayDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,12 +118,15 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
         dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
         //date now
+        todayDate = newCalendar.getTime();
         tvDeparture.setText(dateDayFormatter.format(newCalendar.getTime()));
         dateDeparture = dateFormatter.format(newCalendar.getTime());
+        flightDate = newCalendar;
 
         //date next week
-        newCalendar.add(Calendar.DATE, 6);
-        tvArrival.setText(dateDayFormatter.format(newCalendar.getTime()));
+        nextWeekCalendar = newCalendar;
+        nextWeekCalendar.add(Calendar.DATE, 6);
+        tvArrival.setText(dateDayFormatter.format(nextWeekCalendar.getTime()));
 
         tabLayout.addTab(tabLayout.newTab().setText(R.string.sekali_jalan));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.pulang_pergi));
@@ -132,7 +139,7 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
                     dateArrival = "";
                 } else if (position == 1) {
                     dpArrival.setVisibility(View.VISIBLE);
-                    dateArrival = dateFormatter.format(newCalendar.getTime());
+                    dateArrival = dateFormatter.format(nextWeekCalendar.getTime());
                 }
             }
 
@@ -203,10 +210,10 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
                 new CalendarDatePickerDialogFragment().setOnDateSetListener(new CalendarDatePickerDialogFragment.OnDateSetListener() {
                     @Override
                     public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
-                        Calendar newDate = Calendar.getInstance();
-                        newDate.set(year, monthOfYear, dayOfMonth);
-                        tvDeparture.setText(dateDayFormatter.format(newDate.getTime()));
-                        dateDeparture = dateFormatter.format(newDate.getTime());
+                        flightDate = Calendar.getInstance();
+                        flightDate.set(year, monthOfYear, dayOfMonth);
+                        tvDeparture.setText(dateDayFormatter.format(flightDate.getTime()));
+                        dateDeparture = dateFormatter.format(flightDate.getTime());
                     }
                 }).show(getSupportFragmentManager(), "DATEPICKER");
                 break;
@@ -259,14 +266,19 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
                 }
                 break;
             case R.id.cari_pesawat:
+                long selectedDate = flightDate.getTime().getTime();
+                long todayData = todayDate.getTime();
+
                 if (AIRPORT_CODE_A.isEmpty() || AIRPORT_CODE_D.isEmpty()) {
                     Toast.makeText(FlightActivity.this, "Silahkan pilih bandara keberangkatan dan tujuan", Toast.LENGTH_LONG).show();
                 } else if (AIRPORT_CODE_A.equals(AIRPORT_CODE_D)) {
                     Toast.makeText(FlightActivity.this, "Kota keberangkatan dan kota tujuan harus berbeda", Toast.LENGTH_LONG).show();
                 } else if (totalAdult == 0 && totalChild == 0 && totalBaby == 0) {
                     Toast.makeText(FlightActivity.this, "Harap pilih jumlah penumpang", Toast.LENGTH_LONG).show();
-                }else if (totalAdult == 0) {
+                } else if (totalAdult == 0) {
                     Toast.makeText(FlightActivity.this, "Penumpang dewasa minimal 1 orang", Toast.LENGTH_LONG).show();
+                } else if (selectedDate < todayData) {
+                    Toast.makeText(FlightActivity.this, "Maaf, tanggal yang dipilih sudah lewat. Silahkan pilih tanggal lain", Toast.LENGTH_LONG).show();
                 } else {
                     Intent findFlightIntent = new Intent(FlightActivity.this, DepartureActivity.class);
                     findFlightIntent.putExtra(CommonConstants.AIRPORT_CODE_D, AIRPORT_CODE_D);
