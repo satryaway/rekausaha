@@ -44,13 +44,22 @@ import cz.msebera.android.httpclient.Header;
 
 public class DepartureActivity extends AppCompatActivity {
     private final int FILTER_FLIGHT = 100;
-    @Bind(R.id.list_schedule) TwoWayView listSchedule;
-    @Bind(R.id.list_flight) ListView listFlight;
-    @Bind(R.id.dari_airport_code) TextView dariAirportCode;
-    @Bind(R.id.dari_airport_name) TextView dariAirportName;
-    @Bind(R.id.menuju_airport_code) TextView menujuAirportCode;
-    @Bind(R.id.menuju_airport_name) TextView menujuAirportName;
-    @Bind(R.id.tv_noflight) TextView tvNoflight;
+    @Bind(R.id.list_schedule)
+    TwoWayView listSchedule;
+    @Bind(R.id.list_flight)
+    ListView listFlight;
+    @Bind(R.id.dari_airport_code)
+    TextView dariAirportCode;
+    @Bind(R.id.dari_airport_name)
+    TextView dariAirportName;
+    @Bind(R.id.menuju_airport_code)
+    TextView menujuAirportCode;
+    @Bind(R.id.menuju_airport_name)
+    TextView menujuAirportName;
+    @Bind(R.id.tv_noflight)
+    TextView tvNoflight;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
     private ScheduleAdapter scheduleAdapter;
     private ArrayList<NearbyGoDate> nearbyGoDateArrayList = new ArrayList<>();
     private ArrayList<Departures> depAirportArrayList = new ArrayList<>();
@@ -59,35 +68,76 @@ public class DepartureActivity extends AppCompatActivity {
     private FlightAdapter flightAdapter;
     private Bundle bundle;
     private String dateValue, retDateValue;
+    ;
+    private boolean isReturn;
+    private String jsonObjectResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        bundle = getIntent().getExtras();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_departure);
         ButterKnife.bind(this);
 
-        ((Toolbar) findViewById(R.id.toolbar)).setNavigationIcon(R.drawable.back);
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        toolbar.setNavigationIcon(R.drawable.back);
+        isReturn = bundle.getBoolean(CommonConstants.IS_RETURN);
+
+        if (!isReturn) {
+            toolbar.setTitle(getString(R.string.pergi));
+        } else {
+            toolbar.setTitle(bundle.getBoolean(CommonConstants.IS_IN_RETURN) ? getString(R.string.pulang) : getString(R.string.pergi));
+        }
+
+        setSupportActionBar(toolbar);
 
         dariAirportName.setSelected(true);
         menujuAirportName.setSelected(true);
 
         setValue();
-        getData();
+        if (!isReturn) {
+            getData();
+        } else {
+            if (bundle.getBoolean(CommonConstants.IS_IN_RETURN)) {
+                collectData(bundle.getString(CommonConstants.JSON));
+            } else {
+                getData();
+            }
+        }
         setCallback();
 
     }
 
     private void setValue() {
-        bundle = getIntent().getExtras();
-        dariAirportCode.setText(bundle.getString(CommonConstants.AIRPORT_CODE_D));
-        dariAirportName.setText(bundle.getString(CommonConstants.AIRPORT_LOCATION_D));
-        menujuAirportCode.setText(bundle.getString(CommonConstants.AIRPORT_CODE_A));
-        menujuAirportName.setText(bundle.getString(CommonConstants.AIRPORT_LOCATION_A));
+        if (!isReturn) {
+            dariAirportCode.setText(bundle.getString(CommonConstants.AIRPORT_CODE_D));
+            dariAirportName.setText(bundle.getString(CommonConstants.AIRPORT_LOCATION_D));
+            menujuAirportCode.setText(bundle.getString(CommonConstants.AIRPORT_CODE_A));
+            menujuAirportName.setText(bundle.getString(CommonConstants.AIRPORT_LOCATION_A));
 
-//        dateValue = "2014-05-25";
-        dateValue = bundle.getString(CommonConstants.DATE);
-        retDateValue = bundle.getString(CommonConstants.RET_DATE);
+            isReturn = bundle.getBoolean(CommonConstants.IS_RETURN, false);
+            dateValue = bundle.getString(CommonConstants.DATE);
+        } else {
+            if (bundle.getBoolean(CommonConstants.IS_IN_RETURN)) {
+                dariAirportCode.setText(bundle.getString(CommonConstants.AIRPORT_CODE_A));
+                dariAirportName.setText(bundle.getString(CommonConstants.AIRPORT_LOCATION_A));
+                menujuAirportCode.setText(bundle.getString(CommonConstants.AIRPORT_CODE_D));
+                menujuAirportName.setText(bundle.getString(CommonConstants.AIRPORT_LOCATION_D));
+
+                isReturn = bundle.getBoolean(CommonConstants.IS_RETURN, false);
+                dateValue = bundle.getString(CommonConstants.DATE);
+                retDateValue = bundle.getString(CommonConstants.RET_DATE);
+            } else {
+                dariAirportCode.setText(bundle.getString(CommonConstants.AIRPORT_CODE_A));
+                dariAirportName.setText(bundle.getString(CommonConstants.AIRPORT_LOCATION_A));
+                menujuAirportCode.setText(bundle.getString(CommonConstants.AIRPORT_CODE_D));
+                menujuAirportName.setText(bundle.getString(CommonConstants.AIRPORT_LOCATION_D));
+
+                isReturn = bundle.getBoolean(CommonConstants.IS_RETURN, false);
+                dateValue = bundle.getString(CommonConstants.DATE);
+                retDateValue = bundle.getString(CommonConstants.RET_DATE);
+            }
+        }
     }
 
     private void setCallback() {
@@ -95,7 +145,11 @@ public class DepartureActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 view.setSelected(true);
-                dateValue = nearbyGoDateArrayList.get(position).date;
+                if (!bundle.getBoolean(CommonConstants.IS_IN_RETURN)) {
+                    dateValue = nearbyGoDateArrayList.get(position).date;
+                } else {
+                    retDateValue = nearbyGoDateArrayList.get(position).date;
+                }
 //                                retDate = nearbyGoDateArrayList.get(position).date;
                 getData();
 
@@ -105,24 +159,79 @@ public class DepartureActivity extends AppCompatActivity {
         listFlight.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intentDeparture = new Intent(DepartureActivity.this, OrderFlightActivity.class);
+                if (!isReturn) {
+                    Intent intentDeparture = new Intent(DepartureActivity.this, OrderFlightActivity.class);
+                    if (departures != null) {
+                        intentDeparture.putExtra(CommonConstants.FLIGHT_ID, departures.get(position).flightId);
+                        intentDeparture.putExtra(CommonConstants.HAS_FOOD, departures.get(position).hasFood);
+                        intentDeparture.putExtra(CommonConstants.AIRPORT_TAX, departures.get(position).airportTax);
+                        intentDeparture.putExtra(CommonConstants.BAGGAGE, departures.get(position).checkInBaggage);
+                        intentDeparture.putExtra(CommonConstants.NEED_BAGGAGE, departures.get(position).needBaggage);
+                    } else {
+                        intentDeparture.putExtra(CommonConstants.FLIGHT_ID, depAirportArrayList.get(position).flightId);
+                        intentDeparture.putExtra(CommonConstants.HAS_FOOD, depAirportArrayList.get(position).hasFood);
+                        intentDeparture.putExtra(CommonConstants.AIRPORT_TAX, depAirportArrayList.get(position).airportTax);
+                        intentDeparture.putExtra(CommonConstants.BAGGAGE, depAirportArrayList.get(position).checkInBaggage);
+                        intentDeparture.putExtra(CommonConstants.NEED_BAGGAGE, depAirportArrayList.get(position).needBaggage);
+                    }
 
-                if (departures != null) {
-                    intentDeparture.putExtra(CommonConstants.FLIGHT_ID, departures.get(position).flightId);
-                    intentDeparture.putExtra(CommonConstants.HAS_FOOD, departures.get(position).hasFood);
-                    intentDeparture.putExtra(CommonConstants.AIRPORT_TAX, departures.get(position).airportTax);
-                    intentDeparture.putExtra(CommonConstants.BAGGAGE, departures.get(position).checkInBaggage);
-                    intentDeparture.putExtra(CommonConstants.NEED_BAGGAGE, departures.get(position).needBaggage);
+                    intentDeparture.putExtra(CommonConstants.DATE, dateValue);
+                    startActivity(intentDeparture);
                 } else {
-                    intentDeparture.putExtra(CommonConstants.FLIGHT_ID, depAirportArrayList.get(position).flightId);
-                    intentDeparture.putExtra(CommonConstants.HAS_FOOD, depAirportArrayList.get(position).hasFood);
-                    intentDeparture.putExtra(CommonConstants.AIRPORT_TAX, depAirportArrayList.get(position).airportTax);
-                    intentDeparture.putExtra(CommonConstants.BAGGAGE, depAirportArrayList.get(position).checkInBaggage);
-                    intentDeparture.putExtra(CommonConstants.NEED_BAGGAGE, depAirportArrayList.get(position).needBaggage);
-                }
+                    if (bundle.getBoolean(CommonConstants.IS_IN_RETURN)) {
+                        Intent intentDeparture = new Intent(DepartureActivity.this, OrderFlightActivity.class);
+                        if (departures != null) {
+                            intentDeparture.putExtra(CommonConstants.FLIGHT_ID, bundle.getString(CommonConstants.FLIGHT_ID));
+                            intentDeparture.putExtra(CommonConstants.RET_FLIGHT_ID, departures.get(position).flightId);
+                            intentDeparture.putExtra(CommonConstants.HAS_FOOD, departures.get(position).hasFood);
+                            intentDeparture.putExtra(CommonConstants.AIRPORT_TAX, departures.get(position).airportTax);
+                            intentDeparture.putExtra(CommonConstants.BAGGAGE, departures.get(position).checkInBaggage);
+                            intentDeparture.putExtra(CommonConstants.NEED_BAGGAGE, departures.get(position).needBaggage);
+                            intentDeparture.putExtra(CommonConstants.RET_DATE, bundle.getString(CommonConstants.RET_DATE));
+                            intentDeparture.putExtra(CommonConstants.IS_RETURN, true);
+                        } else {
+                            intentDeparture.putExtra(CommonConstants.FLIGHT_ID, bundle.getString(CommonConstants.FLIGHT_ID));
+                            intentDeparture.putExtra(CommonConstants.RET_FLIGHT_ID, depAirportArrayList.get(position).flightId);
+                            intentDeparture.putExtra(CommonConstants.HAS_FOOD, depAirportArrayList.get(position).hasFood);
+                            intentDeparture.putExtra(CommonConstants.AIRPORT_TAX, depAirportArrayList.get(position).airportTax);
+                            intentDeparture.putExtra(CommonConstants.BAGGAGE, depAirportArrayList.get(position).checkInBaggage);
+                            intentDeparture.putExtra(CommonConstants.NEED_BAGGAGE, depAirportArrayList.get(position).needBaggage);
+                            intentDeparture.putExtra(CommonConstants.RET_DATE, bundle.getString(CommonConstants.RET_DATE));
+                            intentDeparture.putExtra(CommonConstants.IS_RETURN, true);
+                        }
 
-                intentDeparture.putExtra(CommonConstants.DATE, dateValue);
-                startActivity(intentDeparture);
+                        intentDeparture.putExtra(CommonConstants.DATE, dateValue);
+                        startActivity(intentDeparture);
+                    } else {
+                        /**
+                         * dariAirportCode.setText(bundle.getString(CommonConstants.AIRPORT_CODE_D));
+                         dariAirportName.setText(bundle.getString(CommonConstants.AIRPORT_LOCATION_D));
+                         menujuAirportCode.setText(bundle.getString(CommonConstants.AIRPORT_CODE_A));
+                         menujuAirportName.setText(bundle.getString(CommonConstants.AIRPORT_LOCATION_A));
+                         isReturn = bundle.getBoolean(CommonConstants.IS_RETURN, false);
+
+                         //        dateValue = "2014-05-25";
+                         dateValue = bundle.getString(CommonConstants.DATE);
+                         retDateValue = bundle.getString(CommonConstants.RET_DATE);
+                         *
+                         */
+                        Intent findFlightIntent = new Intent(DepartureActivity.this, DepartureActivity.class);
+                        findFlightIntent.putExtra(CommonConstants.FLIGHT_ID, departures != null ? departures.get(position).flightId : depAirportArrayList.get(position).flightId);
+                        findFlightIntent.putExtra(CommonConstants.AIRPORT_CODE_D, bundle.getString(CommonConstants.AIRPORT_CODE_A));
+                        findFlightIntent.putExtra(CommonConstants.AIRPORT_CODE_A, bundle.getString(CommonConstants.AIRPORT_CODE_D));
+                        findFlightIntent.putExtra(CommonConstants.AIRPORT_LOCATION_D, bundle.getString(CommonConstants.AIRPORT_LOCATION_A));
+                        findFlightIntent.putExtra(CommonConstants.AIRPORT_LOCATION_A, bundle.getString(CommonConstants.AIRPORT_LOCATION_D));
+                        findFlightIntent.putExtra(CommonConstants.ADULT, bundle.getString(CommonConstants.ADULT));
+                        findFlightIntent.putExtra(CommonConstants.CHILD, bundle.getString(CommonConstants.CHILD));
+                        findFlightIntent.putExtra(CommonConstants.INFRANT, bundle.getString(CommonConstants.INFRANT));
+                        findFlightIntent.putExtra(CommonConstants.DATE, bundle.getString(CommonConstants.DATE));
+                        findFlightIntent.putExtra(CommonConstants.RET_DATE, bundle.getString(CommonConstants.RET_DATE));
+                        findFlightIntent.putExtra(CommonConstants.IS_IN_RETURN, true);
+                        findFlightIntent.putExtra(CommonConstants.IS_RETURN, true);
+                        findFlightIntent.putExtra(CommonConstants.JSON, jsonObjectResponse);
+                        startActivity(findFlightIntent);
+                    }
+                }
             }
         });
     }
@@ -170,9 +279,9 @@ public class DepartureActivity extends AppCompatActivity {
                 String FILTER_HARGA = data.getStringExtra(CommonConstants.FILTER_HARGA);
 
                 Log.e("FILTER_MASKAPAI", FILTER_MASKAPAI.toLowerCase(Locale.getDefault()) + " " +
-                                FILTER_JAM.toLowerCase(Locale.getDefault()) + " " +
-                                FILTER_OPSI.toLowerCase(Locale.getDefault()) + " " +
-                                FILTER_HARGA.toLowerCase(Locale.getDefault())
+                        FILTER_JAM.toLowerCase(Locale.getDefault()) + " " +
+                        FILTER_OPSI.toLowerCase(Locale.getDefault()) + " " +
+                        FILTER_HARGA.toLowerCase(Locale.getDefault())
                 );
 
                 flightAdapter = new FlightAdapter(DepartureActivity.this, departures);
@@ -211,7 +320,7 @@ public class DepartureActivity extends AppCompatActivity {
         requestParams.put(CommonConstants.CHILD, bundle.getString(CommonConstants.CHILD));
         requestParams.put(CommonConstants.INFRANT, bundle.getString(CommonConstants.INFRANT));
         requestParams.put(CommonConstants.DATE, dateValue);
-        requestParams.put(CommonConstants.RET_DATE, retDateValue);
+        if (isReturn) requestParams.put(CommonConstants.RET_DATE, retDateValue);
         requestParams.put(CommonConstants.TOKEN, "19d0ceaca45f9ee27e3c51df52786f1d904280f9");
         requestParams.put(CommonConstants.OUTPUT, CommonConstants.JSON);
 
@@ -233,62 +342,8 @@ public class DepartureActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.e("JSON FLIGHT", response.toString() + "");
-                try {
-                    listFlight(View.VISIBLE);
-
-                    Gson gson = new Gson();
-
-                    if (nearbyGoDateArrayList.size() > 0) {
-                        listSchedule.setAdapter(null);
-                        scheduleAdapter.notifyDataSetChanged();
-                        nearbyGoDateArrayList.clear();
-                    }
-
-                    JSONArray nearbyDateArrayList = response.getJSONObject(CommonConstants.NEARBY_GO_DATE).getJSONArray(CommonConstants.NEARBY);
-                    for (int i = 0; i < nearbyDateArrayList.length(); i++) {
-                        nearbyGoDateArrayList.add(gson.fromJson(nearbyDateArrayList.getJSONObject(i).toString(), NearbyGoDate.class));
-                    }
-
-                    scheduleAdapter = new ScheduleAdapter(DepartureActivity.this, nearbyGoDateArrayList, dateValue);
-                    listSchedule.setAdapter(scheduleAdapter);
-
-                    for (int i = 0; i < nearbyGoDateArrayList.size(); i++) {
-                        if (nearbyGoDateArrayList.get(i).date.equals(dateValue)) {
-                            if (i - 1 > 0) {
-                                listSchedule.setSelection(i - 1);
-                            } else {
-                                listSchedule.setSelection(i);
-                            }
-                        }
-                        if (nearbyGoDateArrayList.get(i).price != null) {
-                            if (nearbyGoDateArrayList.get(i).price.equals("0.00")) {
-                                noFlight(View.VISIBLE);
-                                listFlight(View.GONE);
-                            }
-                        }
-                    }
-
-                    JSONArray airportArrayList = response.getJSONObject(CommonConstants.DEPARTURES).getJSONArray(CommonConstants.RESULT);
-                    for (int i = 0; i < airportArrayList.length(); i++) {
-                        depAirportArrayList.add(gson.fromJson(airportArrayList.getJSONObject(i).toString(), Departures.class));
-                    }
-
-                    // Sorting
-                    Collections.sort(depAirportArrayList, new Comparator<Departures>() {
-                        @Override
-                        public int compare(Departures fruit2, Departures fruit1) {
-                            return Double.compare(Double.parseDouble(fruit2.priceAdult), Double.parseDouble(fruit1.priceAdult));
-                        }
-                    });
-
-                    depAirportFilterArrayList.addAll(depAirportArrayList);
-
-                    flightAdapter = new FlightAdapter(DepartureActivity.this, depAirportArrayList);
-                    listFlight.setAdapter(flightAdapter);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                jsonObjectResponse = response.toString();
+                collectData(jsonObjectResponse);
             }
 
             @Override
@@ -302,5 +357,84 @@ public class DepartureActivity extends AppCompatActivity {
                 ErrorException.getError(DepartureActivity.this, errorResponse);
             }
         });
+    }
+
+    private void collectData(String responseString) {
+        try {
+            JSONObject response = new JSONObject(responseString);
+            Log.e("JSON FLIGHT", response.toString() + "");
+            listFlight(View.VISIBLE);
+
+            Gson gson = new Gson();
+
+            if (nearbyGoDateArrayList.size() > 0) {
+                listSchedule.setAdapter(null);
+                scheduleAdapter.notifyDataSetChanged();
+                nearbyGoDateArrayList.clear();
+            }
+            JSONArray nearbyDateArrayList = null;
+
+            //Check if it's return
+            if (isReturn) {
+                if (bundle.getBoolean(CommonConstants.IS_IN_RETURN))
+                    nearbyDateArrayList = response.getJSONObject(CommonConstants.NEARBY_RET_DATE).getJSONArray(CommonConstants.NEARBY);
+                else
+                    nearbyDateArrayList = response.getJSONObject(CommonConstants.NEARBY_GO_DATE).getJSONArray(CommonConstants.NEARBY);
+            } else {
+                nearbyDateArrayList = response.getJSONObject(CommonConstants.NEARBY_GO_DATE).getJSONArray(CommonConstants.NEARBY);
+            }
+
+            for (int i = 0; i < nearbyDateArrayList.length(); i++) {
+                nearbyGoDateArrayList.add(gson.fromJson(nearbyDateArrayList.getJSONObject(i).toString(), NearbyGoDate.class));
+            }
+
+            scheduleAdapter = new ScheduleAdapter(DepartureActivity.this, nearbyGoDateArrayList, !bundle.getBoolean(CommonConstants.IS_IN_RETURN) ? dateValue : retDateValue);
+            listSchedule.setAdapter(scheduleAdapter);
+
+            for (int i = 0; i < nearbyGoDateArrayList.size(); i++) {
+                if (nearbyGoDateArrayList.get(i).date.equals(!bundle.getBoolean(CommonConstants.IS_IN_RETURN) ? dateValue : retDateValue)) {
+                    if (i - 1 > 0) {
+                        listSchedule.setSelection(i - 1);
+                    } else {
+                        listSchedule.setSelection(i);
+                    }
+                }
+                if (nearbyGoDateArrayList.get(i).price != null) {
+                    if (nearbyGoDateArrayList.get(i).price.equals("0.00")) {
+                        noFlight(View.VISIBLE);
+                        listFlight(View.GONE);
+                    }
+                }
+            }
+            JSONArray airportArrayList = null;
+
+            if (isReturn) {
+                if (bundle.getBoolean(CommonConstants.IS_IN_RETURN))
+                    airportArrayList = response.getJSONObject(CommonConstants.DEPARTURES).getJSONArray(CommonConstants.RESULT);
+                else
+                    airportArrayList = response.getJSONObject(CommonConstants.RETURNS).getJSONArray(CommonConstants.RESULT);
+            } else {
+                airportArrayList = response.getJSONObject(CommonConstants.DEPARTURES).getJSONArray(CommonConstants.RESULT);
+            }
+
+            for (int i = 0; i < airportArrayList.length(); i++) {
+                depAirportArrayList.add(gson.fromJson(airportArrayList.getJSONObject(i).toString(), Departures.class));
+            }
+
+            // Sorting
+            Collections.sort(depAirportArrayList, new Comparator<Departures>() {
+                @Override
+                public int compare(Departures fruit2, Departures fruit1) {
+                    return Double.compare(Double.parseDouble(fruit2.priceAdult), Double.parseDouble(fruit1.priceAdult));
+                }
+            });
+
+            depAirportFilterArrayList.addAll(depAirportArrayList);
+
+            flightAdapter = new FlightAdapter(DepartureActivity.this, depAirportArrayList);
+            listFlight.setAdapter(flightAdapter);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

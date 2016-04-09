@@ -8,6 +8,11 @@ public class CommonConstants {
 //    public static final String PRODUCTION_URL = "https://api.tiket.com/";
     public static final String DEVELOPMENT_URL = "https://api-sandbox.tiket.com/";
     public static final String BASE_URL = DEVELOPMENT_URL;
+    public static final String IS_RETURN = "is_return";
+    public static final String IS_IN_RETURN = "is_in_return";
+    public static final String RET_FLIGHT_ID = "ret_flight_id";
+    public static final String NEARBY_RET_DATE = "nearby_ret_date";
+    public static final String RETURNS = "returns";
     public static String TOKEN = "token";
     public static String OUTPUT = "output";
     public static String JSON = "json";

@@ -1,15 +1,17 @@
 package com.reka.tour.flight.activity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,44 +42,12 @@ import cz.msebera.android.httpclient.Header;
 public class OrderFlightActivity extends AppCompatActivity {
     private static String flightID, dateValue, hasFood, airportTax, baggage, needBaggage;
     private static DeparturesOrder departuresReturn;
-    @Bind(R.id.tv_date)
-    TextView tvDate;
-    @Bind(R.id.iv_flight)
-    ImageView ivFlight;
-    @Bind(R.id.tv_name)
-    TextView tvAirlinesName;
-    @Bind(R.id.tv_flight_number)
-    TextView tvFlightNumber;
-    @Bind(R.id.iv_baggage)
-    ImageView ivBaggage;
-    @Bind(R.id.iv_food)
-    ImageView ivFood;
-    @Bind(R.id.iv_tax)
-    ImageView ivTax;
-    @Bind(R.id.tv_rute)
-    TextView tvRute;
-    @Bind(R.id.tv_duration)
-    TextView tvDuration;
-    @Bind(R.id.tv_adult)
-    TextView tvAdult;
-    @Bind(R.id.tv_adult_price)
-    TextView tvAdultPrice;
-    @Bind(R.id.layout_child)
-    RelativeLayout layoutChild;
-    @Bind(R.id.tv_child)
-    TextView tvChild;
-    @Bind(R.id.tv_child_price)
-    TextView tvChildPrice;
-    @Bind(R.id.layout_baby)
-    RelativeLayout layoutInfrant;
-    @Bind(R.id.tv_baby)
-    TextView tvInfrant;
-    @Bind(R.id.tv_baby_price)
-    TextView tvInfrantPrice;
-    @Bind(R.id.tv_total)
-    TextView tvTotal;
+    @Bind(R.id.detail_order_wrapper)
+    LinearLayout detailOrderWrapper;
+
     @Bind(R.id.layout_detail_order)
     ScrollView layoutDetailOrder;
+
     private Bundle bundle;
     private DeparturesOrder departures;
     private Resource resource;
@@ -85,6 +55,9 @@ public class OrderFlightActivity extends AppCompatActivity {
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private SimpleDateFormat dateFormatter = new SimpleDateFormat("EEEE, dd MMMM yyyy", new Locale("ind", "IDN"));
     private String responeString;
+    private String retDateValue;
+    private boolean isReturn;
+    private String retFlightID;
 
     public static DeparturesOrder getDepartures() {
         return departuresReturn;
@@ -123,6 +96,11 @@ public class OrderFlightActivity extends AppCompatActivity {
         airportTax = bundle.getString(CommonConstants.AIRPORT_TAX);
         needBaggage = bundle.getString(CommonConstants.NEED_BAGGAGE);
         baggage = bundle.getString(CommonConstants.BAGGAGE);
+        isReturn = bundle.getBoolean(CommonConstants.IS_RETURN, false);
+        if (isReturn) {
+            retDateValue = bundle.getString(CommonConstants.RET_DATE);
+            retFlightID = bundle.getString(CommonConstants.RET_FLIGHT_ID);
+        }
 
         getData();
         setCallBack();
@@ -138,6 +116,10 @@ public class OrderFlightActivity extends AppCompatActivity {
         requestParams.put(CommonConstants.DATE, dateValue);
         requestParams.put(CommonConstants.TOKEN, "19d0ceaca45f9ee27e3c51df52786f1d904280f9");
         requestParams.put(CommonConstants.OUTPUT, CommonConstants.JSON);
+        if (isReturn) {
+            requestParams.put(CommonConstants.RET_FLIGHT_ID, retFlightID);
+            requestParams.put(CommonConstants.RET_DATE, retDateValue);
+        }
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.please_wait));
@@ -167,10 +149,16 @@ public class OrderFlightActivity extends AppCompatActivity {
 
                     JSONObject departuresObject = response.getJSONObject(CommonConstants.DEPARTURES);
                     departures = gson.fromJson(departuresObject.toString(), DeparturesOrder.class);
-                    departuresReturn = departures;
 
-                    setValue();
                     layoutDetailOrder.setVisibility(View.VISIBLE);
+                    setPassenger(departures);
+
+                    JSONObject returnObject = response.getJSONObject(CommonConstants.RETURNS);
+                    if (returnObject != null) {
+                        departuresReturn = gson.fromJson(returnObject.toString(), DeparturesOrder.class);
+                        setPassenger(departuresReturn);
+                    }
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -201,7 +189,30 @@ public class OrderFlightActivity extends AppCompatActivity {
         });
     }
 
-    private void setValue() {
+    private void setPassenger(DeparturesOrder departures) {
+
+        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+        View view = layoutInflater.inflate(R.layout.item_order_detail, null);
+
+        View ivFood = view.findViewById(R.id.iv_food);
+        View ivTax = view.findViewById(R.id.iv_tax);
+        ImageView ivBaggage = (ImageView) view.findViewById(R.id.iv_baggage);
+        ImageView ivFlight = (ImageView) view.findViewById(R.id.iv_flight);
+        TextView tvDate = (TextView) view.findViewById(R.id.tv_date);
+        TextView tvAirlinesName = (TextView) view.findViewById(R.id.tv_name);
+        TextView tvFlightNumber = (TextView) view.findViewById(R.id.tv_flight_number);
+        TextView tvRute = (TextView) view.findViewById(R.id.tv_rute);
+        TextView tvDuration = (TextView) view.findViewById(R.id.tv_duration);
+        TextView tvAdult = (TextView) view.findViewById(R.id.tv_adult);
+        TextView tvAdultPrice = (TextView) view.findViewById(R.id.tv_adult_price);
+        TextView tvChild = (TextView) view.findViewById(R.id.tv_child);
+        TextView tvChildPrice = (TextView) view.findViewById(R.id.tv_child_price);
+        TextView tvInfrant = (TextView) view.findViewById(R.id.tv_baby);
+        TextView tvInfrantPrice = (TextView) view.findViewById(R.id.tv_baby_price);
+        View layoutChild = view.findViewById(R.id.layout_child);
+        View layoutInfrant = view.findViewById(R.id.layout_baby);
+        TextView tvTotal = (TextView) view.findViewById(R.id.tv_total);
+
 
         if (hasFood.equals("0")) {
             ivFood.setVisibility(View.GONE);
@@ -218,7 +229,6 @@ public class OrderFlightActivity extends AppCompatActivity {
                 ivBaggage.setImageResource(R.drawable.ic_baggage_20);
             }
         }
-
 
         try {
             tvDate.setText(dateFormatter.format(dateFormat.parse(departures.flightDate)));
@@ -254,6 +264,7 @@ public class OrderFlightActivity extends AppCompatActivity {
 
         tvTotal.setText(Util.toRupiahFormat(departures.priceValue));
 
+        detailOrderWrapper.addView(view);
     }
 
     @Override

@@ -88,15 +88,15 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
     private int totalChild = 0;
     private int totalBaby = 0;
     private String dateDeparture;
-    private String dateArrival;
+    private String dateReturn;
     private SimpleDateFormat dateDayFormatter;
     private SimpleDateFormat dateFormatter;
     private Calendar newCalendar;
-    private Calendar flightDate;
+    private Calendar departureDate;
     private Calendar nextWeekCalendar;
     private Date todayDate;
-    private Calendar departureDate;
-    private boolean isBackForth = false;
+    private Calendar returnDate;
+    private boolean isReturn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,13 +124,13 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
         todayDate = newCalendar.getTime();
         tvDeparture.setText(dateDayFormatter.format(newCalendar.getTime()));
         dateDeparture = dateFormatter.format(newCalendar.getTime());
-        flightDate = Calendar.getInstance();
+        departureDate = Calendar.getInstance();
 
         //date next week
         nextWeekCalendar = newCalendar;
         nextWeekCalendar.add(Calendar.DATE, 6);
         tvArrival.setText(dateDayFormatter.format(nextWeekCalendar.getTime()));
-        departureDate = nextWeekCalendar;
+        returnDate = nextWeekCalendar;
 
         tabLayout.addTab(tabLayout.newTab().setText(R.string.sekali_jalan));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.pulang_pergi));
@@ -139,13 +139,13 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
                 if (position == 0) {
-                    isBackForth = false;
+                    isReturn = false;
                     dpArrival.setVisibility(View.GONE);
-                    dateArrival = "";
+                    dateReturn = "";
                 } else if (position == 1) {
-                    isBackForth = true;
+                    isReturn = true;
                     dpArrival.setVisibility(View.VISIBLE);
-                    dateArrival = dateFormatter.format(nextWeekCalendar.getTime());
+                    dateReturn = dateFormatter.format(nextWeekCalendar.getTime());
                 }
             }
 
@@ -216,10 +216,10 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
                 new CalendarDatePickerDialogFragment().setOnDateSetListener(new CalendarDatePickerDialogFragment.OnDateSetListener() {
                     @Override
                     public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
-                        flightDate = Calendar.getInstance();
-                        flightDate.set(year, monthOfYear, dayOfMonth);
-                        tvDeparture.setText(dateDayFormatter.format(flightDate.getTime()));
-                        dateDeparture = dateFormatter.format(flightDate.getTime());
+                        departureDate = Calendar.getInstance();
+                        departureDate.set(year, monthOfYear, dayOfMonth);
+                        tvDeparture.setText(dateDayFormatter.format(departureDate.getTime()));
+                        dateDeparture = dateFormatter.format(departureDate.getTime());
                     }
                 }).show(getSupportFragmentManager(), "DATEPICKER");
                 break;
@@ -227,10 +227,10 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
                 new CalendarDatePickerDialogFragment().setOnDateSetListener(new CalendarDatePickerDialogFragment.OnDateSetListener() {
                     @Override
                     public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
-                        departureDate = Calendar.getInstance();
-                        departureDate.set(year, monthOfYear, dayOfMonth);
-                        tvArrival.setText(dateDayFormatter.format(departureDate.getTime()));
-                        dateArrival = dateFormatter.format(departureDate.getTime());
+                        returnDate = Calendar.getInstance();
+                        returnDate.set(year, monthOfYear, dayOfMonth);
+                        tvArrival.setText(dateDayFormatter.format(returnDate.getTime()));
+                        dateReturn = dateFormatter.format(returnDate.getTime());
                     }
                 }).show(getSupportFragmentManager(), "DATEPICKER");
                 break;
@@ -272,11 +272,11 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
                 }
                 break;
             case R.id.cari_pesawat:
-                long selectedDate = flightDate.getTime().getTime();
+                long selectedDate = departureDate.getTime().getTime();
                 long todayData = todayDate.getTime();
 
                 //Comparing dates
-                long difference = Math.abs(flightDate.getTime().getTime() - todayDate.getTime());
+                long difference = Math.abs(departureDate.getTime().getTime() - todayDate.getTime());
                 long differenceDates = difference / (24 * 60 * 60 * 1000);
 
                 //Convert long to String
@@ -294,7 +294,7 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
                     Toast.makeText(FlightActivity.this, "Penumpang dewasa minimal 1 orang", Toast.LENGTH_LONG).show();
                 } else if (selectedDate < todayData) {
                     Toast.makeText(FlightActivity.this, "Maaf, tanggal yang dipilih sudah lewat. Silahkan pilih tanggal lain", Toast.LENGTH_LONG).show();
-                } else if (isBackForth && (departureDate.getTime().getTime() < flightDate.getTime().getTime())) {
+                } else if (isReturn && (returnDate.getTime().getTime() < departureDate.getTime().getTime())) {
                     Toast.makeText(FlightActivity.this, "Tanggal pulang minimal harus sama atau lebih besar dari tanggal pergi. Silahkan pilih tanggal lain", Toast.LENGTH_LONG).show();
                 } else if (Integer.valueOf(dayDifference) > 547) {
                     Toast.makeText(FlightActivity.this, "Tanggal keberangkatan tidak lebih dari 547 hari", Toast.LENGTH_LONG).show();
@@ -312,7 +312,9 @@ public class FlightActivity extends AppCompatActivity implements View.OnClickLis
                     findFlightIntent.putExtra(CommonConstants.CHILD, String.valueOf(totalChild));
                     findFlightIntent.putExtra(CommonConstants.INFRANT, String.valueOf(totalBaby));
                     findFlightIntent.putExtra(CommonConstants.DATE, dateDeparture);
-                    findFlightIntent.putExtra(CommonConstants.RET_DATE, dateArrival);
+                    findFlightIntent.putExtra(CommonConstants.RET_DATE, dateReturn);
+                    findFlightIntent.putExtra(CommonConstants.IS_RETURN, isReturn);
+                    findFlightIntent.putExtra(CommonConstants.IS_IN_RETURN, false);
                     startActivity(findFlightIntent);
                 }
 
