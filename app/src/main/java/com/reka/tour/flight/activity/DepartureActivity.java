@@ -128,10 +128,10 @@ public class DepartureActivity extends AppCompatActivity {
                 dateValue = bundle.getString(CommonConstants.DATE);
                 retDateValue = bundle.getString(CommonConstants.RET_DATE);
             } else {
-                dariAirportCode.setText(bundle.getString(CommonConstants.AIRPORT_CODE_A));
-                dariAirportName.setText(bundle.getString(CommonConstants.AIRPORT_LOCATION_A));
-                menujuAirportCode.setText(bundle.getString(CommonConstants.AIRPORT_CODE_D));
-                menujuAirportName.setText(bundle.getString(CommonConstants.AIRPORT_LOCATION_D));
+                dariAirportCode.setText(bundle.getString(CommonConstants.AIRPORT_CODE_D));
+                dariAirportName.setText(bundle.getString(CommonConstants.AIRPORT_LOCATION_D));
+                menujuAirportCode.setText(bundle.getString(CommonConstants.AIRPORT_CODE_A));
+                menujuAirportName.setText(bundle.getString(CommonConstants.AIRPORT_LOCATION_A));
 
                 isReturn = bundle.getBoolean(CommonConstants.IS_RETURN, false);
                 dateValue = bundle.getString(CommonConstants.DATE);
@@ -187,7 +187,7 @@ public class DepartureActivity extends AppCompatActivity {
                             intentDeparture.putExtra(CommonConstants.AIRPORT_TAX, departures.get(position).airportTax);
                             intentDeparture.putExtra(CommonConstants.BAGGAGE, departures.get(position).checkInBaggage);
                             intentDeparture.putExtra(CommonConstants.NEED_BAGGAGE, departures.get(position).needBaggage);
-                            intentDeparture.putExtra(CommonConstants.RET_DATE, bundle.getString(CommonConstants.RET_DATE));
+                            intentDeparture.putExtra(CommonConstants.RET_DATE, retDateValue);
                             intentDeparture.putExtra(CommonConstants.IS_RETURN, true);
                         } else {
                             intentDeparture.putExtra(CommonConstants.FLIGHT_ID, bundle.getString(CommonConstants.FLIGHT_ID));
@@ -196,7 +196,7 @@ public class DepartureActivity extends AppCompatActivity {
                             intentDeparture.putExtra(CommonConstants.AIRPORT_TAX, depAirportArrayList.get(position).airportTax);
                             intentDeparture.putExtra(CommonConstants.BAGGAGE, depAirportArrayList.get(position).checkInBaggage);
                             intentDeparture.putExtra(CommonConstants.NEED_BAGGAGE, depAirportArrayList.get(position).needBaggage);
-                            intentDeparture.putExtra(CommonConstants.RET_DATE, bundle.getString(CommonConstants.RET_DATE));
+                            intentDeparture.putExtra(CommonConstants.RET_DATE, retDateValue);
                             intentDeparture.putExtra(CommonConstants.IS_RETURN, true);
                         }
 
@@ -224,7 +224,7 @@ public class DepartureActivity extends AppCompatActivity {
                         findFlightIntent.putExtra(CommonConstants.ADULT, bundle.getString(CommonConstants.ADULT));
                         findFlightIntent.putExtra(CommonConstants.CHILD, bundle.getString(CommonConstants.CHILD));
                         findFlightIntent.putExtra(CommonConstants.INFRANT, bundle.getString(CommonConstants.INFRANT));
-                        findFlightIntent.putExtra(CommonConstants.DATE, bundle.getString(CommonConstants.DATE));
+                        findFlightIntent.putExtra(CommonConstants.DATE, dateValue);
                         findFlightIntent.putExtra(CommonConstants.RET_DATE, bundle.getString(CommonConstants.RET_DATE));
                         findFlightIntent.putExtra(CommonConstants.IS_IN_RETURN, true);
                         findFlightIntent.putExtra(CommonConstants.IS_RETURN, true);
@@ -410,9 +410,9 @@ public class DepartureActivity extends AppCompatActivity {
 
             if (isReturn) {
                 if (bundle.getBoolean(CommonConstants.IS_IN_RETURN))
-                    airportArrayList = response.getJSONObject(CommonConstants.DEPARTURES).getJSONArray(CommonConstants.RESULT);
-                else
                     airportArrayList = response.getJSONObject(CommonConstants.RETURNS).getJSONArray(CommonConstants.RESULT);
+                else
+                    airportArrayList = response.getJSONObject(CommonConstants.DEPARTURES).getJSONArray(CommonConstants.RESULT);
             } else {
                 airportArrayList = response.getJSONObject(CommonConstants.DEPARTURES).getJSONArray(CommonConstants.RESULT);
             }

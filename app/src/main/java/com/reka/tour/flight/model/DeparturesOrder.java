@@ -51,6 +51,7 @@ public class DeparturesOrder implements Serializable {
     public String duration;
     @SerializedName("image")
     public String image;
+    public String status;
 
 //    "flight_id": "2037033",
 //            "airlines_name": "GARUDA",

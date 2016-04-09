@@ -143,22 +143,23 @@ public class OrderFlightActivity extends AppCompatActivity {
                 responeString = response.toString();
 
                 setResponeString(response.toString());
+                layoutDetailOrder.setVisibility(View.VISIBLE);
 
                 try {
                     Gson gson = new Gson();
 
                     JSONObject departuresObject = response.getJSONObject(CommonConstants.DEPARTURES);
                     departures = gson.fromJson(departuresObject.toString(), DeparturesOrder.class);
+                    departures.status = getString(R.string.pergi);
 
-                    layoutDetailOrder.setVisibility(View.VISIBLE);
                     setPassenger(departures);
 
                     JSONObject returnObject = response.getJSONObject(CommonConstants.RETURNS);
                     if (returnObject != null) {
                         departuresReturn = gson.fromJson(returnObject.toString(), DeparturesOrder.class);
+                        departuresReturn.status = getString(R.string.pulang);
                         setPassenger(departuresReturn);
                     }
-
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -194,6 +195,8 @@ public class OrderFlightActivity extends AppCompatActivity {
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.item_order_detail, null);
 
+
+        TextView status = (TextView) view.findViewById(R.id.pergi);
         View ivFood = view.findViewById(R.id.iv_food);
         View ivTax = view.findViewById(R.id.iv_tax);
         ImageView ivBaggage = (ImageView) view.findViewById(R.id.iv_baggage);
@@ -213,6 +216,7 @@ public class OrderFlightActivity extends AppCompatActivity {
         View layoutInfrant = view.findViewById(R.id.layout_baby);
         TextView tvTotal = (TextView) view.findViewById(R.id.tv_total);
 
+        status.setText(departures.status);
 
         if (hasFood.equals("0")) {
             ivFood.setVisibility(View.GONE);
