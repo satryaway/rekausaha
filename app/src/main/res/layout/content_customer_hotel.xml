@@ -65,7 +65,7 @@
                     android:layout_marginBottom="4dp">
 
                     <EditText
-                        android:id="@+id/ev_first_name"
+                        android:id="@+id/field_et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/nama_depan"
@@ -269,7 +269,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/tv_next"
+                    android:id="@+id/next_btn"
                     style="@style/Base.TextAppearance.AppCompat.Title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

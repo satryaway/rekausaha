@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -102,7 +101,7 @@ public class PassangerAdapter extends ArrayAdapter<Passanger> {
 
         if (position == 0) {
             holder.checkboxDuplicate.setVisibility(View.VISIBLE);
-            setCheckBox(holder);
+//            setCheckBox(holder);
         }
 
         holder.evTanggaLahir.setInputType(InputType.TYPE_NULL);
@@ -201,7 +200,7 @@ public class PassangerAdapter extends ArrayAdapter<Passanger> {
 
     }
 
-    private void setCheckBox(final ViewHolder holder) {
+    /*private void setCheckBox(final ViewHolder holder) {
         holder.checkboxDuplicate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -224,7 +223,7 @@ public class PassangerAdapter extends ArrayAdapter<Passanger> {
                 }
             }
         });
-    }
+    }*/
 
     private void setDate(final ViewHolder holder) {
         newCalendar = Calendar.getInstance();
@@ -326,7 +325,7 @@ public class PassangerAdapter extends ArrayAdapter<Passanger> {
 
     static class ViewHolder {
         @Bind(R.id.ev_titel) EditText evTitel;
-        @Bind(R.id.ev_first_name) EditText evFirstName;
+        @Bind(R.id.field_et) EditText evFirstName;
         @Bind(R.id.ev_last_name) EditText evLastName;
         @Bind(R.id.ev_tanggal_lahir) EditText evTanggaLahir;
         @Bind(R.id.tv_country) TextView tvCountry;

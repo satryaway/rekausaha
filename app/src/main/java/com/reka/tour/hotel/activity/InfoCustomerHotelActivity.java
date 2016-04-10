@@ -36,7 +36,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class InfoCustomerHotelActivity extends AppCompatActivity {
     @Bind(R.id.ev_titel) EditText evTitel;
-    @Bind(R.id.ev_first_name) EditText evFirstName;
+    @Bind(R.id.field_et) EditText evFirstName;
     @Bind(R.id.ev_last_name) EditText evLastName;
     @Bind(R.id.ev_notelp) EditText evNotelp;
     @Bind(R.id.ev_email) EditText evEmail;
@@ -51,7 +51,7 @@ public class InfoCustomerHotelActivity extends AppCompatActivity {
     @Bind(R.id.layout_tamu) CardView layoutTamu;
 
 
-    @Bind(R.id.tv_next) TextView tvNext;
+    @Bind(R.id.next_btn) TextView tvNext;
     private Bundle bundle;
     private String[] titelDewasa = {"Mr", "Mrs", "Ms"};
     private String detailId;

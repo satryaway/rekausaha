@@ -10,4 +10,9 @@ public class Resource {
     public String id;
     @SerializedName("name")
     public String name;
+
+    public Resource(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }

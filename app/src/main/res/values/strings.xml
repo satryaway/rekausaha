@@ -171,4 +171,7 @@
     <string name="no_flight">Tidak ada penerbangan, silahkan mengubah tanggal dan rute.</string>
     <string name="refresh">Refresh</string>
     <string name="kewarganegaraan">Kewarganegaraan</string>
+    <string name="needed">Diperlukan</string>
+    <string name="field_not_completed">Data belum lengkap. Silahkan masukkan semua isian yang dibutuhkan</string>
+    <string name="ok">OK</string>
 </resources>

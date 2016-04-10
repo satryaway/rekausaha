@@ -92,7 +92,7 @@ public class OrderHotelActivity extends AppCompatActivity {
 
     }
 
-    @OnClick(R.id.tv_next)
+    @OnClick(R.id.next_btn)
     public void onClickPembayaran() {
         getOrder(url);
     }

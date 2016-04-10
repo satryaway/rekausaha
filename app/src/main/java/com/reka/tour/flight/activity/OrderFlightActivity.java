@@ -180,11 +180,14 @@ public class OrderFlightActivity extends AppCompatActivity {
     }
 
     private void setCallBack() {
-        findViewById(R.id.tv_next).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.next_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intentDeparture = new Intent(OrderFlightActivity.this, InfoPassangerActivity.class);
-                intentDeparture.putExtra(CommonConstants.RESPONE, getResponeString());
+                intentDeparture.putExtra(CommonConstants.RESPONE, getResponseString());
+                intentDeparture.putExtra(CommonConstants.FLIGHT_ID, flightID);
+                intentDeparture.putExtra(CommonConstants.RET_FLIGHT_ID, retFlightID);
+                intentDeparture.putExtra(CommonConstants.IS_RETURN, isReturn);
                 startActivity(intentDeparture);
             }
         });
@@ -194,7 +197,6 @@ public class OrderFlightActivity extends AppCompatActivity {
 
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.item_order_detail, null);
-
 
         TextView status = (TextView) view.findViewById(R.id.pergi);
         View ivFood = view.findViewById(R.id.iv_food);
@@ -283,7 +285,7 @@ public class OrderFlightActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public String getResponeString() {
+    public String getResponseString() {
         return responeString;
     }
 

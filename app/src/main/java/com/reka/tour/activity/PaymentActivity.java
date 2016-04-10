@@ -187,7 +187,7 @@ public class PaymentActivity extends AppCompatActivity {
 
     }
 
-    @OnClick(R.id.tv_next)
+    @OnClick(R.id.next_btn)
     void nextOnClick() {
         if (finish) {
             Intent intent = new Intent(this, MainActivity.class);
@@ -395,7 +395,7 @@ public class PaymentActivity extends AppCompatActivity {
                 }
 
                 ((Toolbar) findViewById(R.id.toolbar)).setNavigationIcon(null);
-                ((TextView) findViewById(R.id.tv_next)).setText("Selesai");
+                ((TextView) findViewById(R.id.next_btn)).setText("Selesai");
                 tvSisaWaktu.setVisibility(View.GONE);
                 tvUpto.setVisibility(View.GONE);
                 layoutTime.setVisibility(View.GONE);

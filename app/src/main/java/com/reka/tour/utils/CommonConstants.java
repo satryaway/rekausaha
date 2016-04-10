@@ -13,6 +13,7 @@ public class CommonConstants {
     public static final String RET_FLIGHT_ID = "ret_flight_id";
     public static final String NEARBY_RET_DATE = "nearby_ret_date";
     public static final String RETURNS = "returns";
+    public static final String COMBOBOX = "combobox";
     public static String TOKEN = "token";
     public static String OUTPUT = "output";
     public static String JSON = "json";
