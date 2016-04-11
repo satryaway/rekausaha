@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    package="com.reka.tour"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.reka.tour">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -19,39 +18,40 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.ListPaymentActivity"/>
-        <activity android:name=".activity.PaymentActivity"/>
-        <activity android:name=".activity.ListOrderActivity"/>
+        <activity android:name=".activity.ListPaymentActivity" />
+        <activity android:name=".activity.PaymentActivity" />
+        <activity android:name=".activity.ListOrderActivity" />
 
         <!--flight-->
-        <activity android:name=".flight.activity.FilterActivity"/>
-        <activity android:name=".flight.activity.AirportChooserActivity"/>
-        <activity android:name=".flight.activity.FlightActivity"/>
-        <activity android:name=".flight.activity.DepartureActivity"/>
-        <activity android:name=".flight.activity.ArrivalActivity"/>
-        <activity android:name=".flight.activity.OrderFlightActivity"/>
+        <activity android:name=".flight.activity.FilterActivity" />
+        <activity android:name=".flight.activity.AirportChooserActivity" />
+        <activity android:name=".flight.activity.FlightActivity" />
+        <activity android:name=".flight.activity.DepartureActivity" />
+        <activity android:name=".flight.activity.ArrivalActivity" />
+        <activity android:name=".flight.activity.OrderFlightActivity" />
         <activity
             android:name=".flight.activity.InfoPassangerActivity"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
 
         <!--hotel-->
         <activity
             android:name=".hotel.activity.HotelActivity"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".hotel.activity.ChooserHotelActivity"/>
-        <activity android:name=".hotel.activity.ListHotelActivity"/>
-        <activity android:name=".hotel.activity.SortirHotelActivity"/>
-        <activity android:name=".hotel.activity.FilterHotelActivity"/>
-        <activity android:name=".hotel.activity.ProfileHotelActivity"/>
-        <activity android:name=".hotel.activity.RoomHotelActivity"/>
-        <activity android:name=".hotel.activity.OrderHotelActivity"/>
-        <activity android:name=".hotel.activity.InfoCustomerHotelActivity"/>
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".hotel.activity.ChooserHotelActivity" />
+        <activity android:name=".hotel.activity.ListHotelActivity" />
+        <activity android:name=".hotel.activity.SortirHotelActivity" />
+        <activity android:name=".hotel.activity.FilterHotelActivity" />
+        <activity android:name=".hotel.activity.ProfileHotelActivity" />
+        <activity android:name=".hotel.activity.RoomHotelActivity" />
+        <activity android:name=".hotel.activity.OrderHotelActivity" />
+        <activity android:name=".hotel.activity.InfoCustomerHotelActivity" />
+        <activity android:name=".CheckoutPaymentActivity" />
 
     </application>
 

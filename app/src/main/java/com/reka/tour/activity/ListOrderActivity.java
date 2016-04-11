@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -52,9 +53,9 @@ public class ListOrderActivity extends AppCompatActivity {
         ((Toolbar) findViewById(R.id.toolbar)).setNavigationIcon(R.drawable.back);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
-
         bundle = getIntent().getExtras();
-        whatOrder = bundle.getString(CommonConstants.WHAT_ORDER);
+//        whatOrder = bundle.getString(CommonConstants.WHAT_ORDER);
+        whatOrder = "FLIGHT";
 
         Log.e("whatOrder", whatOrder + "");
 
@@ -67,7 +68,21 @@ public class ListOrderActivity extends AppCompatActivity {
     }
 
     private void setCallBack() {
-
+        findViewById(R.id.tv_checkout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (myOrders.size() > 0) {
+                    if (whatOrder.equals("FLIGHT")) {
+                        Intent intent = new Intent(ListOrderActivity.this, ListPaymentActivity.class);
+                        startActivity(intent);
+                    } else if (whatOrder.equals("HOTEL")) {
+                        Intent intent = new Intent(ListOrderActivity.this, InfoCustomerHotelActivity.class);
+                        intent.putExtra(CommonConstants.DETAIL_ID, myOrders.get(0).orderDetailId);
+                        startActivity(intent);
+                    }
+                }
+            }
+        });
     }
 
     @OnClick(R.id.tv_checkout)
@@ -121,7 +136,7 @@ public class ListOrderActivity extends AppCompatActivity {
                     myOrderAdapter = new MyOrderAdapter(ListOrderActivity.this, myOrders, ListOrderActivity.this);
                     listOrder.setAdapter(myOrderAdapter);
 
-                    if (myOrders.size() == 1) {
+                    /*if (myOrders.size() == 1) {
                         if (whatOrder.equals("FLIGHT")) {
                             Intent intent = new Intent(ListOrderActivity.this, ListPaymentActivity.class);
                             startActivity(intent);
@@ -131,7 +146,7 @@ public class ListOrderActivity extends AppCompatActivity {
                             startActivity(intent);
                         }
 
-                    }
+                    }*/
 
                 } catch (JSONException e) {
                     e.printStackTrace();

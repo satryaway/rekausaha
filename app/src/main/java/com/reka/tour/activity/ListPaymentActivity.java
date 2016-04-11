@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.reka.tour.CheckoutPaymentActivity;
 import com.reka.tour.R;
 import com.reka.tour.adapter.MethodPaymentAdapter;
 import com.reka.tour.model.MethodPayment;
@@ -57,7 +58,7 @@ public class ListPaymentActivity extends AppCompatActivity {
     void onItemMethodPaymentClick(int position) {
 
         if (!methodPayments.get(position).link.equals("#")) {
-            Intent intent = new Intent(ListPaymentActivity.this, PaymentActivity.class);
+            Intent intent = new Intent(ListPaymentActivity.this, CheckoutPaymentActivity.class);
             intent.putExtra(CommonConstants.LINK, methodPayments.get(position).link);
             intent.putExtra(CommonConstants.TYPE, methodPayments.get(position).type);
             intent.putExtra(CommonConstants.TEXT, methodPayments.get(position).text);

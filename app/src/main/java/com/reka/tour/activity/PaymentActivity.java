@@ -130,20 +130,24 @@ public class PaymentActivity extends AppCompatActivity {
         url = getIntent().getExtras().getString(CommonConstants.LINK);
         type = getIntent().getExtras().getString(CommonConstants.TYPE);
 
-        if (!url.equals("#")) {
+        /*if (!url.equals("#")) {
             getData(url);
-        }
-        Log.e("URL", url);
+        }*/
+        /*Log.e("URL", url);
 
         String text = getIntent().getExtras().getString(CommonConstants.TEXT);
-        ((Toolbar) findViewById(R.id.toolbar)).setTitle(text);
+        ((Toolbar) findViewById(R.id.toolbar)).setTitle(text);*/
 
 
-        if (type.equals(CommonConstants.KLIKBCA.toLowerCase())) {
+
+        /*if (type.equals(CommonConstants.KLIKBCA.toLowerCase())) {
             layoutKlikbca.setVisibility(View.VISIBLE);
         }else if (type.equals("creditcard")){
             showPayment();
-        }
+        }*/
+        /*String token = "19d0ceaca45f9ee27e3c51df52786f1d904280f9";
+        url = url + "&checkouttoken=" + token;
+        showPayment(url);*/
 
         whatOrder = ListOrderActivity.getWhatOrder();
         if (whatOrder.equals("FLIGHT")) {
@@ -157,8 +161,8 @@ public class PaymentActivity extends AppCompatActivity {
         }
     }
 
-    private void showPayment(){
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://sandbox.tiket.com/payment/checkout_payment?checkouttoken=19d0ceaca45f9ee27e3c51df52786f1d904280f9"));
+    private void showPayment(String url){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(browserIntent);
     }
 
