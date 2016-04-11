@@ -28,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -42,6 +43,8 @@ public class ListOrderActivity extends AppCompatActivity {
     private Bundle bundle;
     private static String whatOrder;
     private String orderId;
+    private HashMap<String, String> contactMap = new HashMap<>();
+    private String checkoutCustomerURL;
 
     public static ArrayList<MyOrder> getMyOrders() {
         return myOrders;
@@ -61,6 +64,7 @@ public class ListOrderActivity extends AppCompatActivity {
         bundle = getIntent().getExtras();
 //        whatOrder = bundle.getString(CommonConstants.WHAT_ORDER);
         whatOrder = "FLIGHT";
+        contactMap = (HashMap<String, String>) bundle.getSerializable(CommonConstants.CONTACT_MAP);
 
         Log.e("whatOrder", whatOrder + "");
 
@@ -117,6 +121,68 @@ public class ListOrderActivity extends AppCompatActivity {
                 Log.e("JSON FLIGHT", response.toString() + "");
                 try {
                     int statCode = response.getJSONObject(CommonConstants.DIAGNOSTIC).getInt(CommonConstants.STATUS);
+                    checkoutCustomerURL = response.getString(CommonConstants.NEXT_CHECHOUT_URI);
+                    if (statCode == 200) {
+                        registerCustomer();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Toast.makeText(ListOrderActivity.this, R.string.RTO, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Log.e("JSON ListOrder", errorResponse + "");
+                ErrorException.getError(ListOrderActivity.this, errorResponse);
+            }
+        });
+    }
+
+    private void registerCustomer() {
+        String url = checkoutCustomerURL;
+
+        RequestParams requestParams = new RequestParams();
+        requestParams.put(CommonConstants.TOKEN, RekaApplication.getInstance().getToken());
+        requestParams.put(CommonConstants.OUTPUT, CommonConstants.JSON);
+        String key = "salutation";
+        requestParams.put(key, getValue(key));
+        key = "firstName";
+        requestParams.put(key, getValue(key));
+        key = "lastName";
+        requestParams.put(key, getValue(key));
+        key = "emailAddress";
+        requestParams.put(key, getValue(key));
+        key = "phone";
+        requestParams.put(key, getValue(key));
+        requestParams.put("saveContinue", 2);
+
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getString(R.string.registering));
+
+        AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
+        client.setTimeout(10000);
+        client.get(url, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onStart() {
+                progressDialog.show();
+            }
+
+            @Override
+            public void onFinish() {
+                progressDialog.hide();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Log.e("JSON FLIGHT", response.toString() + "");
+                try {
+                    int statCode = response.getJSONObject(CommonConstants.DIAGNOSTIC).getInt(CommonConstants.STATUS);
                     if (statCode == 200) {
                         Intent intent = new Intent(ListOrderActivity.this, ListPaymentActivity.class);
                         startActivity(intent);
@@ -138,6 +204,16 @@ public class ListOrderActivity extends AppCompatActivity {
                 ErrorException.getError(ListOrderActivity.this, errorResponse);
             }
         });
+    }
+
+    private String getValue(String key) {
+        String value = "";
+        for (String keyMap: contactMap.keySet()) {
+            if (keyMap.toLowerCase().contains(key.toLowerCase())) {
+                value = contactMap.get(keyMap);
+            }
+        }
+        return value;
     }
 
     @OnClick(R.id.tv_checkout)

@@ -47,6 +47,7 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -109,6 +110,7 @@ public class InfoPassangerActivity extends AppCompatActivity {
     private String flightID;
     private String retFlightID;
     private boolean isReturn;
+    private HashMap<String, String> contactMap = new HashMap<>();
 
 
     @Override
@@ -360,6 +362,9 @@ public class InfoPassangerActivity extends AppCompatActivity {
                     content = requestedField.requiredField.value;
 
                 requestParams.add(requestedField.key, content);
+                if (requestedField.key.contains("con")) {
+                    contactMap.put(requestedField.key, content);
+                }
                 validatedCount++;
             }
         }
@@ -656,6 +661,7 @@ public class InfoPassangerActivity extends AppCompatActivity {
     private void nextActivity() {
         Intent intent = new Intent(InfoPassangerActivity.this, ListOrderActivity.class);
         intent.putExtra(CommonConstants.WHAT_ORDER, "FLIGHT");
+        intent.putExtra(CommonConstants.CONTACT_MAP, contactMap);
         startActivity(intent);
     }
 

@@ -18,6 +18,8 @@ public class CommonConstants {
     public static final String METHOD = "method";
     public static final String SECRET_KEY = "secretkey";
     public static final String STATUS = "status";
+    public static final String CONTACT_MAP = "contact_map";
+    public static final String NEXT_CHECHOUT_URI = "next_checkout_uri";
     public static String TOKEN = "token";
     public static String OUTPUT = "output";
     public static String JSON = "json";
