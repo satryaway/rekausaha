@@ -14,6 +14,9 @@ public class CommonConstants {
     public static final String NEARBY_RET_DATE = "nearby_ret_date";
     public static final String RETURNS = "returns";
     public static final String COMBOBOX = "combobox";
+    public static final String REKA_USAHA = "REKAUSAHA";
+    public static final String METHOD = "method";
+    public static final String SECRET_KEY = "secretkey";
     public static String TOKEN = "token";
     public static String OUTPUT = "output";
     public static String JSON = "json";

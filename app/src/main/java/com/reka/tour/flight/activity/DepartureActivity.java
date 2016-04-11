@@ -21,6 +21,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.reka.tour.R;
+import com.reka.tour.RekaApplication;
 import com.reka.tour.flight.adapter.FlightAdapter;
 import com.reka.tour.flight.adapter.ScheduleAdapter;
 import com.reka.tour.flight.model.Departures;
@@ -287,7 +288,7 @@ public class DepartureActivity extends AppCompatActivity {
         requestParams.put(CommonConstants.INFRANT, bundle.getString(CommonConstants.INFRANT));
         requestParams.put(CommonConstants.DATE, dateValue);
         if (isReturn) requestParams.put(CommonConstants.RET_DATE, retDateValue);
-        requestParams.put(CommonConstants.TOKEN, "19d0ceaca45f9ee27e3c51df52786f1d904280f9");
+        requestParams.put(CommonConstants.TOKEN, RekaApplication.getInstance().getToken());
         requestParams.put(CommonConstants.OUTPUT, CommonConstants.JSON);
 
         final ProgressDialog progressDialog = new ProgressDialog(this);

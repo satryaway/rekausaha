@@ -63,6 +63,7 @@ public class CheckoutPaymentActivity extends AppCompatActivity {
         settings.setJavaScriptEnabled(true);
         webview.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
         String newUA = "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.4) Gecko/20100101 Firefox/4.0";
+        newUA = "twh:[BUSINESS_ID];[BUSINESS_NAME]";
         webview.getSettings().setUserAgentString(newUA);
 
         final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
