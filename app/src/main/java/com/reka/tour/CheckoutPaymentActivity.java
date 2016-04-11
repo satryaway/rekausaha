@@ -97,7 +97,7 @@ public class CheckoutPaymentActivity extends AppCompatActivity {
             }
         });
 
-        url += "&checkouttoken=19d0ceaca45f9ee27e3c51df52786f1d904280f9";
+        url += "&checkouttoken=" + RekaApplication.getInstance().getToken();
         webview.loadUrl(url);
     }
 }

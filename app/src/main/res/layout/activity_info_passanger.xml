@@ -36,6 +36,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:id="@+id/passanger_info_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp" />
+
             <Button
                 android:id="@+id/next_btn"
                 style="@style/Base.TextAppearance.AppCompat.Title"
@@ -49,16 +56,6 @@
                 android:textAllCaps="true"
                 android:textColor="@android:color/white" />
 
-            <LinearLayout
-                android:id="@+id/passanger_info_wrapper"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="8dp" />
-
-
         </LinearLayout>
-
     </ScrollView>
-
 </LinearLayout>

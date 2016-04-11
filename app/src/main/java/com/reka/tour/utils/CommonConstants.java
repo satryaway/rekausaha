@@ -17,6 +17,7 @@ public class CommonConstants {
     public static final String REKA_USAHA = "REKAUSAHA";
     public static final String METHOD = "method";
     public static final String SECRET_KEY = "secretkey";
+    public static final String STATUS = "status";
     public static String TOKEN = "token";
     public static String OUTPUT = "output";
     public static String JSON = "json";

@@ -21,6 +21,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.reka.tour.R;
+import com.reka.tour.RekaApplication;
 import com.reka.tour.flight.model.DeparturesOrder;
 import com.reka.tour.flight.model.Resource;
 import com.reka.tour.utils.CommonConstants;
@@ -114,7 +115,7 @@ public class OrderFlightActivity extends AppCompatActivity {
         RequestParams requestParams = new RequestParams();
         requestParams.put(CommonConstants.FLIGHT_ID, flightID);
         requestParams.put(CommonConstants.DATE, dateValue);
-        requestParams.put(CommonConstants.TOKEN, "19d0ceaca45f9ee27e3c51df52786f1d904280f9");
+        requestParams.put(CommonConstants.TOKEN, RekaApplication.getInstance().getToken());
         requestParams.put(CommonConstants.OUTPUT, CommonConstants.JSON);
         if (isReturn) {
             requestParams.put(CommonConstants.RET_FLIGHT_ID, retFlightID);

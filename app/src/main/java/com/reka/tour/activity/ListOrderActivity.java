@@ -16,6 +16,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.reka.tour.R;
+import com.reka.tour.RekaApplication;
 import com.reka.tour.flight.adapter.MyOrderAdapter;
 import com.reka.tour.hotel.activity.InfoCustomerHotelActivity;
 import com.reka.tour.model.MyOrder;
@@ -35,10 +36,12 @@ import cz.msebera.android.httpclient.Header;
 
 public class ListOrderActivity extends AppCompatActivity {
     private static ArrayList<MyOrder> myOrders = new ArrayList<>();
-    @Bind(R.id.list_order) ListView listOrder;
+    @Bind(R.id.list_order)
+    ListView listOrder;
     private MyOrderAdapter myOrderAdapter;
     private Bundle bundle;
     private static String whatOrder;
+    private String orderId;
 
     public static ArrayList<MyOrder> getMyOrders() {
         return myOrders;
@@ -48,6 +51,8 @@ public class ListOrderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_order);
+
+        Log.d("TOKEN", RekaApplication.getInstance().getToken());
         ButterKnife.bind(this);
 
         ((Toolbar) findViewById(R.id.toolbar)).setNavigationIcon(R.drawable.back);
@@ -73,14 +78,64 @@ public class ListOrderActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (myOrders.size() > 0) {
                     if (whatOrder.equals("FLIGHT")) {
-                        Intent intent = new Intent(ListOrderActivity.this, ListPaymentActivity.class);
-                        startActivity(intent);
+                        checkoutRequest();
                     } else if (whatOrder.equals("HOTEL")) {
                         Intent intent = new Intent(ListOrderActivity.this, InfoCustomerHotelActivity.class);
                         intent.putExtra(CommonConstants.DETAIL_ID, myOrders.get(0).orderDetailId);
                         startActivity(intent);
                     }
                 }
+            }
+        });
+    }
+
+    private void checkoutRequest() {
+        String url = CommonConstants.BASE_URL + "order/checkout/" + orderId + "/IDR";
+
+        RequestParams requestParams = new RequestParams();
+        requestParams.put(CommonConstants.TOKEN, RekaApplication.getInstance().getToken());
+        requestParams.put(CommonConstants.OUTPUT, CommonConstants.JSON);
+
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getString(R.string.please_wait));
+
+        AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
+        client.setTimeout(10000);
+        client.get(url, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onStart() {
+                progressDialog.show();
+            }
+
+            @Override
+            public void onFinish() {
+                progressDialog.hide();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Log.e("JSON FLIGHT", response.toString() + "");
+                try {
+                    int statCode = response.getJSONObject(CommonConstants.DIAGNOSTIC).getInt(CommonConstants.STATUS);
+                    if (statCode == 200) {
+                        Intent intent = new Intent(ListOrderActivity.this, ListPaymentActivity.class);
+                        startActivity(intent);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Toast.makeText(ListOrderActivity.this, R.string.RTO, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Log.e("JSON ListOrder", errorResponse + "");
+                ErrorException.getError(ListOrderActivity.this, errorResponse);
             }
         });
     }
@@ -103,7 +158,7 @@ public class ListOrderActivity extends AppCompatActivity {
         String url = CommonConstants.BASE_URL + "order";
 
         RequestParams requestParams = new RequestParams();
-        requestParams.put(CommonConstants.TOKEN, "19d0ceaca45f9ee27e3c51df52786f1d904280f9");
+        requestParams.put(CommonConstants.TOKEN, RekaApplication.getInstance().getToken());
         requestParams.put(CommonConstants.OUTPUT, CommonConstants.JSON);
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
@@ -128,10 +183,13 @@ public class ListOrderActivity extends AppCompatActivity {
                 try {
                     Gson gson = new Gson();
 
+                    myOrders.clear();
                     JSONArray myOrderArrayList = response.getJSONObject(CommonConstants.MYORDER).getJSONArray(CommonConstants.DATA);
                     for (int i = 0; i < myOrderArrayList.length(); i++) {
                         myOrders.add(gson.fromJson(myOrderArrayList.getJSONObject(i).toString(), MyOrder.class));
                     }
+
+                    orderId = response.getJSONObject(CommonConstants.MYORDER).getString(CommonConstants.ORDER_ID);
 
                     myOrderAdapter = new MyOrderAdapter(ListOrderActivity.this, myOrders, ListOrderActivity.this);
                     listOrder.setAdapter(myOrderAdapter);
@@ -169,9 +227,11 @@ public class ListOrderActivity extends AppCompatActivity {
     public void deleteOrderId(final int position) {
         String url = CommonConstants.BASE_URL + "order/delete_order";
 
+        Log.d("TOKEN", RekaApplication.getInstance().getToken());
+
         RequestParams requestParams = new RequestParams();
         requestParams.put(CommonConstants.ORDER_DETAIL_ID, myOrders.get(position).orderDetailId);
-        requestParams.put(CommonConstants.TOKEN, "19d0ceaca45f9ee27e3c51df52786f1d904280f9");
+        requestParams.put(CommonConstants.TOKEN, RekaApplication.getInstance().getToken());
         requestParams.put(CommonConstants.OUTPUT, CommonConstants.JSON);
 
         final ProgressDialog progressDialog = new ProgressDialog(this);

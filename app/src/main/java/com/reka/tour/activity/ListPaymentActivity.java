@@ -16,6 +16,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.reka.tour.CheckoutPaymentActivity;
 import com.reka.tour.R;
+import com.reka.tour.RekaApplication;
 import com.reka.tour.adapter.MethodPaymentAdapter;
 import com.reka.tour.model.MethodPayment;
 import com.reka.tour.utils.CommonConstants;
@@ -71,7 +72,7 @@ public class ListPaymentActivity extends AppCompatActivity {
         String url = CommonConstants.BASE_URL + "checkout/checkout_payment";
 
         RequestParams requestParams = new RequestParams();
-        requestParams.put(CommonConstants.TOKEN, "19d0ceaca45f9ee27e3c51df52786f1d904280f9");
+        requestParams.put(CommonConstants.TOKEN, RekaApplication.getInstance().getToken());
         requestParams.put(CommonConstants.OUTPUT, CommonConstants.JSON);
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
