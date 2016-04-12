@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -21,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialogFragment;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -30,7 +32,6 @@ import com.reka.tour.RekaApplication;
 import com.reka.tour.Session.CountrySessionManager;
 import com.reka.tour.activity.ListOrderActivity;
 import com.reka.tour.flight.adapter.PassangerAdapter;
-import com.reka.tour.flight.model.Departures;
 import com.reka.tour.flight.model.DeparturesOrder;
 import com.reka.tour.flight.model.Passanger;
 import com.reka.tour.flight.model.RequestedField;
@@ -120,7 +121,7 @@ public class InfoPassangerActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         countrySessionManager = new CountrySessionManager(this);
-
+        dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         ((Toolbar) findViewById(R.id.toolbar)).setNavigationIcon(R.drawable.back);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         /*(findViewById(R.id.toolbar)).setOnClickListener(new View.OnClickListener() {
@@ -232,6 +233,28 @@ public class InfoPassangerActivity extends AppCompatActivity {
                             editTextWrapper = (ViewGroup) layoutInflater.inflate(R.layout.item_text_field, null);
                             fieldET = (EditText) editTextWrapper.getChildAt(1);
                             fieldET.setTag(key);
+                            if (key.toLowerCase().contains("date")) {
+                                fieldET.setFocusable(false);
+                                fieldET.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(final View v) {
+                                        new CalendarDatePickerDialogFragment().setOnDateSetListener(new CalendarDatePickerDialogFragment.OnDateSetListener() {
+                                            @Override
+                                            public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
+                                                Calendar takenDate = Calendar.getInstance();
+                                                takenDate.set(year, monthOfYear, dayOfMonth);
+                                                ((EditText) v).setText(dateFormatter.format(takenDate.getTime()));
+                                            }
+                                        }).show(getSupportFragmentManager(), "DATEPICKER");
+                                    }
+                                });
+                            } else if (key.toLowerCase().contains("phone")) {
+                                fieldET.setInputType(InputType.TYPE_CLASS_PHONE);
+                            } else if (key.toLowerCase().contains("no")) {
+                                fieldET.setInputType(InputType.TYPE_CLASS_NUMBER);
+                            } else if (key.toLowerCase().contains("email")) {
+                                fieldET.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                            }
                         }
 
                         fieldTV = (TextView) editTextWrapper.getChildAt(0);
