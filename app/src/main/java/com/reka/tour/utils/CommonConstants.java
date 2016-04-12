@@ -5,7 +5,7 @@ package com.reka.tour.utils;
  * Constants
  */
 public class CommonConstants {
-//    public static final String PRODUCTION_URL = "https://api.tiket.com/";
+    public static final String PRODUCTION_URL = "https://api.tiket.com/";
     public static final String DEVELOPMENT_URL = "https://api-sandbox.tiket.com/";
     public static final String BASE_URL = DEVELOPMENT_URL;
     public static final String IS_RETURN = "is_return";
@@ -20,6 +20,7 @@ public class CommonConstants {
     public static final String STATUS = "status";
     public static final String CONTACT_MAP = "contact_map";
     public static final String NEXT_CHECHOUT_URI = "next_checkout_uri";
+    public static final String DEPARTURE_TIME = "departure_time";
     public static String TOKEN = "token";
     public static String OUTPUT = "output";
     public static String JSON = "json";

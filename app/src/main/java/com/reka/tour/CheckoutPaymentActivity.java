@@ -27,6 +27,7 @@ public class CheckoutPaymentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         handleIntent();
+        Log.i("Token", RekaApplication.getInstance().getToken());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout_payment);
 

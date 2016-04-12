@@ -32,7 +32,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.splash_screen_layout);
 
         sharedPreferences = this.getSharedPreferences(CommonConstants.REKA_USAHA, MODE_PRIVATE);
-        String url = CommonConstants.BASE_URL + "/apiv1/payexpress";
+        String url = CommonConstants.BASE_URL + "apiv1/payexpress";
 
         RequestParams requestParams = new RequestParams();
         requestParams.put(CommonConstants.METHOD, "getToken");
