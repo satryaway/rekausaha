@@ -34,9 +34,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.lucasr.twowayview.TwoWayView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Locale;
 
 import butterknife.Bind;
@@ -71,6 +74,7 @@ public class DepartureActivity extends AppCompatActivity {
     private boolean isReturn;
     private String jsonObjectResponse;
     private ArrayList<Departures> depAirportFilterArrayList = new ArrayList<>();
+    private String departure_time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +131,7 @@ public class DepartureActivity extends AppCompatActivity {
                 isReturn = bundle.getBoolean(CommonConstants.IS_RETURN, false);
                 dateValue = bundle.getString(CommonConstants.DATE);
                 retDateValue = bundle.getString(CommonConstants.RET_DATE);
+                departure_time = bundle.getString(CommonConstants.DEPARTURE_TIME);
             } else {
                 dariAirportCode.setText(bundle.getString(CommonConstants.AIRPORT_CODE_D));
                 dariAirportName.setText(bundle.getString(CommonConstants.AIRPORT_LOCATION_D));
@@ -169,34 +174,47 @@ public class DepartureActivity extends AppCompatActivity {
                     intentDeparture.putExtra(CommonConstants.DATE, dateValue);
                     startActivity(intentDeparture);
                 } else {
-                    if (bundle.getBoolean(CommonConstants.IS_IN_RETURN)) {
-                        Intent intentDeparture = new Intent(DepartureActivity.this, OrderFlightActivity.class);
-                        intentDeparture.putExtra(CommonConstants.FLIGHT_ID, bundle.getString(CommonConstants.FLIGHT_ID));
-                        intentDeparture.putExtra(CommonConstants.RET_FLIGHT_ID, depAirportArrayList.get(position).flightId);
-                        intentDeparture.putExtra(CommonConstants.HAS_FOOD, depAirportArrayList.get(position).hasFood);
-                        intentDeparture.putExtra(CommonConstants.AIRPORT_TAX, depAirportArrayList.get(position).airportTax);
-                        intentDeparture.putExtra(CommonConstants.BAGGAGE, depAirportArrayList.get(position).checkInBaggage);
-                        intentDeparture.putExtra(CommonConstants.NEED_BAGGAGE, depAirportArrayList.get(position).needBaggage);
-                        intentDeparture.putExtra(CommonConstants.RET_DATE, retDateValue);
-                        intentDeparture.putExtra(CommonConstants.IS_RETURN, true);
-                        intentDeparture.putExtra(CommonConstants.DATE, dateValue);
-                        startActivity(intentDeparture);
-                    } else {
-                        Intent findFlightIntent = new Intent(DepartureActivity.this, DepartureActivity.class);
-                        findFlightIntent.putExtra(CommonConstants.FLIGHT_ID, depAirportArrayList.get(position).flightId);
-                        findFlightIntent.putExtra(CommonConstants.AIRPORT_CODE_D, bundle.getString(CommonConstants.AIRPORT_CODE_A));
-                        findFlightIntent.putExtra(CommonConstants.AIRPORT_CODE_A, bundle.getString(CommonConstants.AIRPORT_CODE_D));
-                        findFlightIntent.putExtra(CommonConstants.AIRPORT_LOCATION_D, bundle.getString(CommonConstants.AIRPORT_LOCATION_A));
-                        findFlightIntent.putExtra(CommonConstants.AIRPORT_LOCATION_A, bundle.getString(CommonConstants.AIRPORT_LOCATION_D));
-                        findFlightIntent.putExtra(CommonConstants.ADULT, bundle.getString(CommonConstants.ADULT));
-                        findFlightIntent.putExtra(CommonConstants.CHILD, bundle.getString(CommonConstants.CHILD));
-                        findFlightIntent.putExtra(CommonConstants.INFRANT, bundle.getString(CommonConstants.INFRANT));
-                        findFlightIntent.putExtra(CommonConstants.DATE, dateValue);
-                        findFlightIntent.putExtra(CommonConstants.RET_DATE, bundle.getString(CommonConstants.RET_DATE));
-                        findFlightIntent.putExtra(CommonConstants.IS_IN_RETURN, true);
-                        findFlightIntent.putExtra(CommonConstants.IS_RETURN, true);
-                        findFlightIntent.putExtra(CommonConstants.JSON, jsonObjectResponse);
-                        startActivity(findFlightIntent);
+                    try {
+                        if (bundle.getBoolean(CommonConstants.IS_IN_RETURN)) {
+                            SimpleDateFormat sdf = new SimpleDateFormat("kk:mm");
+                            String returnTime = depAirportArrayList.get(position).simpleDepartureTime;
+                            Date parsedReturnTime = sdf.parse(returnTime);
+                            Date parsedGoTime = sdf.parse(departure_time);
+                            if ((parsedReturnTime.getTime() < parsedGoTime.getTime()) && (dateValue.equals(retDateValue))) {
+                                Toast.makeText(DepartureActivity.this, "Waktu pulang harus lebih besar dari waktu pergi", Toast.LENGTH_LONG).show();
+                            } else {
+                                Intent intentDeparture = new Intent(DepartureActivity.this, OrderFlightActivity.class);
+                                intentDeparture.putExtra(CommonConstants.FLIGHT_ID, bundle.getString(CommonConstants.FLIGHT_ID));
+                                intentDeparture.putExtra(CommonConstants.RET_FLIGHT_ID, depAirportArrayList.get(position).flightId);
+                                intentDeparture.putExtra(CommonConstants.HAS_FOOD, depAirportArrayList.get(position).hasFood);
+                                intentDeparture.putExtra(CommonConstants.AIRPORT_TAX, depAirportArrayList.get(position).airportTax);
+                                intentDeparture.putExtra(CommonConstants.BAGGAGE, depAirportArrayList.get(position).checkInBaggage);
+                                intentDeparture.putExtra(CommonConstants.NEED_BAGGAGE, depAirportArrayList.get(position).needBaggage);
+                                intentDeparture.putExtra(CommonConstants.RET_DATE, retDateValue);
+                                intentDeparture.putExtra(CommonConstants.IS_RETURN, true);
+                                intentDeparture.putExtra(CommonConstants.DATE, dateValue);
+                                startActivity(intentDeparture);
+                            }
+                        } else {
+                            Intent findFlightIntent = new Intent(DepartureActivity.this, DepartureActivity.class);
+                            findFlightIntent.putExtra(CommonConstants.FLIGHT_ID, depAirportArrayList.get(position).flightId);
+                            findFlightIntent.putExtra(CommonConstants.AIRPORT_CODE_D, bundle.getString(CommonConstants.AIRPORT_CODE_A));
+                            findFlightIntent.putExtra(CommonConstants.AIRPORT_CODE_A, bundle.getString(CommonConstants.AIRPORT_CODE_D));
+                            findFlightIntent.putExtra(CommonConstants.AIRPORT_LOCATION_D, bundle.getString(CommonConstants.AIRPORT_LOCATION_A));
+                            findFlightIntent.putExtra(CommonConstants.AIRPORT_LOCATION_A, bundle.getString(CommonConstants.AIRPORT_LOCATION_D));
+                            findFlightIntent.putExtra(CommonConstants.ADULT, bundle.getString(CommonConstants.ADULT));
+                            findFlightIntent.putExtra(CommonConstants.CHILD, bundle.getString(CommonConstants.CHILD));
+                            findFlightIntent.putExtra(CommonConstants.INFRANT, bundle.getString(CommonConstants.INFRANT));
+                            findFlightIntent.putExtra(CommonConstants.DATE, dateValue);
+                            findFlightIntent.putExtra(CommonConstants.RET_DATE, bundle.getString(CommonConstants.RET_DATE));
+                            findFlightIntent.putExtra(CommonConstants.IS_IN_RETURN, true);
+                            findFlightIntent.putExtra(CommonConstants.IS_RETURN, true);
+                            findFlightIntent.putExtra(CommonConstants.DEPARTURE_TIME, depAirportArrayList.get(position).simpleDepartureTime);
+                            findFlightIntent.putExtra(CommonConstants.JSON, jsonObjectResponse);
+                            startActivity(findFlightIntent);
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
                     }
                 }
             }
