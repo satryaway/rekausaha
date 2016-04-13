@@ -1,8 +1,8 @@
-<android.support.design.widget.CoordinatorLayout android:id="@+id/coordinatorLayout"
-                                                 xmlns:android="http://schemas.android.com/apk/res/android"
-                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                 android:layout_width="match_parent"
-                                                 android:layout_height="match_parent">
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
 
     <android.support.design.widget.AppBarLayout
@@ -26,7 +26,7 @@
                 android:layout_height="146dp"
                 android:layout_gravity="bottom"
                 android:scaleType="centerCrop"
-                app:layout_collapseMode="parallax"/>
+                app:layout_collapseMode="parallax" />
 
 
             <android.support.v7.widget.Toolbar
@@ -50,14 +50,14 @@
                         style="@style/TextAppearance.AppCompat.Title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:singleLine="true"
                         android:ellipsize="marquee"
-                        android:marqueeRepeatLimit="marquee_forever"
-                        android:scrollHorizontally="true"
                         android:focusable="true"
                         android:focusableInTouchMode="true"
                         android:freezesText="true"
-                        android:text=""/>
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"
+                        android:text="" />
 
                     <TextView
                         android:id="@+id/location_hotel"
@@ -66,7 +66,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/title_hotel"
                         android:singleLine="true"
-                        android:text=""/>
+                        android:text="" />
                 </RelativeLayout>
 
 
@@ -77,7 +77,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_profile"/>
+    <include layout="@layout/content_profile" />
 
 
     <LinearLayout
@@ -98,7 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Harga mulai dari"/>
+                android:text="Harga mulai dari" />
 
             <TextView
                 android:id="@+id/tv_harga_hotel"
@@ -107,7 +107,7 @@
                 android:layout_below="@+id/tv_harga_mulai"
                 android:gravity="center"
                 android:text="/malam"
-                android:textColor="@color/colorAccent"/>
+                android:textColor="@color/colorAccent" />
         </RelativeLayout>
 
 
@@ -136,7 +136,7 @@
                     android:layout_centerInParent="true"
                     android:text="@string/lihat_kamar"
                     android:textAllCaps="true"
-                    android:textColor="@android:color/white"/>
+                    android:textColor="@android:color/white" />
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 

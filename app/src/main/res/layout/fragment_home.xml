@@ -10,13 +10,13 @@
         android:layout_above="@+id/layout_navmenu"
         android:layout_alignParentTop="true">
 
-        <com.reka.tour.views.pagerindicator.AutoScrollViewPager
+        <com.jixstreet.rekatoursandtravel.views.pagerindicator.AutoScrollViewPager
             android:id="@+id/pager"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
-        <com.reka.tour.views.pagerindicator.CirclePageIndicator
+        <com.jixstreet.rekatoursandtravel.views.pagerindicator.CirclePageIndicator
             android:id="@+id/indicator"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

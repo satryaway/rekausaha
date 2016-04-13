@@ -27,7 +27,7 @@
             android:lineSpacingExtra="2sp"
             android:text="@string/fasilitas" />
 
-        <com.reka.tour.views.ExpandableHeightGridView
+        <com.jixstreet.rekatoursandtravel.views.ExpandableHeightGridView
             android:id="@+id/gv_fasilitas"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

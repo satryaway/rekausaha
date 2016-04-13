@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "com.reka.tour"
+        applicationId "com.jixstreet.rekatoursandtravel"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
@@ -42,4 +42,5 @@ dependencies {
     compile files('libs/mail.jar')
     compile 'com.edmodo:rangebar:1.0.0'
     compile 'com.code-troopers.betterpickers:library:2.5.1'
+    compile 'com.squareup.retrofit2:retrofit:2.0.1'
 }

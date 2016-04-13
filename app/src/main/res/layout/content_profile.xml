@@ -29,7 +29,7 @@
             android:orientation="vertical"
             android:visibility="visible">
 
-            <com.reka.tour.views.WrapContentHeightViewPager
+            <com.jixstreet.rekatoursandtravel.views.WrapContentHeightViewPager
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/header_selector" >
 
-    <com.reka.tour.views.UnderlineTextView
+    <com.jixstreet.rekatoursandtravel.views.UnderlineTextView
         android:id="@+id/country_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
