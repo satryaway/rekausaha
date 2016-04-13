@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jixstreet.rekatoursandtravel.RekaApplication;
+import com.jixstreet.rekatoursandtravel.flight.activity.InfoPassangerActivity;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -94,13 +96,18 @@ public class OrderHotelActivity extends AppCompatActivity {
 
     @OnClick(R.id.next_btn)
     public void onClickPembayaran() {
-        getOrder(url);
+//        getOrder(url);
+        Intent intent = new Intent(this, InfoPassangerActivity.class);
+        intent.putExtra(CommonConstants.RESPONE, getString(R.string.hotel_customer_field));
+        intent.putExtra(CommonConstants.IS_HOTEL, true);
+        intent.putExtra(CommonConstants.BOOKURI, url);
+        startActivity(intent);
     }
 
     private void getOrder(String url) {
 
         RequestParams requestParams = new RequestParams();
-        requestParams.put(CommonConstants.TOKEN, "19d0ceaca45f9ee27e3c51df52786f1d904280f9");
+        requestParams.put(CommonConstants.TOKEN, RekaApplication.getInstance().getToken());
         requestParams.put(CommonConstants.OUTPUT, CommonConstants.JSON);
 
         final ProgressDialog progressDialog = new ProgressDialog(this);

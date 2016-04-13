@@ -45,6 +45,7 @@ public class ListOrderActivity extends AppCompatActivity {
     private String orderId;
     private HashMap<String, String> contactMap = new HashMap<>();
     private String checkoutCustomerURL;
+    private boolean isHotel = false;
 
     public static ArrayList<MyOrder> getMyOrders() {
         return myOrders;
@@ -64,6 +65,7 @@ public class ListOrderActivity extends AppCompatActivity {
         bundle = getIntent().getExtras();
 //        whatOrder = bundle.getString(CommonConstants.WHAT_ORDER);
         whatOrder = "FLIGHT";
+        isHotel = bundle.getBoolean(CommonConstants.IS_HOTEL);
         contactMap = (HashMap<String, String>) bundle.getSerializable(CommonConstants.CONTACT_MAP);
 
         Log.e("whatOrder", whatOrder + "");

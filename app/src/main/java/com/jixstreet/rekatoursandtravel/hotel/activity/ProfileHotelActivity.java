@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.jixstreet.rekatoursandtravel.RekaApplication;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -126,7 +127,7 @@ public class ProfileHotelActivity extends AppCompatActivity {
         url = bundle.getString(CommonConstants.BUSSINESSURI);
 
         RequestParams requestParams = new RequestParams();
-        requestParams.put(CommonConstants.TOKEN, "19d0ceaca45f9ee27e3c51df52786f1d904280f9");
+        requestParams.put(CommonConstants.TOKEN, RekaApplication.getInstance().getToken());
         requestParams.put(CommonConstants.OUTPUT, CommonConstants.JSON);
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
