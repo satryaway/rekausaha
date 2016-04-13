@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,7 @@ public class InfoFragment extends Fragment {
     private Breadcrumb breadcrumb;
     private General general;
     private View view;
+    private FragmentManager fm;
 
     public static InfoFragment newInstance() {
         return new InfoFragment();
@@ -65,7 +67,7 @@ public class InfoFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_info, container, false);
 
 //        SupportMapFragment mapFragment = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.map);
-        FragmentManager fm = getChildFragmentManager();
+        fm = getChildFragmentManager();
         SupportMapFragment fragment = (SupportMapFragment) fm.findFragmentById(R.id.map);
         if (fragment == null) {
             fragment = SupportMapFragment.newInstance();
@@ -97,6 +99,20 @@ public class InfoFragment extends Fragment {
         setValue();
 
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Fragment fragment = (fm.findFragmentById(R.id.map));
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.remove(fragment);
+        ft.commitAllowingStateLoss();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
     private void setInit() {
