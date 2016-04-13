@@ -176,4 +176,5 @@
     <string name="ok">OK</string>
     <string name="secret_key">c163a8cdfd9ec47b87a18aff676e2d54</string>
     <string name="registering">Registering</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

@@ -108,10 +108,6 @@ public class OrderFlightActivity extends AppCompatActivity {
 
     }
 
-    private void afefasefas() {
-
-    }
-
     private void getData() {
         layoutDetailOrder.setVisibility(View.GONE);
         String url = CommonConstants.BASE_URL + "flight_api/get_flight_data";
@@ -131,7 +127,7 @@ public class OrderFlightActivity extends AppCompatActivity {
         progressDialog.setMessage(getString(R.string.please_wait));
 
         AsyncHttpClient client = new AsyncHttpClient();
-        client.addHeader("user-agent", "twh:[22531633]:[Jixstreet]");
+        client.addHeader("user-agent", "twh:[22490422]:[Reka Tours dan Travel]");
         client.get(url, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onStart() {

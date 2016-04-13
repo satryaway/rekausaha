@@ -10,9 +10,9 @@ public class General implements Serializable {
     @SerializedName("description")
     public String description;
     @SerializedName("latitude")
-    public String latitude;
+    public double latitude;
     @SerializedName("longitude")
-    public String longitude;
+    public double longitude;
 
 
 //    "general": {

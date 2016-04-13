@@ -36,7 +36,7 @@ public class SplashActivity extends AppCompatActivity {
 
         RequestParams requestParams = new RequestParams();
         requestParams.put(CommonConstants.METHOD, "getToken");
-        requestParams.put(CommonConstants.SECRET_KEY, getString(R.string.secret_key_jix));
+        requestParams.put(CommonConstants.SECRET_KEY, getString(R.string.secret_key));
         requestParams.put(CommonConstants.OUTPUT, CommonConstants.JSON);
 
         AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
