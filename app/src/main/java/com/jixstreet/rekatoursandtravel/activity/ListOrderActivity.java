@@ -12,9 +12,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.jixstreet.rekatoursandtravel.R;
 import com.jixstreet.rekatoursandtravel.RekaApplication;
 import com.jixstreet.rekatoursandtravel.flight.adapter.MyOrderAdapter;
@@ -22,6 +19,9 @@ import com.jixstreet.rekatoursandtravel.hotel.activity.InfoCustomerHotelActivity
 import com.jixstreet.rekatoursandtravel.model.MyOrder;
 import com.jixstreet.rekatoursandtravel.utils.CommonConstants;
 import com.jixstreet.rekatoursandtravel.utils.ErrorException;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,6 +46,9 @@ public class ListOrderActivity extends AppCompatActivity {
     private HashMap<String, String> contactMap = new HashMap<>();
     private String checkoutCustomerURL;
     private boolean isHotel = false;
+    private boolean isSecondTime = false;
+    private boolean isExpressCustomer = false;
+    private static HashMap<String, String> staticContactMap;
 
     public static ArrayList<MyOrder> getMyOrders() {
         return myOrders;
@@ -66,11 +69,18 @@ public class ListOrderActivity extends AppCompatActivity {
 //        whatOrder = bundle.getString(CommonConstants.WHAT_ORDER);
         whatOrder = "FLIGHT";
         isHotel = bundle.getBoolean(CommonConstants.IS_HOTEL);
+        isExpressCustomer = bundle.getBoolean(CommonConstants.IS_EXPRESS_CUSTOMER);
         contactMap = (HashMap<String, String>) bundle.getSerializable(CommonConstants.CONTACT_MAP);
+        if (!isExpressCustomer)
+            staticContactMap = contactMap;
 
         Log.e("whatOrder", whatOrder + "");
 
-        getData();
+        if (!isExpressCustomer)
+            getData();
+        else
+            checkoutCustomer();
+
         setCallBack();
     }
 
@@ -125,7 +135,7 @@ public class ListOrderActivity extends AppCompatActivity {
                     int statCode = response.getJSONObject(CommonConstants.DIAGNOSTIC).getInt(CommonConstants.STATUS);
                     checkoutCustomerURL = response.getString(CommonConstants.NEXT_CHECHOUT_URI);
                     if (statCode == 200) {
-                        registerCustomer();
+                        checkoutCustomer();
                     }
 
                 } catch (JSONException e) {
@@ -146,12 +156,13 @@ public class ListOrderActivity extends AppCompatActivity {
         });
     }
 
-    private void registerCustomer() {
-        String url = checkoutCustomerURL;
+    private void checkoutCustomer() {
+        String url = isExpressCustomer ? "https://api-sandbox.tiket.com/checkout/checkout_customer" : checkoutCustomerURL;
 
         RequestParams requestParams = new RequestParams();
         requestParams.put(CommonConstants.TOKEN, RekaApplication.getInstance().getToken());
         requestParams.put(CommonConstants.OUTPUT, CommonConstants.JSON);
+
         String key = "salutation";
         requestParams.put(key, getValue(key));
         key = "firstName";
@@ -162,7 +173,24 @@ public class ListOrderActivity extends AppCompatActivity {
         requestParams.put(key, getValue(key));
         key = "phone";
         requestParams.put(key, getValue(key));
+
+        if (isExpressCustomer) {
+            for (String keyMap : contactMap.keySet()) {
+                requestParams.put(keyMap, contactMap.get(keyMap));
+            }
+            requestParams.put("country", "id");
+            requestParams.put("detailId", orderId);
+        }
+
         requestParams.put("saveContinue", 2);
+
+        if (isHotel && isSecondTime) {
+            for (String keyMap : contactMap.keySet()) {
+                requestParams.put(keyMap, contactMap.get(keyMap));
+            }
+            requestParams.put("country", "id");
+            requestParams.put("detailId", orderId);
+        }
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.registering));
@@ -186,8 +214,18 @@ public class ListOrderActivity extends AppCompatActivity {
                 try {
                     int statCode = response.getJSONObject(CommonConstants.DIAGNOSTIC).getInt(CommonConstants.STATUS);
                     if (statCode == 200) {
-                        Intent intent = new Intent(ListOrderActivity.this, ListPaymentActivity.class);
-                        startActivity(intent);
+                        if (!isHotel || isExpressCustomer) {
+                            Intent intent = new Intent(ListOrderActivity.this, ListPaymentActivity.class);
+                            startActivity(intent);
+                        } else {
+                            if (isSecondTime) {
+                                Intent intent = new Intent(ListOrderActivity.this, ListPaymentActivity.class);
+                                startActivity(intent);
+                            } else {
+                                isSecondTime = true;
+                                checkoutCustomer();
+                            }
+                        }
                     }
 
                 } catch (JSONException e) {
@@ -209,10 +247,16 @@ public class ListOrderActivity extends AppCompatActivity {
     }
 
     private String getValue(String key) {
+        HashMap<String, String> tempMap = new HashMap<>();
+        if (isExpressCustomer)
+            tempMap = staticContactMap;
+        else
+            tempMap = contactMap;
+
         String value = "";
-        for (String keyMap: contactMap.keySet()) {
+        for (String keyMap : tempMap.keySet()) {
             if (keyMap.toLowerCase().contains(key.toLowerCase())) {
-                value = contactMap.get(keyMap);
+                value = tempMap.get(keyMap);
             }
         }
         return value;

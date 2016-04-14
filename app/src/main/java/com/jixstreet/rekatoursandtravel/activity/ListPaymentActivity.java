@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.jixstreet.rekatoursandtravel.flight.activity.InfoPassangerActivity;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -104,6 +105,14 @@ public class ListPaymentActivity extends AppCompatActivity {
 
                     methodPaymentAdapter = new MethodPaymentAdapter(ListPaymentActivity.this, methodPayments);
                     listMethodPayment.setAdapter(methodPaymentAdapter);
+                    JSONObject requiredObject = response.getJSONObject(CommonConstants.REQUIRED);
+                    if (requiredObject != null) {
+                        Intent intent = new Intent(ListPaymentActivity.this, InfoPassangerActivity.class);
+                        intent.putExtra(CommonConstants.RESPONE, getString(R.string.get_customer_express_field));
+                        intent.putExtra(CommonConstants.IS_HOTEL, true);
+                        intent.putExtra(CommonConstants.IS_EXPRESS_CUSTOMER, true);
+                        startActivity(intent);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

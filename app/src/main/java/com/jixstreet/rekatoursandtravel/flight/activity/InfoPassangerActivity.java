@@ -73,6 +73,7 @@ public class InfoPassangerActivity extends AppCompatActivity {
     private boolean isHotel = false;
     private HashMap<String, String> contactMap = new HashMap<>();
     private String bookUri;
+    private boolean isExpressCustomer = false;
 
 
     @Override
@@ -92,6 +93,7 @@ public class InfoPassangerActivity extends AppCompatActivity {
         retFlightID = bundle.getString(CommonConstants.RET_FLIGHT_ID);
         isReturn = bundle.getBoolean(CommonConstants.IS_RETURN);
         isHotel = bundle.getBoolean(CommonConstants.IS_HOTEL);
+        isExpressCustomer = bundle.getBoolean(CommonConstants.IS_EXPRESS_CUSTOMER);
         bookUri = bundle.getString(CommonConstants.BOOKURI);
 
         getCountry();
@@ -102,7 +104,6 @@ public class InfoPassangerActivity extends AppCompatActivity {
     private void setValue() {
         try {
             requiredObject = new JSONObject(responseString).getJSONObject(CommonConstants.REQUIRED);
-
             Gson gson = new Gson();
             Iterator<String> iterator = requiredObject.keys();
             LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -114,7 +115,7 @@ public class InfoPassangerActivity extends AppCompatActivity {
                 final JSONObject value = requiredObject.getJSONObject(key);
                 requiredField = gson.fromJson(value.toString(), RequiredField.class);
 
-                if (requiredField.category.equals(CommonConstants.SEPARATOR)) {
+                if (requiredField.category != null &&requiredField.category.equals(CommonConstants.SEPARATOR)) {
                     CardView cardWrapper = (CardView) layoutInflater.inflate(R.layout.item_card_field_box, null);
                     LinearLayout fieldWrapper = (LinearLayout) cardWrapper.findViewById(R.id.field_wrapper);
                     TextView separatorTitleTV = (TextView) layoutInflater.inflate(R.layout.item_separator_field, null);
@@ -221,7 +222,10 @@ public class InfoPassangerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isValidated()) {
-                    addOrder();
+                    if (isExpressCustomer)
+                        nextActivity();
+                    else
+                        addOrder();
                 } else {
                     final AlertDialog.Builder alertDialog = new AlertDialog.Builder(InfoPassangerActivity.this);
                     alertDialog.setMessage(getString(R.string.field_not_completed));
@@ -318,6 +322,10 @@ public class InfoPassangerActivity extends AppCompatActivity {
                 if (requestedField.key.contains("con")) {
                     contactMap.put(requestedField.key, content);
                 }
+
+                if (isExpressCustomer) {
+                    contactMap.put(requestedField.key, content);
+                }
                 validatedCount++;
             }
         }
@@ -356,6 +364,7 @@ public class InfoPassangerActivity extends AppCompatActivity {
         intent.putExtra(CommonConstants.WHAT_ORDER, "FLIGHT");
         intent.putExtra(CommonConstants.CONTACT_MAP, contactMap);
         intent.putExtra(CommonConstants.IS_HOTEL, isHotel);
+        intent.putExtra(CommonConstants.IS_EXPRESS_CUSTOMER, isExpressCustomer);
         startActivity(intent);
     }
 

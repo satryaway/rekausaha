@@ -178,4 +178,53 @@
     <string name="registering">Registering</string>
     <string name="title_activity_maps">Map</string>
     <string name="hotel_customer_field">{\"diagnostic\":{\"status\":200,\"elapsetime\":\"0.2042\",\"memoryusage\":\"6.24MB\",\"unix_timestamp\":1460558836,\"confirm\":\"success\",\"lang\":\"id\",\"currency\":\"IDR\"},\"output_type\":\"json\",\"required\":{\"separator\":{\"mandatory\":1,\"type\":\"text\",\"example\":\"\",\"FieldText\":\"Informasi Kontak yang Dapat Dihubungi\",\"category\":\"separator\",\"disabled\":\"false\"},\"conSalutation\":{\"mandatory\":1,\"type\":\"combobox\",\"example\":\"Mr\",\"FieldText\":\"Titel\",\"category\":\"contact\",\"resource\":[{\"id\":\"Mr\",\"name\":\"Tuan\"},{\"id\":\"Mrs\",\"name\":\"Nyonya\"},{\"id\":\"Ms\",\"name\":\"Nona\"}],\"disabled\":\"false\"},\"conFirstName\":{\"mandatory\":1,\"type\":\"textbox\",\"example\":\"Jane\",\"FieldText\":\"Nama Lengkap sesuai dengan KTP\\/Passport\\/SIM\",\"category\":\"contact\",\"disabled\":\"false\"},\"conLastName\":{\"mandatory\":0,\"type\":\"textbox\",\"example\":\"wacob\",\"FieldText\":\"Nama Belakang\",\"category\":\"contact\",\"disabled\":\"false\"},\"conPhone\":{\"mandatory\":1,\"type\":\"textbox\",\"example\":\"+6285212345678\",\"FieldText\":\"No. Telepon\",\"category\":\"contact\",\"disabled\":\"false\"},\"conEmailAddress\":{\"mandatory\":1,\"type\":\"textbox\",\"example\":\"example@email.com\",\"FieldText\":\"Kontak Email\",\"category\":\"contact\",\"disabled\":\"false\"}},\"departures\":{\"flight_id\":\"2177211\",\"airlines_name\":\"AIRASIA\",\"flight_number\":\"QZ-7912\",\"flight_date\":\"2016-04-14\",\"stop\":\"Langsung\",\"price_value\":\"315000.00\",\"price_adult\":\"315000.00\",\"price_child\":\"0.00\",\"price_infant\":\"0.00\",\"count_adult\":\"1\",\"count_child\":\"0\",\"count_infant\":\"0\",\"timestamp\":\"2016-04-08 10:02:51\",\"simple_departure_time\":\"13:20\",\"simple_arrival_time\":\"15:55\",\"long_via\":\"\",\"full_via\":\"BDO - DPS (13:20 - 15:55)\",\"markup_price_string\":\"IDR 415.000\",\"markup_price\":415000,\"need_baggage\":1,\"duration\":\"1 j 35 m\",\"image\":\"https:\\/\\/api-sandbox.tiket.com\\/images\\/tiket2\\/icon_airasia_2.jpg\",\"flight_infos\":{\"flight_info\":[{\"flight_number\":\"QZ-7912\",\"departure_city\":\"BDO\",\"arrival_city\":\"DPS\",\"simple_departure_time\":\"\",\"simple_arrival_time\":\"\"}]},\"sss_key\":null},\"login_status\":\"false\",\"token\":\"17d6e7eeb6605e182fea261c6baf9cf7f08094dd\"}</string>
+    <string name="hotel_customer_field_express">{
+  "required": {
+"separator_adult1":{"mandatory":1,"type":"text","example":"","FieldText":"Informasi Kontak yang Dapat Dihubungi","category":"separator"},
+    "express_fullname": {
+      "mandatory": 1,
+      "type": "textbox",
+      "example": "Jane",
+      "FieldText": "Nama Lengkap"
+    },
+    "express_phone": {
+      "mandatory": 1,
+      "type": "textbox",
+      "example": "+628xxxxxxxx",
+      "FieldText": "Nomor telepon"
+    },
+    "expresss_specialrequest": {
+      "mandatory": 0,
+      "type": "textbox",
+      "example": "lantainya yang dibawah",
+      "FieldText": "Permintaan Khusus (Pilihan)"
+    },
+    "express_guest": {
+      "mandatory": 0,
+      "type": "checkbox",
+      "example": "1",
+      "FieldText": "Saya tidak menginap di hotel ini. Saya melakukan booking untuk orang lain. ",
+      "resource": [
+        "0",
+        "1"
+      ]
+    },
+
+"separator_customer1":{"mandatory":1,"type":"text","example":"","FieldText":"Informasi Tamu","category":"separator"},
+
+    "express_guestfullname": {
+      "mandatory": 0,
+      "type": "textbox",
+      "example": "John",
+      "FieldText": "Nama Lengkap tamu yang akan menginap"
+    },
+    "express_email": {
+      "mandatory": 1,
+      "type": "textbox",
+      "example": "email@email.com",
+      "FieldText": "Email"
+    }
+  }
+}</string>
+    <string name="get_customer_express_field">{ \"fake\" : \"\",   \"required\": { \"separator_adult1\":{\"mandatory\":1,\"type\":\"text\",\"example\":\"\",\"FieldText\":\"Informasi Kontak yang Dapat Dihubungi\",\"category\":\"separator\"},     \"express_fullname\": {       \"mandatory\": 1,       \"type\": \"textbox\",       \"example\": \"Jane\",       \"FieldText\": \"Nama Lengkap\"     },     \"express_phone\": {       \"mandatory\": 1,       \"type\": \"textbox\",       \"example\": \"+628xxxxxxxx\",       \"FieldText\": \"Nomor telepon\"     },     \"expresss_specialrequest\": {       \"mandatory\": 0,       \"type\": \"textbox\",       \"example\": \"lantainya yang dibawah\",       \"FieldText\": \"Permintaan Khusus (Pilihan)\"     },     \"express_guest\": {       \"mandatory\": 0,       \"type\": \"checkbox\",       \"example\": \"1\",       \"FieldText\": \"Saya tidak menginap di hotel ini. Saya melakukan booking untuk orang lain. \",       \"resource\": [         \"0\",         \"1\"       ]     },  \"separator_customer_1\":{\"mandatory\":1,\"type\":\"text\",\"example\":\"\",\"FieldText\":\"Informasi Tamu\",\"category\":\"separator\"},      \"express_guestfullname\": {       \"mandatory\": 0,       \"type\": \"textbox\",       \"example\": \"John\",       \"FieldText\": \"Nama Lengkap tamu yang akan menginap\"     },     \"express_email\": {       \"mandatory\": 1,       \"type\": \"textbox\",       \"example\": \"email@email.com\",       \"FieldText\": \"Email\"     }   } }</string>
 </resources>

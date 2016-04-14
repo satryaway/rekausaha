@@ -22,6 +22,7 @@ public class CommonConstants {
     public static final String NEXT_CHECHOUT_URI = "next_checkout_uri";
     public static final String DEPARTURE_TIME = "departure_time";
     public static final String IS_HOTEL = "is_hotel";
+    public static final String IS_EXPRESS_CUSTOMER = "is_express_customer";
     public static String TOKEN = "token";
     public static String OUTPUT = "output";
     public static String JSON = "json";
