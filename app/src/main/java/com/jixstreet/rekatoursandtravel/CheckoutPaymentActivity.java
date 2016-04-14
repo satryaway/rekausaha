@@ -3,16 +3,15 @@ package com.jixstreet.rekatoursandtravel;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 
 import com.jixstreet.rekatoursandtravel.utils.CommonConstants;
 
@@ -40,11 +39,7 @@ public class CheckoutPaymentActivity extends AppCompatActivity {
 
         initUI();
         setCallBack();
-        if (!url.contains("api"))
-            setValue();
-        else {
-            Toast.makeText(CheckoutPaymentActivity.this, "Here", Toast.LENGTH_SHORT).show();
-        }
+        setValue();
     }
 
     private void handleIntent() {
@@ -82,7 +77,7 @@ public class CheckoutPaymentActivity extends AppCompatActivity {
             }
 
             public void onPageFinished(WebView view, String url) {
-                Log.i(TAG, "Finished loading URL: " +url);
+                Log.i(TAG, "Finished loading URL: " + url);
                 if (progressBar.isShowing()) {
                     progressBar.dismiss();
                 }

@@ -23,6 +23,14 @@ public class CommonConstants {
     public static final String DEPARTURE_TIME = "departure_time";
     public static final String IS_HOTEL = "is_hotel";
     public static final String IS_EXPRESS_CUSTOMER = "is_express_customer";
+    public static final String GRAND_TOTAL = "grand_total";
+    public static final String POLICIES = "policies";
+    public static final String VALUE = "value";
+    public static final String BEFORE = "before";
+    public static final String AFTER = "after";
+    public static final String LANG = "lang";
+    public static final String ID = "id";
+    public static final String MESSAGE = "message";
     public static String TOKEN = "token";
     public static String OUTPUT = "output";
     public static String JSON = "json";

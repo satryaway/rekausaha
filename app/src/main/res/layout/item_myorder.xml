@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="10dp">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
 
 
     <ImageView
@@ -14,7 +14,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginRight="5dp"
-        android:src="@drawable/flight_ic"/>
+        android:src="@drawable/flight_ic" />
 
     <TextView
         android:id="@+id/tv_order_type"
@@ -24,7 +24,7 @@
         android:layout_alignLeft="@+id/tv_order_name"
         android:layout_alignStart="@+id/tv_order_name"
         android:layout_toLeftOf="@+id/iv_delete_order"
-        android:text="FLIGHT"/>
+        android:text="FLIGHT" />
 
     <TextView
         android:id="@+id/tv_order_name"
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv_delete_order"
         android:layout_toRightOf="@id/iv_order"
-        android:text="CGK (Jakarta - Cengkareng) - DPS (Denpasar, Bali)"/>
+        android:text="CGK (Jakarta - Cengkareng) - DPS (Denpasar, Bali)" />
 
     <TextView
         android:id="@+id/tv_order_name_detail"
@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_order_name"
         android:layout_toRightOf="@id/iv_order"
-        android:text="Garuda"/>
+        android:text="Garuda" />
 
     <TextView
         android:id="@+id/tv_order_price"
@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_order_name_detail"
         android:layout_toRightOf="@id/iv_order"
-        android:text="Rp. 200.000"/>
+        android:text="Rp. 200.000" />
 
     <TextView
         android:id="@+id/tv_order_expire"
@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_order_price"
         android:layout_toRightOf="@id/iv_order"
-        android:text="Expired until : 10 Januari 2016 15:15:15"/>
+        android:text="Expired until : 10 Januari 2016 15:15:15" />
 
     <ImageView
         android:id="@+id/iv_delete_order"
@@ -69,6 +69,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:src="@android:drawable/ic_delete"/>
+        android:src="@android:drawable/ic_delete" />
 
 </RelativeLayout>

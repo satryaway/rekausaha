@@ -258,7 +258,7 @@ public class InfoPassangerActivity extends AppCompatActivity {
         String url = isHotel ? bookUri : CommonConstants.BASE_URL + "order/add/flight?v=3";
 
         AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-        client.setTimeout(10000);
+        client.setTimeout(300000);
         client.get(url, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onStart() {

@@ -11,17 +11,18 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.jixstreet.rekatoursandtravel.flight.activity.InfoPassangerActivity;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.jixstreet.rekatoursandtravel.CheckoutPaymentActivity;
 import com.jixstreet.rekatoursandtravel.R;
 import com.jixstreet.rekatoursandtravel.RekaApplication;
 import com.jixstreet.rekatoursandtravel.adapter.MethodPaymentAdapter;
+import com.jixstreet.rekatoursandtravel.flight.activity.InfoPassangerActivity;
 import com.jixstreet.rekatoursandtravel.model.MethodPayment;
+import com.jixstreet.rekatoursandtravel.model.Policy;
 import com.jixstreet.rekatoursandtravel.utils.CommonConstants;
 import com.jixstreet.rekatoursandtravel.utils.ErrorException;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,6 +44,7 @@ public class ListPaymentActivity extends AppCompatActivity {
 
     private ArrayList<MethodPayment> methodPayments = new ArrayList<>();
     private MethodPaymentAdapter methodPaymentAdapter;
+    public static String policies;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +62,12 @@ public class ListPaymentActivity extends AppCompatActivity {
     void onItemMethodPaymentClick(int position) {
 
         if (!methodPayments.get(position).link.equals("#")) {
-            Intent intent = new Intent(ListPaymentActivity.this, CheckoutPaymentActivity.class);
+            Intent intent;
+            if (methodPayments.get(position).link.contains("api")) {
+                intent = new Intent(ListPaymentActivity.this, PaymentActivity.class);
+            } else {
+                intent = new Intent(ListPaymentActivity.this, CheckoutPaymentActivity.class);
+            }
             intent.putExtra(CommonConstants.LINK, methodPayments.get(position).link);
             intent.putExtra(CommonConstants.TYPE, methodPayments.get(position).type);
             intent.putExtra(CommonConstants.TEXT, methodPayments.get(position).text);
