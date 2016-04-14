@@ -69,47 +69,6 @@ public class PaymentActivity extends AppCompatActivity {
     @Bind(R.id.list_step_payment)
     ListView listStepPayment;
 
-    @Bind(R.id.tv_date)
-    TextView tvDate;
-
-    @Bind(R.id.iv_flight)
-    ImageView ivFlight;
-    @Bind(R.id.tv_name)
-    TextView tvAirlinesName;
-    @Bind(R.id.tv_flight_number)
-    TextView tvFlightNumber;
-
-    @Bind(R.id.iv_baggage)
-    ImageView ivBaggage;
-    @Bind(R.id.iv_food)
-    ImageView ivFood;
-    @Bind(R.id.iv_tax)
-    ImageView ivTax;
-
-    @Bind(R.id.tv_rute)
-    TextView tvRute;
-    @Bind(R.id.tv_duration)
-    TextView tvDuration;
-
-    @Bind(R.id.tv_adult)
-    TextView tvAdult;
-    @Bind(R.id.tv_adult_price)
-    TextView tvAdultPrice;
-
-    @Bind(R.id.layout_child)
-    RelativeLayout layoutChild;
-    @Bind(R.id.tv_child)
-    TextView tvChild;
-    @Bind(R.id.tv_child_price)
-    TextView tvChildPrice;
-
-    @Bind(R.id.layout_baby)
-    RelativeLayout layoutInfrant;
-    @Bind(R.id.tv_baby)
-    TextView tvInfrant;
-    @Bind(R.id.tv_baby_price)
-    TextView tvInfrantPrice;
-
     @Bind(R.id.ev_klikbca)
     EditText evKlikbca;
     @Bind(R.id.tv_step_payment)
@@ -139,6 +98,7 @@ public class PaymentActivity extends AppCompatActivity {
     private LayoutInflater inflater;
     private HashMap<String, Policy> policiesMap = new HashMap<>();
     private boolean isAfter = false;
+    private boolean isKlikBCA = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,6 +116,12 @@ public class PaymentActivity extends AppCompatActivity {
         type = getIntent().getExtras().getString(CommonConstants.TYPE);
 
         orders = ListOrderActivity.getMyOrders();
+
+        if (type.equals("klikbca")) {
+            isKlikBCA = true;
+            layoutTime.setVisibility(View.GONE);
+            layoutKlikbca.setVisibility(View.VISIBLE);
+        }
 
         getData(url);
 
@@ -302,7 +268,15 @@ public class PaymentActivity extends AppCompatActivity {
 
     @OnClick(R.id.next_btn)
     void nextOnClick() {
-        getData(url);
+        if (isKlikBCA){
+            if (evKlikbca.getText().toString().isEmpty()) {
+                evKlikbca.setError("Diperlukan");
+            } else {
+                getData(url);
+            }
+        } else {
+            getData(url);
+        }
     }
 
     private void getData(String url) {
@@ -314,6 +288,9 @@ public class PaymentActivity extends AppCompatActivity {
         if (isAfter) {
             requestParams.put(CommonConstants.BTN_BOOKING, "1");
         }
+
+        if (isAfter && isKlikBCA)
+            requestParams.put(CommonConstants.USER_BCA, evKlikbca.getText().toString());
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.getting_order));

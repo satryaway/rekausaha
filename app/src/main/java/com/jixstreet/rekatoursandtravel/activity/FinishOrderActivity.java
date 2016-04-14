@@ -82,17 +82,34 @@ public class FinishOrderActivity extends AppCompatActivity {
             JSONObject jsonObject = new JSONObject(responseObjectString);
 
             //parse step
-            JSONArray stepsArray = jsonObject.getJSONArray(CommonConstants.STEPS);
-            for (int i = 0; i < stepsArray.length(); i++) {
-                JSONObject stepObj = stepsArray.getJSONObject(i);
+            JSONArray places = jsonObject.optJSONArray(CommonConstants.STEPS);
+            if (places != null) {
+                JSONArray stepsArray = jsonObject.getJSONArray(CommonConstants.STEPS);
+                for (int i = 0; i < stepsArray.length(); i++) {
+                    JSONObject stepObj = stepsArray.getJSONObject(i);
+                    ArrayList<String> steps = new ArrayList<>();
+                    JSONArray stepArray = stepObj.getJSONArray(CommonConstants.STEP);
+                    for (int j = 0; j < stepArray.length(); j++) {
+                        steps.add(stepArray.getString(j));
+                    }
+
+                    Step step = new Step();
+                    step.name = stepObj.getString(CommonConstants.NAME);
+                    step.step = steps;
+
+                    stepList.add(step);
+                }
+            } else {
+                JSONObject stepObject = jsonObject.getJSONObject(CommonConstants.STEPS);
+                JSONArray stepArray = stepObject.getJSONArray(CommonConstants.STEP);
+
                 ArrayList<String> steps = new ArrayList<>();
-                JSONArray stepArray = stepObj.getJSONArray(CommonConstants.STEP);
                 for (int j = 0; j < stepArray.length(); j++) {
                     steps.add(stepArray.getString(j));
                 }
 
                 Step step = new Step();
-                step.name = stepObj.getString(CommonConstants.NAME);
+                step.name = "Informasi Penting";
                 step.step = steps;
 
                 stepList.add(step);

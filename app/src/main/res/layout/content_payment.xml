@@ -56,26 +56,26 @@
             app:cardCornerRadius="2dp"
             app:cardUseCompatPadding="true">
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tv_sisa_waktu"
-                    style="@style/Base.TextAppearance.AppCompat.Caption"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:paddingTop="5dp"
-                    android:text="@string/sisa_waktu" />
-
                 <RelativeLayout
                     android:id="@+id/layout_time"
                     android:layout_width="wrap_content"
                     android:layout_height="200dp">
+
+                    <TextView
+                        android:id="@+id/tv_sisa_waktu"
+                        style="@style/Base.TextAppearance.AppCompat.Caption"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:text="@string/sisa_waktu" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -101,6 +101,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="10dp"
+                    android:visibility="gone"
                     android:text="Hingga 23:59 WIB"
                     android:textAllCaps="true" />
 
@@ -525,25 +526,10 @@
                         android:layout_alignParentRight="true"
                         android:layout_alignParentTop="true"
                         android:gravity="right"
-                        android:text="IDR 2.234.533"
                         android:textColor="@android:color/white" />
 
                 </RelativeLayout>
             </LinearLayout>
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp">
-
-            <LinearLayout
-                android:id="@+id/step_wrapper"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="8dp" />
-
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
@@ -563,7 +549,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:textStyle="bold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/rincian_pembayaran" />
@@ -574,6 +560,28 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/userid_klikbca" />
             </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Informasi Penting"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp">
+
+            <LinearLayout
+                android:id="@+id/step_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp" />
+
         </android.support.v7.widget.CardView>
 
         <ListView
