@@ -1,6 +1,7 @@
 package com.jixstreet.rekatoursandtravel.activity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -32,7 +33,6 @@ import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 
 public class ListOrderActivity extends AppCompatActivity {
@@ -47,8 +47,9 @@ public class ListOrderActivity extends AppCompatActivity {
     private String checkoutCustomerURL;
     private boolean isHotel = false;
     private boolean isSecondTime = false;
-    private boolean isExpressCustomer = false;
     private static HashMap<String, String> staticContactMap;
+    private HashMap<String, String> hotelCustomerMap = new HashMap<>();
+    private int orderIteration = -1;
 
     public static ArrayList<MyOrder> getMyOrders() {
         return myOrders;
@@ -66,20 +67,16 @@ public class ListOrderActivity extends AppCompatActivity {
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
         bundle = getIntent().getExtras();
-//        whatOrder = bundle.getString(CommonConstants.WHAT_ORDER);
         whatOrder = "FLIGHT";
         isHotel = bundle.getBoolean(CommonConstants.IS_HOTEL);
-        isExpressCustomer = bundle.getBoolean(CommonConstants.IS_EXPRESS_CUSTOMER);
         contactMap = (HashMap<String, String>) bundle.getSerializable(CommonConstants.CONTACT_MAP);
-        if (!isExpressCustomer)
-            staticContactMap = contactMap;
+        hotelCustomerMap = (HashMap<String, String>) bundle.getSerializable(CommonConstants.HOTE_CUSTOMER_MAP);
+
+        staticContactMap = contactMap;
 
         Log.e("whatOrder", whatOrder + "");
 
-        if (!isExpressCustomer)
-            getData();
-        else
-            checkoutCustomer();
+        getData();
 
         setCallBack();
     }
@@ -157,43 +154,39 @@ public class ListOrderActivity extends AppCompatActivity {
     }
 
     private void checkoutCustomer() {
-        String url = isExpressCustomer ? "https://api-sandbox.tiket.com/checkout/checkout_customer" : checkoutCustomerURL;
+        String url = checkoutCustomerURL;
 
         RequestParams requestParams = new RequestParams();
-        requestParams.put(CommonConstants.TOKEN, RekaApplication.getInstance().getToken());
-        requestParams.put(CommonConstants.OUTPUT, CommonConstants.JSON);
+        if (!isHotel) {
+            requestParams.put(CommonConstants.TOKEN, RekaApplication.getInstance().getToken());
+            requestParams.put(CommonConstants.OUTPUT, CommonConstants.JSON);
 
-        String key = "salutation";
-        requestParams.put(key, getValue(key));
-        key = "firstName";
-        requestParams.put(key, getValue(key));
-        key = "lastName";
-        requestParams.put(key, getValue(key));
-        key = "emailAddress";
-        requestParams.put(key, getValue(key));
-        key = "phone";
-        requestParams.put(key, getValue(key));
+            String key = "salutation";
+            requestParams.put(key, getValue(key));
+            key = "firstName";
+            requestParams.put(key, getValue(key));
+            key = "lastName";
+            requestParams.put(key, getValue(key));
+            key = "emailAddress";
+            requestParams.put(key, getValue(key));
+            key = "phone";
+            requestParams.put(key, getValue(key));
 
-        if (isExpressCustomer) {
-            for (String keyMap : contactMap.keySet()) {
-                requestParams.put(keyMap, contactMap.get(keyMap));
-            }
-            requestParams.put("country", "id");
-            requestParams.put("detailId", orderId);
-        }
-
-        requestParams.put("saveContinue", 2);
-
-        if (isHotel && isSecondTime) {
-            for (String keyMap : contactMap.keySet()) {
-                requestParams.put(keyMap, contactMap.get(keyMap));
-            }
-            requestParams.put("country", "id");
-            requestParams.put("detailId", orderId);
+            requestParams.put("saveContinue", 2);
+        } else {
+            if (!isSecondTime)
+                requestParams = getRequestParamsForCheckoutLogin();
+            else
+                requestParams = getRequestParamsForCheckoutProcess();
         }
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
         progressDialog.setMessage(getString(R.string.registering));
+
+        if (isSecondTime) {
+            progressDialog.setMessage("Saving your order");
+        }
 
         AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
         client.setTimeout(10000);
@@ -214,18 +207,22 @@ public class ListOrderActivity extends AppCompatActivity {
                 try {
                     int statCode = response.getJSONObject(CommonConstants.DIAGNOSTIC).getInt(CommonConstants.STATUS);
                     if (statCode == 200) {
-                        if (!isHotel || isExpressCustomer) {
+                        if (!isHotel) {
                             Intent intent = new Intent(ListOrderActivity.this, ListPaymentActivity.class);
                             startActivity(intent);
                         } else {
-                            if (isSecondTime) {
+                            if (orderIteration == myOrders.size()-1) {
                                 Intent intent = new Intent(ListOrderActivity.this, ListPaymentActivity.class);
                                 startActivity(intent);
                             } else {
                                 isSecondTime = true;
+                                orderIteration++;
                                 checkoutCustomer();
                             }
                         }
+                    } else {
+                        String message = response.getJSONObject(CommonConstants.DIAGNOSTIC).getString(CommonConstants.error_msgs);
+                        showAlertDialog(message);
                     }
 
                 } catch (JSONException e) {
@@ -246,17 +243,68 @@ public class ListOrderActivity extends AppCompatActivity {
         });
     }
 
-    private String getValue(String key) {
-        HashMap<String, String> tempMap = new HashMap<>();
-        if (isExpressCustomer)
-            tempMap = staticContactMap;
-        else
-            tempMap = contactMap;
+    private void showAlertDialog(String message) {
+        final android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(
+                ListOrderActivity.this).create();
 
+        // Setting Dialog Message
+        alertDialog.setMessage(message);
+
+        // Setting OK Button
+        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Write your code here to execute after dialog closed
+                alertDialog.dismiss();
+            }
+        });
+
+        // Showing Alert Message
+        alertDialog.show();
+    }
+
+    private RequestParams getRequestParamsForCheckoutProcess() {
+        RequestParams requestParams = new RequestParams();
+        String key = "express_fullname";
+        requestParams.put(key, hotelCustomerMap.get(key));
+        key = "express_phone";
+        requestParams.put(key, hotelCustomerMap.get(key));
+        key = "express_email";
+        requestParams.put(key, hotelCustomerMap.get(key));
+        key = "conSalutation";
+        requestParams.put(key, hotelCustomerMap.get(key));
+        key = "conFirstName";
+        requestParams.put(key, hotelCustomerMap.get(key));
+        key = "conLastName";
+        requestParams.put(key, hotelCustomerMap.get(key));
+        key = "conPhone";
+        requestParams.put(key, hotelCustomerMap.get(key));
+
+        requestParams.put("detailId", myOrders.get(orderIteration).orderDetailId);
+        requestParams.put("country", "ID");
+        requestParams.put(CommonConstants.TOKEN, RekaApplication.getInstance().getToken());
+        requestParams.put(CommonConstants.OUTPUT, CommonConstants.JSON);
+        return requestParams;
+    }
+
+    private RequestParams getRequestParamsForCheckoutLogin() {
+        RequestParams requestParams = new RequestParams();
+        requestParams.put(CommonConstants.SALUTATION, hotelCustomerMap.get("conSalutation"));
+        requestParams.put(CommonConstants.FIRSTNAME, hotelCustomerMap.get("conFirstName"));
+        requestParams.put(CommonConstants.LASTNAME, hotelCustomerMap.get("conLastName"));
+        requestParams.put("phone", hotelCustomerMap.get("conPhone"));
+        requestParams.put(CommonConstants.EMAILADDRESS, hotelCustomerMap.get("conEmailAddress"));
+        requestParams.put("saveContinue", "2");
+        requestParams.put(CommonConstants.TOKEN, RekaApplication.getInstance().getToken());
+        requestParams.put(CommonConstants.OUTPUT, CommonConstants.JSON);
+
+        return requestParams;
+    }
+
+    private String getValue(String key) {
         String value = "";
-        for (String keyMap : tempMap.keySet()) {
+        for (String keyMap : contactMap.keySet()) {
             if (keyMap.toLowerCase().contains(key.toLowerCase())) {
-                value = tempMap.get(keyMap);
+                value = contactMap.get(keyMap);
             }
         }
         return value;

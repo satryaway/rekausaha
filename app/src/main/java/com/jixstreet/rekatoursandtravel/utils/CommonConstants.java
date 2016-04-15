@@ -31,6 +31,7 @@ public class CommonConstants {
     public static final String LANG = "lang";
     public static final String ID = "id";
     public static final String MESSAGE = "message";
+    public static final String HOTE_CUSTOMER_MAP = "hotel_customer_map";
     public static String TOKEN = "token";
     public static String OUTPUT = "output";
     public static String JSON = "json";
