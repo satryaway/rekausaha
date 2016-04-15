@@ -99,21 +99,26 @@ public class PaymentActivity extends AppCompatActivity {
     private HashMap<String, Policy> policiesMap = new HashMap<>();
     private boolean isAfter = false;
     private boolean isKlikBCA = false;
+    private String text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
 
-        ButterKnife.bind(this);
-
-        ((Toolbar) findViewById(R.id.toolbar)).setNavigationIcon(R.drawable.back);
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-
-        inflater = (LayoutInflater) getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
         url = getIntent().getExtras().getString(CommonConstants.LINK);
         type = getIntent().getExtras().getString(CommonConstants.TYPE);
+        text = getIntent().getExtras().getString(CommonConstants.TEXT);
+
+        ButterKnife.bind(this);
+
+        ((Toolbar) findViewById(R.id.toolbar)).setNavigationIcon(R.drawable.back);
+        ((Toolbar) findViewById(R.id.toolbar)).setTitle(text);
+
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+
+        inflater = (LayoutInflater) getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
         orders = ListOrderActivity.getMyOrders();
 
@@ -121,6 +126,8 @@ public class PaymentActivity extends AppCompatActivity {
             isKlikBCA = true;
             layoutTime.setVisibility(View.GONE);
             layoutKlikbca.setVisibility(View.VISIBLE);
+        } else if (type.equals("mandiri_clickpay")) {
+            layoutTime.setVisibility(View.GONE);
         }
 
         getData(url);
@@ -284,6 +291,7 @@ public class PaymentActivity extends AppCompatActivity {
         requestParams.put(CommonConstants.TOKEN, RekaApplication.getInstance().getToken());
         requestParams.put(CommonConstants.OUTPUT, CommonConstants.JSON);
         requestParams.put(CommonConstants.LANG, CommonConstants.ID);
+        requestParams.put(CommonConstants.CURRENCY, "IDR");
 
         if (isAfter) {
             requestParams.put(CommonConstants.BTN_BOOKING, "1");
@@ -322,10 +330,17 @@ public class PaymentActivity extends AppCompatActivity {
 
                         getPolicies();
                     } else {
-                        Intent intent = new Intent(PaymentActivity.this, FinishOrderActivity.class);
-                        intent.putExtra(CommonConstants.RESPONE, response.toString());
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
+                        JSONObject diagnosticObj = response.getJSONObject(CommonConstants.DIAGNOSTIC);
+                        int status = diagnosticObj.getInt(CommonConstants.STATUS);
+                        
+                        if (status == 200) {
+                            Intent intent = new Intent(PaymentActivity.this, FinishOrderActivity.class);
+                            intent.putExtra(CommonConstants.RESPONE, response.toString());
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(PaymentActivity.this, diagnosticObj.getString(CommonConstants.ERROR_MSGS), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

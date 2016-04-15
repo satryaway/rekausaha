@@ -261,7 +261,7 @@ public class ListOrderActivity extends AppCompatActivity {
         }
         return value;
     }
-
+/*
     @OnClick(R.id.tv_checkout)
     public void checkout() {
         if (myOrders.size() == 1) {
@@ -274,7 +274,7 @@ public class ListOrderActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         }
-    }
+    }*/
 
     private void getData() {
         String url = CommonConstants.BASE_URL + "order";
