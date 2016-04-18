@@ -78,10 +78,10 @@ public class ListHotelActivity extends AppCompatActivity {
         listHotel.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (hotels.get(position).price.equals("")){
+                /*if (hotels.get(position).price.equals("")){
                     Toast.makeText(ListHotelActivity.this, "Invalid price", Toast.LENGTH_SHORT).show();
                     return;
-                }
+                }*/
                 Intent intent = new Intent(ListHotelActivity.this,
                         ProfileHotelActivity.class);
                 intent.putExtra(CommonConstants.BUSSINESSURI, hotels.get(position).businessUri);
@@ -155,7 +155,9 @@ public class ListHotelActivity extends AppCompatActivity {
                     Gson gson = new Gson();
                     JSONArray hotelAreaArray = response.getJSONObject(CommonConstants.RESULTS).getJSONArray(CommonConstants.RESULT);
                     for (int i = 0; i < hotelAreaArray.length(); i++) {
-                        hotels.add(gson.fromJson(hotelAreaArray.getJSONObject(i).toString(), Hotel.class));
+                        Hotel hotel = gson.fromJson(hotelAreaArray.getJSONObject(i).toString(), Hotel.class);
+                        if (!hotel.price.isEmpty())
+                            hotels.add(hotel);
                     }
 
                     JSONObject searchQueries = response.getJSONObject(CommonConstants.SEARCH_QUERIES);

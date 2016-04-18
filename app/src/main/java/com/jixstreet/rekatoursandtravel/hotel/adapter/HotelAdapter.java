@@ -2,6 +2,7 @@ package com.jixstreet.rekatoursandtravel.hotel.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,15 +70,14 @@ public class HotelAdapter extends ArrayAdapter<Hotel> {
 
         if (hotel.price != "") {
             holder.tvPriceHotel.setText(Util.toRupiahFormat(hotel.price));
-            if (hotel.oldprice != "")
+            if (hotel.oldprice != "") {
                 holder.tvOldPriceHotel.setText(Util.toRupiahFormat(hotel.oldprice));
+                holder.tvOldPriceHotel.setPaintFlags(holder.tvOldPriceHotel.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            }
         } else {
-            holder.tvPriceHotel.setText("");
+            holder.tvPriceHotel.setText(Util.toRupiahFormat(hotel.oldprice));
             holder.tvOldPriceHotel.setText("");
         }
-
-
-
 
         return convertView;
     }

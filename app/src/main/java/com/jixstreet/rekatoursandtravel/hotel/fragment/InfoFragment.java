@@ -116,8 +116,8 @@ public class InfoFragment extends Fragment {
     }
 
     private void setInit() {
-        Drawable drawable = rbBintang.getProgressDrawable();
-        drawable.setColorFilter(Color.parseColor("#f7961f"), PorterDuff.Mode.SRC_ATOP);
+        /*Drawable drawable = rbBintang.getProgressDrawable();
+        drawable.setColorFilter(Color.parseColor("#f7961f"), PorterDuff.Mode.SRC_ATOP);*/
 
     }
 

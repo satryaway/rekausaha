@@ -14,7 +14,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:background="@android:color/white"
         android:orientation="vertical">
 
@@ -32,22 +32,20 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="60dp"
+            android:layout_margin="8dp"
+            android:layout_alignParentBottom="true"
             android:background="@drawable/draw_circle"
             android:gravity="center"
             android:padding="5dp"
             android:text="8.2"
-            android:textColor="@android:color/white"
-            android:visibility="gone" />
+            android:textColor="@android:color/white" />
 
         <RatingBar
             android:id="@+id/rb_star_hotel"
             style="?android:attr/ratingBarStyleIndicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="3dp"
             android:layout_toEndOf="@+id/iv_image_hotel"
             android:layout_toRightOf="@+id/iv_image_hotel"
             android:max="5"
@@ -62,6 +60,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rb_star_hotel"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="16sp"
             android:layout_toEndOf="@+id/iv_image_hotel"
             android:layout_toRightOf="@+id/iv_image_hotel"
             android:text="Hotel Aston"
@@ -75,6 +76,7 @@
             android:layout_below="@+id/tv_name_hotel"
             android:layout_toEndOf="@+id/iv_image_hotel"
             android:layout_toRightOf="@+id/iv_image_hotel"
+            android:textSize="14sp"
             android:text="150.000"
             android:textColor="@color/colorAccent" />
 
@@ -84,6 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_name_hotel"
             android:layout_toRightOf="@+id/tv_price_hotel"
+            android:textSize="14sp"
             android:text="/malam" />
 
         <TextView
@@ -94,6 +97,7 @@
             android:layout_toEndOf="@+id/iv_image_hotel"
             android:layout_toRightOf="@+id/iv_image_hotel"
             android:paddingBottom="5dp"
+            android:textSize="12sp"
             android:text="110.000" />
 
         <ImageView

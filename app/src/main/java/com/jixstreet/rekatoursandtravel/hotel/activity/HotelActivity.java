@@ -107,14 +107,14 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
         tvDayCheckin.setText(dayFormatter.format(newCalendar.getTime()));
         tvDateCheckin.setText(dateFormatter.format(newCalendar.getTime()));
         tvMonthYearCheckin.setText(monthYearFormatter.format(newCalendar.getTime()));
-        dateCheckin = dateFormatter.format(newCalendar.getTime());
+        dateCheckin = dateDefaultFormatter.format(newCalendar.getTime());
 
         //date next week
         newCalendar.add(Calendar.DATE, 1);
         tvDayCheckout.setText(dayFormatter.format(newCalendar.getTime()));
         tvDateCheckout.setText(dateFormatter.format(newCalendar.getTime()));
         tvMonthYearCheckout.setText(monthYearFormatter.format(newCalendar.getTime()));
-        dateCheckout = dateFormatter.format(newCalendar.getTime());
+        dateCheckout = dateDefaultFormatter.format(newCalendar.getTime());
 
 
         final String[] listTamu = new String[6];
