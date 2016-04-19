@@ -2,6 +2,7 @@ package com.jixstreet.rekatoursandtravel.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,15 +24,11 @@ import com.google.gson.Gson;
 import com.jixstreet.rekatoursandtravel.R;
 import com.jixstreet.rekatoursandtravel.RekaApplication;
 import com.jixstreet.rekatoursandtravel.adapter.StepsAdapter;
-import com.jixstreet.rekatoursandtravel.flight.adapter.MyOrderAdapter;
-import com.jixstreet.rekatoursandtravel.flight.model.DeparturesOrder;
-import com.jixstreet.rekatoursandtravel.hotel.model.Breadcrumb;
-import com.jixstreet.rekatoursandtravel.hotel.model.Room;
-import com.jixstreet.rekatoursandtravel.hotel.model.SearchQueriesHotel;
 import com.jixstreet.rekatoursandtravel.model.MyOrder;
 import com.jixstreet.rekatoursandtravel.model.Policy;
 import com.jixstreet.rekatoursandtravel.model.Steps;
 import com.jixstreet.rekatoursandtravel.utils.CommonConstants;
+import com.jixstreet.rekatoursandtravel.utils.DateTimeUtils;
 import com.jixstreet.rekatoursandtravel.utils.ErrorException;
 import com.jixstreet.rekatoursandtravel.utils.Util;
 import com.loopj.android.http.AsyncHttpClient;
@@ -43,11 +40,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -68,6 +67,9 @@ public class PaymentActivity extends AppCompatActivity {
     RelativeLayout layoutTime;
     @Bind(R.id.list_step_payment)
     ListView listStepPayment;
+
+    @Bind(R.id.discount_tv)
+    TextView discountTV;
 
     @Bind(R.id.ev_klikbca)
     EditText evKlikbca;
@@ -100,6 +102,12 @@ public class PaymentActivity extends AppCompatActivity {
     private boolean isAfter = false;
     private boolean isKlikBCA = false;
     private String text;
+    private Calendar calendar;
+    private long elapsedDays;
+    private long elapsedHours;
+    private long elapsedMinutes;
+    private long elapsedSeconds;
+    private String initialTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +129,7 @@ public class PaymentActivity extends AppCompatActivity {
         inflater = (LayoutInflater) getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
         orders = ListOrderActivity.getMyOrders();
+        initialTime = orders.get(0).orderExpireDatetime;
 
         if (type.equals("klikbca")) {
             isKlikBCA = true;
@@ -275,7 +284,7 @@ public class PaymentActivity extends AppCompatActivity {
 
     @OnClick(R.id.next_btn)
     void nextOnClick() {
-        if (isKlikBCA){
+        if (isKlikBCA) {
             if (evKlikbca.getText().toString().isEmpty()) {
                 evKlikbca.setError("Diperlukan");
             } else {
@@ -320,27 +329,32 @@ public class PaymentActivity extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 Log.e("JSON METHOD PAYMENT", response.toString() + "");
                 try {
+                    JSONObject diagnosticObj = response.getJSONObject(CommonConstants.DIAGNOSTIC);
+                    int status = diagnosticObj.getInt(CommonConstants.STATUS);
+
+                    if (status != 200) {
+                        String errorMsgs = diagnosticObj.getString(CommonConstants.ERROR_MSGS);
+                        showAlertDialog(errorMsgs);
+                        return;
+                    }
+
                     if (!isAfter) {
                         JSONObject object = response.getJSONObject(CommonConstants.RESULT);
                         orderId = object.getString(CommonConstants.ORDER_ID);
                         int grandSubtotal = object.getInt(CommonConstants.GRAND_TOTAL);
+                        int discount = object.getInt(CommonConstants.PAYMENT_DISCOUNT);
                         tvOrderId.setText(orderId);
                         tvTotal.setText("IDR " + grandSubtotal);
+                        discountTV.setText("IDR " + discount);
                         isAfter = true;
 
                         getPolicies();
+                        countDownTime();
                     } else {
-                        JSONObject diagnosticObj = response.getJSONObject(CommonConstants.DIAGNOSTIC);
-                        int status = diagnosticObj.getInt(CommonConstants.STATUS);
-                        
-                        if (status == 200) {
-                            Intent intent = new Intent(PaymentActivity.this, FinishOrderActivity.class);
-                            intent.putExtra(CommonConstants.RESPONE, response.toString());
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
-                        } else {
-                            Toast.makeText(PaymentActivity.this, diagnosticObj.getString(CommonConstants.ERROR_MSGS), Toast.LENGTH_SHORT).show();
-                        }
+                        Intent intent = new Intent(PaymentActivity.this, FinishOrderActivity.class);
+                        intent.putExtra(CommonConstants.RESPONE, response.toString());
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -360,6 +374,52 @@ public class PaymentActivity extends AppCompatActivity {
         });
     }
 
+    private void countDownTime() {
+//        final String dummy = "2016-04-19 09:51:00";
+        final String interval = Util.printDifference(initialTime);
+//        final String interval = Util.printDifference(dummy);
+
+        if (interval.equals("expired")) {
+            tvExpiredTime.setText("Time Expired");
+            showAlertDialog("your order has expired please recheck your order");
+        } else {
+            tvExpiredTime.postDelayed(new Runnable() {
+                public void run() {
+                    String interval = Util.printDifference(initialTime);
+//                    String interval = Util.printDifference(dummy);
+                    tvExpiredTime.setText(interval);
+                    tvExpiredTime.postDelayed(this, 1000);
+
+                    if (interval.equals("expired")) {
+                        tvExpiredTime.setText("Time Expired");
+                        tvExpiredTime.removeCallbacks(this);
+                        showAlertDialog("your order has expired please recheck your order");
+                    }
+                }
+            }, 1000);
+
+        }
+    }
+
+    private void showAlertDialog(String message) {
+        final android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(
+                this).create();
+
+        // Setting Dialog Message
+        alertDialog.setMessage(message);
+
+        // Setting OK Button
+        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Write your code here to execute after dialog closed
+                alertDialog.dismiss();
+                finish();
+            }
+        });
+
+        // Showing Alert Message
+        alertDialog.show();
+    }
 
     private void getFinishPayment(String url) {
         RequestParams requestParams = new RequestParams();
