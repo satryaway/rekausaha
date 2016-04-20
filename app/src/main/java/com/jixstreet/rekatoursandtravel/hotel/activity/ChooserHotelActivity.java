@@ -1,5 +1,6 @@
 package com.jixstreet.rekatoursandtravel.hotel.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.jixstreet.rekatoursandtravel.RekaApplication;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -134,6 +136,10 @@ public class ChooserHotelActivity extends AppCompatActivity {
     }
 
     private void getData(String keywords, boolean bool) {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getString(R.string.please_wait));
+        progressDialog.setCancelable(false);
+
         String url = CommonConstants.BASE_URL + "search/autocomplete/hotel";
 
         RequestParams requestParams = new RequestParams();
@@ -144,7 +150,7 @@ public class ChooserHotelActivity extends AppCompatActivity {
             requestParams.put(CommonConstants.UID, "country:" + keywords);
         }
 
-        requestParams.put(CommonConstants.TOKEN, "19d0ceaca45f9ee27e3c51df52786f1d904280f9");
+        requestParams.put(CommonConstants.TOKEN, RekaApplication.getInstance().getToken());
         requestParams.put(CommonConstants.OUTPUT, CommonConstants.JSON);
 
         AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
@@ -152,12 +158,12 @@ public class ChooserHotelActivity extends AppCompatActivity {
         client.get(url, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onStart() {
-                progressBar.setVisibility(View.VISIBLE);
+                progressDialog.show();
             }
 
             @Override
             public void onFinish() {
-                progressBar.setVisibility(View.GONE);
+                progressDialog.hide();
             }
 
             @Override
