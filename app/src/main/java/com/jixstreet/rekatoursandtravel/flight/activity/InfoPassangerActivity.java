@@ -130,11 +130,15 @@ public class InfoPassangerActivity extends AppCompatActivity {
                         if (requiredField.type.equals(CommonConstants.COMBOBOX)) {
                             editTextWrapper = (ViewGroup) layoutInflater.inflate(R.layout.item_text_field_with_spinner, null);
                             fieldET = (EditText) editTextWrapper.getChildAt(1);
+                            final JSONArray places = value.optJSONArray("resource");
+                            if (places == null) {
+                                requiredField.value = "id";
+                                fieldET.setText("Indonesia");
+                            }
                             fieldET.setOnTouchListener(new View.OnTouchListener() {
                                 @Override
                                 public boolean onTouch(View view, MotionEvent motionEvent) {
                                     if (MotionEvent.ACTION_UP == motionEvent.getAction()) {
-                                        JSONArray places = value.optJSONArray("resource");
                                         AlertDialog.Builder builder = new AlertDialog.Builder(InfoPassangerActivity.this);
                                         if (places == null) {
                                             builder.setItems(countryCollection, new DialogInterface.OnClickListener() {
@@ -191,6 +195,10 @@ public class InfoPassangerActivity extends AppCompatActivity {
                                 fieldET.setInputType(InputType.TYPE_CLASS_NUMBER);
                             } else if (key.toLowerCase().contains("email")) {
                                 fieldET.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                            }
+
+                            if (key.toLowerCase().contains("passportno")) {
+                                fieldET.setInputType(InputType.TYPE_CLASS_TEXT);
                             }
                         }
 

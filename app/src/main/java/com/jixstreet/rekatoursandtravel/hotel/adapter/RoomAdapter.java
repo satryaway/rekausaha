@@ -40,7 +40,7 @@ public class RoomAdapter extends ArrayAdapter<Room> {
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {
-        this.position=position;
+        this.position = position;
         room = getItem(position);
 
         LayoutInflater mInflater = (LayoutInflater) context
@@ -58,6 +58,7 @@ public class RoomAdapter extends ArrayAdapter<Room> {
         holder.tvNameRoom.setText(room.roomName);
         holder.tvPriceRoom.setText(Util.toRupiahFormat(room.price));
         holder.tvJumlahKamar.setText("Jumlah kamar : " + room.roomAvailable);
+        holder.ivFood.setVisibility(!room.with_breakfasts.equals("0") ? View.VISIBLE : View.GONE);
 
         setCallBack();
         return convertView;
@@ -73,7 +74,6 @@ public class RoomAdapter extends ArrayAdapter<Room> {
                 dialog.setContentView(R.layout.dialog_info);
 
                 setInitDialog(dialog);
-
                 dialog.show();
 
             }
@@ -117,12 +117,20 @@ public class RoomAdapter extends ArrayAdapter<Room> {
     }
 
     static class ViewHolder {
-        @Bind(R.id.tv_name_room) TextView tvNameRoom;
-        @Bind(R.id.tv_price_room) TextView tvPriceRoom;
-        @Bind(R.id.tv_jumlah_kamar) TextView tvJumlahKamar;
-        @Bind(R.id.iv_promo) ImageView ivPromo;
-        @Bind(R.id.iv_info) ImageView ivinfo;
-        @Bind(R.id.tv_order) TextView tvorder;
+        @Bind(R.id.tv_name_room)
+        TextView tvNameRoom;
+        @Bind(R.id.tv_price_room)
+        TextView tvPriceRoom;
+        @Bind(R.id.tv_jumlah_kamar)
+        TextView tvJumlahKamar;
+        @Bind(R.id.iv_promo)
+        ImageView ivPromo;
+        @Bind(R.id.iv_info)
+        ImageView ivinfo;
+        @Bind(R.id.tv_order)
+        TextView tvorder;
+        @Bind(R.id.iv_food)
+        ImageView ivFood;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);

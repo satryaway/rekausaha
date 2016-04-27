@@ -45,29 +45,13 @@
             android:padding="5dp">
 
             <ImageView
-                android:id="@+id/iv_baggage"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:padding="5dp"
-                android:src="@drawable/flight_ic" />
-
-            <ImageView
                 android:id="@+id/iv_food"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:padding="5dp"
                 android:src="@drawable/ic_food" />
 
-            <ImageView
-                android:id="@+id/iv_tax"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:padding="5dp"
-                android:src="@drawable/ic_tax" />
-
         </LinearLayout>
-
-
         <TextView
             android:id="@+id/tv_price_room"
             style="@style/TextAppearance.AppCompat.Subhead"

@@ -28,12 +28,12 @@ import butterknife.ButterKnife;
 
 
 public class FlightActivity extends AppCompatActivity implements View.OnClickListener {
-    private static String AIRPORT_CODE_D = "";
-    private static String AIRPORT_NAME_D = "";
-    private static String AIRPORT_LOCATION_D = "";
-    private static String AIRPORT_CODE_A = "";
-    private static String AIRPORT_NAME_A = "";
-    private static String AIRPORT_LOCATION_A = "";
+    private String AIRPORT_CODE_D = "";
+    private String AIRPORT_NAME_D = "";
+    private String AIRPORT_LOCATION_D = "";
+    private String AIRPORT_CODE_A = "";
+    private String AIRPORT_NAME_A = "";
+    private String AIRPORT_LOCATION_A = "";
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
