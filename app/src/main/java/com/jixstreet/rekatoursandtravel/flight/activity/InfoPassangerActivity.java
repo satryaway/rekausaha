@@ -364,7 +364,6 @@ public class InfoPassangerActivity extends AppCompatActivity {
 
     private void nextActivity() {
         Intent intent = new Intent(InfoPassangerActivity.this, ListOrderActivity.class);
-        intent.putExtra(CommonConstants.WHAT_ORDER, "FLIGHT");
         intent.putExtra(CommonConstants.CONTACT_MAP, contactMap);
         intent.putExtra(CommonConstants.HOTE_CUSTOMER_MAP, hotelCustomerMap);
         intent.putExtra(CommonConstants.IS_HOTEL, isHotel);

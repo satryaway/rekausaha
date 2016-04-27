@@ -29,13 +29,16 @@ public class MyOrderAdapter extends ArrayAdapter<MyOrder> {
     private int layoutResourceId;
     private Context context;
     private ViewHolder holder;
-    private ListOrderActivity activity;
+    private OnDeleteClickListener onDeleteClickListener;
 
-    public MyOrderAdapter(Context context, ArrayList<MyOrder> scheduleArrayList, ListOrderActivity activity) {
+    public void setOnDeleteClickListener(OnDeleteClickListener onDeleteClickListener) {
+        this.onDeleteClickListener = onDeleteClickListener;
+    }
+
+    public MyOrderAdapter(Context context, ArrayList<MyOrder> scheduleArrayList) {
         super(context, R.layout.item_myorder, scheduleArrayList);
         this.context = context;
         this.layoutResourceId = R.layout.item_myorder;
-        this.activity=activity;
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -64,11 +67,15 @@ public class MyOrderAdapter extends ArrayAdapter<MyOrder> {
         holder.ivDeleteOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.deleteOrderId(position);
+                onDeleteClickListener.callBack(position);
             }
         });
 
         return convertView;
+    }
+
+    public interface OnDeleteClickListener {
+        void callBack(int position);
     }
 
     static class ViewHolder {

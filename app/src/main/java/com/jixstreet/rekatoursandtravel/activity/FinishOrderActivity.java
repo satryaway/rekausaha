@@ -200,6 +200,7 @@ public class FinishOrderActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent intent = new Intent(FinishOrderActivity.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra(CommonConstants.REFRESH_TOKEN, true);
         startActivity(intent);
         super.onBackPressed();
     }

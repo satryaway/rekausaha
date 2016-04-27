@@ -31,7 +31,8 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen_layout);
 
-        sharedPreferences = this.getSharedPreferences(CommonConstants.REKA_USAHA, MODE_PRIVATE);
+        startAnActivity();
+        /*sharedPreferences = this.getSharedPreferences(CommonConstants.REKA_USAHA, MODE_PRIVATE);
         String url = CommonConstants.BASE_URL + "apiv1/payexpress";
 
         RequestParams requestParams = new RequestParams();
@@ -64,7 +65,7 @@ public class SplashActivity extends AppCompatActivity {
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
             }
-        });
+        });*/
     }
 
     private void startAnActivity() {

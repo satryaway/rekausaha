@@ -16,7 +16,6 @@ import com.google.gson.Gson;
 import com.jixstreet.rekatoursandtravel.R;
 import com.jixstreet.rekatoursandtravel.RekaApplication;
 import com.jixstreet.rekatoursandtravel.flight.adapter.MyOrderAdapter;
-import com.jixstreet.rekatoursandtravel.hotel.activity.InfoCustomerHotelActivity;
 import com.jixstreet.rekatoursandtravel.model.MyOrder;
 import com.jixstreet.rekatoursandtravel.utils.CommonConstants;
 import com.jixstreet.rekatoursandtravel.utils.ErrorException;
@@ -41,7 +40,6 @@ public class ListOrderActivity extends AppCompatActivity {
     ListView listOrder;
     private MyOrderAdapter myOrderAdapter;
     private Bundle bundle;
-    private static String whatOrder;
     private String orderId;
     private HashMap<String, String> contactMap = new HashMap<>();
     private String checkoutCustomerURL;
@@ -67,22 +65,15 @@ public class ListOrderActivity extends AppCompatActivity {
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
         bundle = getIntent().getExtras();
-        whatOrder = "FLIGHT";
         isHotel = bundle.getBoolean(CommonConstants.IS_HOTEL);
         contactMap = (HashMap<String, String>) bundle.getSerializable(CommonConstants.CONTACT_MAP);
         hotelCustomerMap = (HashMap<String, String>) bundle.getSerializable(CommonConstants.HOTE_CUSTOMER_MAP);
 
         staticContactMap = contactMap;
 
-        Log.e("whatOrder", whatOrder + "");
-
         getData();
 
         setCallBack();
-    }
-
-    public static String getWhatOrder() {
-        return whatOrder;
     }
 
     private void setCallBack() {
@@ -90,13 +81,7 @@ public class ListOrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (myOrders.size() > 0) {
-                    if (whatOrder.equals("FLIGHT")) {
-                        checkoutRequest();
-                    } else if (whatOrder.equals("HOTEL")) {
-                        Intent intent = new Intent(ListOrderActivity.this, InfoCustomerHotelActivity.class);
-                        intent.putExtra(CommonConstants.DETAIL_ID, myOrders.get(0).orderDetailId);
-                        startActivity(intent);
-                    }
+                    checkoutRequest();
                 }
             }
         });
@@ -211,7 +196,7 @@ public class ListOrderActivity extends AppCompatActivity {
                             Intent intent = new Intent(ListOrderActivity.this, ListPaymentActivity.class);
                             startActivity(intent);
                         } else {
-                            if (orderIteration == myOrders.size()-1) {
+                            if (orderIteration == myOrders.size() - 1) {
                                 Intent intent = new Intent(ListOrderActivity.this, ListPaymentActivity.class);
                                 startActivity(intent);
                             } else {
@@ -361,8 +346,14 @@ public class ListOrderActivity extends AppCompatActivity {
 
                     orderId = response.getJSONObject(CommonConstants.MYORDER).getString(CommonConstants.ORDER_ID);
 
-                    myOrderAdapter = new MyOrderAdapter(ListOrderActivity.this, myOrders, ListOrderActivity.this);
+                    myOrderAdapter = new MyOrderAdapter(ListOrderActivity.this, myOrders);
                     listOrder.setAdapter(myOrderAdapter);
+                    myOrderAdapter.setOnDeleteClickListener(new MyOrderAdapter.OnDeleteClickListener() {
+                        @Override
+                        public void callBack(int position) {
+                            deleteOrderId(position);
+                        }
+                    });
 
                     /*if (myOrders.size() == 1) {
                         if (whatOrder.equals("FLIGHT")) {

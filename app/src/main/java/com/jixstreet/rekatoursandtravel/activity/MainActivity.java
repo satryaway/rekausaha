@@ -1,5 +1,7 @@
 package com.jixstreet.rekatoursandtravel.activity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -14,6 +16,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.jixstreet.rekatoursandtravel.R;
 import com.jixstreet.rekatoursandtravel.Session.CountrySessionManager;
@@ -23,11 +26,19 @@ import com.jixstreet.rekatoursandtravel.fragment.HomeFragment;
 import com.jixstreet.rekatoursandtravel.fragment.NewsFragment;
 import com.jixstreet.rekatoursandtravel.model.Country;
 import com.jixstreet.rekatoursandtravel.utils.Builder;
+import com.jixstreet.rekatoursandtravel.utils.CommonConstants;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -39,13 +50,26 @@ public class MainActivity extends AppCompatActivity
 
     private Fragment fragment;
     private CountrySessionManager countrySessionManager;
+    private SharedPreferences sharedPreferences;
+    private boolean isRefreshToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent intent = getIntent();
+        isRefreshToken = intent.getBooleanExtra(CommonConstants.REFRESH_TOKEN, false);
+
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+
+        sharedPreferences = this.getSharedPreferences(CommonConstants.REKA_USAHA, MODE_PRIVATE);
+        String token = sharedPreferences.getString(CommonConstants.TOKEN, "");
+
+        if (token.isEmpty() || isRefreshToken) {
+            getAccessToken();
+        }
 
         countrySessionManager = new CountrySessionManager(this);
         if (countrySessionManager.getCountry(this) == null) {
@@ -111,8 +135,11 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_tentang) {
             toolbarIcon.setVisibility(View.GONE);
             fragment = AboutFragment.newInstance();
+        } else if (id == R.id.nav_booking) {
+            Intent intent = new Intent(MainActivity.this, MyBookingActivity.class);
+            startActivity(intent);
+            finish();
         }
-
 
         if (fragment != null) {
             fragmentTransaction.replace(R.id.content, fragment);
@@ -122,5 +149,40 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void getAccessToken() {
+        String url = CommonConstants.BASE_URL + "apiv1/payexpress";
+
+        RequestParams requestParams = new RequestParams();
+        requestParams.put(CommonConstants.METHOD, "getToken");
+        requestParams.put(CommonConstants.SECRET_KEY, getString(R.string.secret_key));
+        requestParams.put(CommonConstants.OUTPUT, CommonConstants.JSON);
+
+        AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
+        client.setTimeout(10000);
+        client.get(url, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    String token = response.getString(CommonConstants.TOKEN);
+                    sharedPreferences.edit().putString(CommonConstants.TOKEN, token).apply();
+                    Log.d("token", token);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Toast.makeText(MainActivity.this, "Request Timed Out", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+        });
     }
 }
