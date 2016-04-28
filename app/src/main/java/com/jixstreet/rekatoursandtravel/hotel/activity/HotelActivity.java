@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialogFragment;
 import com.jixstreet.rekatoursandtravel.R;
@@ -22,6 +23,7 @@ import com.jixstreet.rekatoursandtravel.utils.Util;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import butterknife.Bind;
@@ -63,6 +65,9 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
     private Calendar newCalendar;
     private String VALUE_HOTEL_AREA = "id";
     private int HOTEL_KOTA = 400;
+    private Date todayDate;
+    private Date checkinDate;
+    private Date checkoutDate;
 
     public static String getDateCheckin() {
         return dateCheckin;
@@ -103,11 +108,15 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
         monthYearFormatter = new SimpleDateFormat("MMM yyyy", new Locale("ind", "IDN"));
         dateDefaultFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
+        todayDate = newCalendar.getTime();
+
         //date now
         tvDayCheckin.setText(dayFormatter.format(newCalendar.getTime()));
         tvDateCheckin.setText(dateFormatter.format(newCalendar.getTime()));
         tvMonthYearCheckin.setText(monthYearFormatter.format(newCalendar.getTime()));
         dateCheckin = dateDefaultFormatter.format(newCalendar.getTime());
+
+        checkinDate = newCalendar.getTime();
 
         //date next week
         newCalendar.add(Calendar.DATE, 1);
@@ -116,6 +125,7 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
         tvMonthYearCheckout.setText(monthYearFormatter.format(newCalendar.getTime()));
         dateCheckout = dateDefaultFormatter.format(newCalendar.getTime());
 
+        checkoutDate = newCalendar.getTime();
 
         final String[] listTamu = new String[6];
         for (int i = 0; i < 6; i++) {
@@ -198,11 +208,19 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
                         tvMonthYearCheckin.setText(monthYearFormatter.format(newDate.getTime()));
                         dateCheckin = dateDefaultFormatter.format(newDate.getTime());
 
-                        newDate.add(Calendar.DATE, 1);
-                        tvDayCheckout.setText(dayFormatter.format(newDate.getTime()));
-                        tvDateCheckout.setText(dateFormatter.format(newDate.getTime()));
-                        tvMonthYearCheckout.setText(monthYearFormatter.format(newDate.getTime()));
-                        dateCheckout = dateDefaultFormatter.format(newDate.getTime());
+                        checkinDate = newDate.getTime();
+                        Calendar checkoutCal = Calendar.getInstance();
+                        checkoutCal.set(year, monthOfYear, dayOfMonth);
+
+                        checkoutCal.add(Calendar.DATE, 1);
+                        tvDayCheckout.setText(dayFormatter.format(checkoutCal.getTime()));
+                        tvDateCheckout.setText(dateFormatter.format(checkoutCal.getTime()));
+                        tvMonthYearCheckout.setText(monthYearFormatter.format(checkoutCal.getTime()));
+                        dateCheckout = dateDefaultFormatter.format(checkoutCal.getTime());
+
+                        checkoutDate = checkoutCal.getTime();
+
+
                     }
                 }).show(getSupportFragmentManager(), "DATEPICKER");
 
@@ -218,6 +236,8 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
                         tvDateCheckout.setText(dateFormatter.format(newDate.getTime()));
                         tvMonthYearCheckout.setText(monthYearFormatter.format(newDate.getTime()));
                         dateCheckout = dateDefaultFormatter.format(newDate.getTime());
+
+                        checkoutDate = newDate.getTime();
                     }
                 }).show(getSupportFragmentManager(), "DATEPICKER");
 
@@ -227,14 +247,35 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
                 room = evKamar.getText().toString();
                 tamu = evTamu.getText().toString();
 
-                Intent pickIntent = new Intent(HotelActivity.this,
-                        ListHotelActivity.class);
-                pickIntent.putExtra(CommonConstants.Q, VALUE_HOTEL_AREA);
-                pickIntent.putExtra(CommonConstants.STARTDATE, dateCheckin);
-                pickIntent.putExtra(CommonConstants.ENDDATE, dateCheckout);
-                pickIntent.putExtra(CommonConstants.ROOM, room);
-                pickIntent.putExtra(CommonConstants.ADULT, tamu);
-                startActivity(pickIntent);
+                //Comparing dates
+                long difference = Math.abs(checkinDate.getTime() - todayDate.getTime());
+                long differenceDates = difference / (24 * 60 * 60 * 1000);
+
+                //Convert long to String
+                String dayDifference = Long.toString(differenceDates);
+
+                long differences = Math.abs(checkoutDate.getTime() - checkinDate.getTime());
+                long differencesDates = differences / (24 * 60 * 60 * 1000);
+
+                String dayDifferences = Long.toString(differencesDates);
+
+                if (checkinDate.getTime() < todayDate.getTime()) {
+                    Toast.makeText(HotelActivity.this, "Tanggal check-in tidak boleh kurang dari hari ini", Toast.LENGTH_SHORT).show();
+                } else if (checkinDate.getTime() > checkoutDate.getTime()) {
+                    Toast.makeText(HotelActivity.this, "Tanggal check-out tidak boleh kurang dari tanggal check-in", Toast.LENGTH_SHORT).show();
+                } else if (Integer.valueOf(dayDifference) > 547) {
+                    Toast.makeText(HotelActivity.this, "Tanggal checkin tidak lebih dari 547 hari", Toast.LENGTH_SHORT).show();
+                } else if (Integer.valueOf(dayDifferences) > 15) {
+                    Toast.makeText(HotelActivity.this, "Tanggal checkout tidak lebih dari 15 hari", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent pickIntent = new Intent(HotelActivity.this, ListHotelActivity.class);
+                    pickIntent.putExtra(CommonConstants.Q, VALUE_HOTEL_AREA);
+                    pickIntent.putExtra(CommonConstants.STARTDATE, dateCheckin);
+                    pickIntent.putExtra(CommonConstants.ENDDATE, dateCheckout);
+                    pickIntent.putExtra(CommonConstants.ROOM, room);
+                    pickIntent.putExtra(CommonConstants.ADULT, tamu);
+                    startActivity(pickIntent);
+                }
                 break;
 
             default:
