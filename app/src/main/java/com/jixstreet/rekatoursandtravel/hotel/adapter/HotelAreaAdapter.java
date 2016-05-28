@@ -34,18 +34,21 @@ public class HotelAreaAdapter extends BaseAdapter implements StickyListHeadersAd
 
     private int[] getSectionIndices() {
         ArrayList<Integer> sectionIndices = new ArrayList<>();
-        String lastFirstChar = hotelAreaList.get(0).category;
-        sectionIndices.add(0);
-        for (int i = 1; i < hotelAreaList.size(); i++) {
-            if (!hotelAreaList.get(i).category.equals(lastFirstChar)) {
-                lastFirstChar = hotelAreaList.get(i).category;
-                sectionIndices.add(i);
+        if (hotelAreaList.size() != 0) {
+            String lastFirstChar = hotelAreaList.get(0).category;
+            sectionIndices.add(0);
+            for (int i = 1; i < hotelAreaList.size(); i++) {
+                if (!hotelAreaList.get(i).category.equals(lastFirstChar)) {
+                    lastFirstChar = hotelAreaList.get(i).category;
+                    sectionIndices.add(i);
+                }
             }
         }
         int[] sections = new int[sectionIndices.size()];
         for (int i = 0; i < sectionIndices.size(); i++) {
             sections[i] = sectionIndices.get(i);
         }
+
         return sections;
     }
 
