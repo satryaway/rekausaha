@@ -27,4 +27,8 @@ public class RequiredField implements Serializable {
     public String disabled;
 
     public String value;
+
+    public String key;
+
+    public int groupingPosition;
 }

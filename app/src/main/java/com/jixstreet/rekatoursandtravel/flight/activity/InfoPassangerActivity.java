@@ -44,6 +44,8 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -74,6 +76,10 @@ public class InfoPassangerActivity extends AppCompatActivity {
     private HashMap<String, String> contactMap = new HashMap<>();
     private String bookUri;
     private HashMap<String, String> hotelCustomerMap = new HashMap<>();
+    private List<RequiredField> requiredFields = new ArrayList<>();
+    private List<RequiredField> finalRequiredFields = new ArrayList<>();
+    private List<String> keys = new ArrayList<>();
+    private LayoutInflater layoutInflater;
 
 
     @Override
@@ -105,122 +111,398 @@ public class InfoPassangerActivity extends AppCompatActivity {
             requiredObject = new JSONObject(responseString).getJSONObject(CommonConstants.REQUIRED);
             Gson gson = new Gson();
             Iterator<String> iterator = requiredObject.keys();
-            LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+            layoutInflater = (LayoutInflater) getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
-            while (iterator.hasNext()) {
-                String key = iterator.next();
+            if (!iterator.next().equals(CommonConstants.SEPARATOR)) {
+                collectField(requiredObject);
+            } else {
+                while (iterator.hasNext()) {
+                    String key = iterator.next();
 
-                final RequiredField requiredField;
-                final JSONObject value = requiredObject.getJSONObject(key);
-                requiredField = gson.fromJson(value.toString(), RequiredField.class);
+                    final RequiredField requiredField;
+                    final JSONObject value = requiredObject.getJSONObject(key);
+                    requiredField = gson.fromJson(value.toString(), RequiredField.class);
 
-                if (requiredField.category != null && requiredField.category.equals(CommonConstants.SEPARATOR)) {
-                    CardView cardWrapper = (CardView) layoutInflater.inflate(R.layout.item_card_field_box, null);
-                    LinearLayout fieldWrapper = (LinearLayout) cardWrapper.findViewById(R.id.field_wrapper);
-                    TextView separatorTitleTV = (TextView) layoutInflater.inflate(R.layout.item_separator_field, null);
-                    separatorTitleTV.setText(requiredField.fieldText);
-                    fieldWrapper.addView(separatorTitleTV);
-                    cardFieldWrapperList.add(cardWrapper);
-                } else {
-                    if (cardFieldWrapperList.size() != 0) {
-                        TextView fieldTV;
-                        final EditText fieldET;
-                        ViewGroup editTextWrapper;
+                    if (requiredField.category != null && requiredField.category.equals(CommonConstants.SEPARATOR)) {
+                        CardView cardWrapper = (CardView) layoutInflater.inflate(R.layout.item_card_field_box, null);
+                        LinearLayout fieldWrapper = (LinearLayout) cardWrapper.findViewById(R.id.field_wrapper);
+                        TextView separatorTitleTV = (TextView) layoutInflater.inflate(R.layout.item_separator_field, null);
+                        separatorTitleTV.setText(requiredField.fieldText);
+                        fieldWrapper.addView(separatorTitleTV);
+                        cardFieldWrapperList.add(cardWrapper);
+                    } else {
+                        if (cardFieldWrapperList.size() != 0) {
+                            TextView fieldTV;
+                            final EditText fieldET;
+                            ViewGroup editTextWrapper;
 
-                        if (requiredField.type.equals(CommonConstants.COMBOBOX)) {
-                            editTextWrapper = (ViewGroup) layoutInflater.inflate(R.layout.item_text_field_with_spinner, null);
-                            fieldET = (EditText) editTextWrapper.getChildAt(1);
-                            final JSONArray places = value.optJSONArray("resource");
-                            if (places == null) {
-                                requiredField.value = "id";
-                                fieldET.setText("Indonesia");
-                            }
-                            fieldET.setOnTouchListener(new View.OnTouchListener() {
-                                @Override
-                                public boolean onTouch(View view, MotionEvent motionEvent) {
-                                    if (MotionEvent.ACTION_UP == motionEvent.getAction()) {
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(InfoPassangerActivity.this);
-                                        if (places == null) {
-                                            builder.setItems(countryCollection, new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int item) {
-                                                    fieldET.setText(countryCollection[item]);
-                                                    requiredField.value = countries.get(item).countryId;
-                                                }
-                                            }).create().show();
-                                        } else {
-                                            final String[] adultTitle = new String[places.length()];
-                                            for (int i = 0; i < places.length(); i++) {
-                                                try {
-                                                    JSONObject jsonObject = places.getJSONObject(i);
-                                                    adultTitle[i] = places.getJSONObject(i).getString("name");
-                                                    requiredField.value = jsonObject.getString("id");
-                                                } catch (JSONException e) {
-                                                    e.printStackTrace();
-                                                }
-                                            }
-
-                                            builder.setItems(adultTitle, new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int item) {
-                                                    fieldET.setText(adultTitle[item]);
-                                                }
-                                            }).create().show();
-                                        }
-                                    }
-                                    return true;
+                            if (requiredField.type.equals(CommonConstants.COMBOBOX)) {
+                                editTextWrapper = (ViewGroup) layoutInflater.inflate(R.layout.item_text_field_with_spinner, null);
+                                fieldET = (EditText) editTextWrapper.getChildAt(1);
+                                final JSONArray places = value.optJSONArray("resource");
+                                if (places == null) {
+                                    requiredField.value = "id";
+                                    fieldET.setText("Indonesia");
                                 }
-                            });
-                            fieldET.setTag(key);
-                        } else {
-                            editTextWrapper = (ViewGroup) layoutInflater.inflate(R.layout.item_text_field, null);
-                            fieldET = (EditText) editTextWrapper.getChildAt(1);
-                            fieldET.setTag(key);
-                            if (key.toLowerCase().contains("date")) {
-                                fieldET.setFocusable(false);
-                                fieldET.setOnClickListener(new View.OnClickListener() {
+                                fieldET.setOnTouchListener(new View.OnTouchListener() {
                                     @Override
-                                    public void onClick(final View v) {
-                                        new CalendarDatePickerDialogFragment().setOnDateSetListener(new CalendarDatePickerDialogFragment.OnDateSetListener() {
-                                            @Override
-                                            public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
-                                                Calendar takenDate = Calendar.getInstance();
-                                                takenDate.set(year, monthOfYear, dayOfMonth);
-                                                ((EditText) v).setText(dateFormatter.format(takenDate.getTime()));
+                                    public boolean onTouch(View view, MotionEvent motionEvent) {
+                                        if (MotionEvent.ACTION_UP == motionEvent.getAction()) {
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(InfoPassangerActivity.this);
+                                            if (places == null) {
+                                                builder.setItems(countryCollection, new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int item) {
+                                                        fieldET.setText(countryCollection[item]);
+                                                        requiredField.value = countries.get(item).countryId;
+                                                    }
+                                                }).create().show();
+                                            } else {
+                                                final String[] adultTitle = new String[places.length()];
+                                                for (int i = 0; i < places.length(); i++) {
+                                                    try {
+                                                        JSONObject jsonObject = places.getJSONObject(i);
+                                                        adultTitle[i] = places.getJSONObject(i).getString("name");
+                                                        requiredField.value = jsonObject.getString("id");
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                }
+
+                                                builder.setItems(adultTitle, new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int item) {
+                                                        fieldET.setText(adultTitle[item]);
+                                                    }
+                                                }).create().show();
                                             }
-                                        }).show(getSupportFragmentManager(), "DATEPICKER");
+                                        }
+                                        return true;
                                     }
                                 });
-                            } else if (key.toLowerCase().contains("phone")) {
-                                fieldET.setInputType(InputType.TYPE_CLASS_PHONE);
-                            } else if (key.toLowerCase().contains("no")) {
-                                fieldET.setInputType(InputType.TYPE_CLASS_NUMBER);
-                            } else if (key.toLowerCase().contains("email")) {
-                                fieldET.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                                fieldET.setTag(key);
+                            } else {
+                                editTextWrapper = (ViewGroup) layoutInflater.inflate(R.layout.item_text_field, null);
+                                fieldET = (EditText) editTextWrapper.getChildAt(1);
+                                fieldET.setTag(key);
+                                if (key.toLowerCase().contains("date")) {
+                                    fieldET.setFocusable(false);
+                                    fieldET.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(final View v) {
+                                            new CalendarDatePickerDialogFragment().setOnDateSetListener(new CalendarDatePickerDialogFragment.OnDateSetListener() {
+                                                @Override
+                                                public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
+                                                    Calendar takenDate = Calendar.getInstance();
+                                                    takenDate.set(year, monthOfYear, dayOfMonth);
+                                                    ((EditText) v).setText(dateFormatter.format(takenDate.getTime()));
+                                                }
+                                            }).show(getSupportFragmentManager(), "DATEPICKER");
+                                        }
+                                    });
+                                } else if (key.toLowerCase().contains("phone")) {
+                                    fieldET.setInputType(InputType.TYPE_CLASS_PHONE);
+                                } else if (key.toLowerCase().contains("no")) {
+                                    fieldET.setInputType(InputType.TYPE_CLASS_NUMBER);
+                                } else if (key.toLowerCase().contains("email")) {
+                                    fieldET.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                                }
+
+                                if (key.toLowerCase().contains("passportno")) {
+                                    fieldET.setInputType(InputType.TYPE_CLASS_TEXT);
+                                }
                             }
 
-                            if (key.toLowerCase().contains("passportno")) {
-                                fieldET.setInputType(InputType.TYPE_CLASS_TEXT);
-                            }
+                            fieldTV = (TextView) editTextWrapper.getChildAt(0);
+                            fieldTV.setHint(requiredField.fieldText);
+
+                            ViewGroup cardWrapper = cardFieldWrapperList.get(cardFieldWrapperList.size() - 1);
+                            LinearLayout fieldWrapper = (LinearLayout) cardWrapper.getChildAt(0);
+                            fieldWrapper.addView(editTextWrapper);
+                            requestedFieldArrayList.add(new RequestedField(requiredField, editTextWrapper, key));
                         }
-
-                        fieldTV = (TextView) editTextWrapper.getChildAt(0);
-                        fieldTV.setHint(requiredField.fieldText);
-
-                        ViewGroup cardWrapper = cardFieldWrapperList.get(cardFieldWrapperList.size() - 1);
-                        LinearLayout fieldWrapper = (LinearLayout) cardWrapper.getChildAt(0);
-                        fieldWrapper.addView(editTextWrapper);
-                        requestedFieldArrayList.add(new RequestedField(requiredField, editTextWrapper, key));
                     }
+
                 }
 
-            }
-
-            for (int i = 0; i < cardFieldWrapperList.size(); i++) {
-                passengerInfoWrapper.addView(cardFieldWrapperList.get(i));
+                for (int i = 0; i < cardFieldWrapperList.size(); i++) {
+                    passengerInfoWrapper.addView(cardFieldWrapperList.get(i));
+                }
             }
 
 
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void collectField(JSONObject requiredObject) throws JSONException {
+        Iterator<String> iterator = requiredObject.keys();
+        Gson gson = new Gson();
+        requiredFields = new ArrayList<>();
+        finalRequiredFields = new ArrayList<>();
+        keys = new ArrayList<>();
+
+        while (iterator.hasNext()) {
+            String key = iterator.next();
+
+            final RequiredField requiredField;
+            final JSONObject value = requiredObject.getJSONObject(key);
+            requiredField = gson.fromJson(value.toString(), RequiredField.class);
+            requiredField.key = key;
+            requiredFields.add(requiredField);
+            keys.add(key);
+        }
+
+        //Get the separator, EQUALS
+        iterateObject(CommonConstants.SEPARATOR, false);
+
+        //Collect the "con", CONTAINS
+        List<RequiredField> required = sortFields(getIteratedObject("con", true));
+        finalRequiredFields.addAll(required);
+
+        //Collect adult
+        checkExistence("a");
+
+        //Collect child
+        checkExistence("c");
+
+        //Collect infant
+        checkExistence("i");
+
+        requiredFields = finalRequiredFields;
+
+        makeFields();
+    }
+
+    private void makeFields() throws JSONException {
+        for (int i = 0; i < requiredFields.size(); i++) {
+            final RequiredField requiredField = requiredFields.get(i);
+
+            if (requiredField.category != null && requiredField.category.equals(CommonConstants.SEPARATOR)) {
+                CardView cardWrapper = (CardView) layoutInflater.inflate(R.layout.item_card_field_box, null);
+                LinearLayout fieldWrapper = (LinearLayout) cardWrapper.findViewById(R.id.field_wrapper);
+                TextView separatorTitleTV = (TextView) layoutInflater.inflate(R.layout.item_separator_field, null);
+                separatorTitleTV.setText(requiredField.fieldText);
+                fieldWrapper.addView(separatorTitleTV);
+                cardFieldWrapperList.add(cardWrapper);
+            } else {
+                if (cardFieldWrapperList.size() != 0) {
+                    TextView fieldTV;
+                    final EditText fieldET;
+                    ViewGroup editTextWrapper;
+
+                    if (requiredField.type.equals(CommonConstants.COMBOBOX)) {
+                        editTextWrapper = (ViewGroup) layoutInflater.inflate(R.layout.item_text_field_with_spinner, null);
+                        fieldET = (EditText) editTextWrapper.getChildAt(1);
+                        JSONObject val = requiredObject.getJSONObject(requiredField.key);
+                        final JSONArray places = val.optJSONArray("resource");
+                        if (places == null) {
+                            requiredField.value = "id";
+                            fieldET.setText("Indonesia");
+                        }
+                        fieldET.setOnTouchListener(new View.OnTouchListener() {
+                            @Override
+                            public boolean onTouch(View view, MotionEvent motionEvent) {
+                                if (MotionEvent.ACTION_UP == motionEvent.getAction()) {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(InfoPassangerActivity.this);
+                                    if (places == null) {
+                                        builder.setItems(countryCollection, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int item) {
+                                                fieldET.setText(countryCollection[item]);
+                                                requiredField.value = countries.get(item).countryId;
+                                            }
+                                        }).create().show();
+                                    } else {
+                                        final String[] adultTitle = new String[places.length()];
+                                        for (int i = 0; i < places.length(); i++) {
+                                            try {
+                                                JSONObject jsonObject = places.getJSONObject(i);
+                                                adultTitle[i] = places.getJSONObject(i).getString("name");
+                                                requiredField.value = jsonObject.getString("id");
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+
+                                        builder.setItems(adultTitle, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int item) {
+                                                fieldET.setText(adultTitle[item]);
+                                            }
+                                        }).create().show();
+                                    }
+                                }
+                                return true;
+                            }
+                        });
+                        fieldET.setTag(requiredField.key);
+                    } else {
+                        editTextWrapper = (ViewGroup) layoutInflater.inflate(R.layout.item_text_field, null);
+                        fieldET = (EditText) editTextWrapper.getChildAt(1);
+                        fieldET.setTag(requiredField.key);
+                        if (requiredField.key.toLowerCase().contains("date")) {
+                            fieldET.setFocusable(false);
+                            fieldET.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(final View v) {
+                                    new CalendarDatePickerDialogFragment().setOnDateSetListener(new CalendarDatePickerDialogFragment.OnDateSetListener() {
+                                        @Override
+                                        public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
+                                            Calendar takenDate = Calendar.getInstance();
+                                            takenDate.set(year, monthOfYear, dayOfMonth);
+                                            ((EditText) v).setText(dateFormatter.format(takenDate.getTime()));
+                                        }
+                                    }).show(getSupportFragmentManager(), "DATEPICKER");
+                                }
+                            });
+                        } else if (requiredField.key.toLowerCase().contains("phone")) {
+                            fieldET.setInputType(InputType.TYPE_CLASS_PHONE);
+                        } else if (requiredField.key.toLowerCase().contains("no")) {
+                            fieldET.setInputType(InputType.TYPE_CLASS_NUMBER);
+                        } else if (requiredField.key.toLowerCase().contains("email")) {
+                            fieldET.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                        }
+
+                        if (requiredField.key.toLowerCase().contains("passportno")) {
+                            fieldET.setInputType(InputType.TYPE_CLASS_TEXT);
+                        }
+                    }
+
+                    fieldTV = (TextView) editTextWrapper.getChildAt(0);
+                    fieldTV.setHint(requiredField.fieldText);
+
+                    ViewGroup cardWrapper = cardFieldWrapperList.get(cardFieldWrapperList.size() - 1);
+                    LinearLayout fieldWrapper = (LinearLayout) cardWrapper.getChildAt(0);
+                    fieldWrapper.addView(editTextWrapper);
+                    requestedFieldArrayList.add(new RequestedField(requiredField, editTextWrapper, requiredField.key));
+                }
+            }
+        }
+
+        for (int i = 0; i < cardFieldWrapperList.size(); i++) {
+            passengerInfoWrapper.addView(cardFieldWrapperList.get(i));
+        }
+    }
+
+    void checkExistence(String type) {
+        int iterator = 1;
+        boolean isExisted = true;
+        String s = type + iterator;
+        String kind = "adult";
+        switch (type) {
+            case "c":
+                kind = "child";
+                break;
+            case "i":
+                kind = "infant";
+                break;
+        }
+
+        List<RequiredField> requiredFieldList;
+
+        while (isExisted) {
+            requiredFieldList = new ArrayList<>();
+            String fullKind = "separator_" + kind + iterator;
+            iterateObject(fullKind, false);
+            for (int i = 0; i < requiredFields.size(); i++) {
+                String s1 = requiredFields.get(i).key;
+                if (s1.contains(s)) {
+                    requiredFieldList.addAll(getIteratedObject(s1, true));
+                }
+            }
+
+            requiredFieldList = sortFields(requiredFieldList);
+            finalRequiredFields.addAll(requiredFieldList);
+
+            iterator++;
+            s = type + iterator;
+            boolean isFound = false;
+            for (int i = 0; i < requiredFields.size() && !isFound; i++) {
+                String s1 = requiredFields.get(i).key;
+                if (s1.contains(s)) {
+                    isFound = true;
+                }
+            }
+
+            isExisted = isFound;
+        }
+    }
+
+    List<RequiredField> sortFields(List<RequiredField> requiredFieldList) {
+        for (int i = 0; i < requiredFieldList.size(); i++) {
+            RequiredField requiredField = requiredFieldList.get(i);
+            if (requiredField.key.toLowerCase().contains("title") || requiredField.key.toLowerCase().contains("salutation")) {
+                requiredField.groupingPosition = 0;
+            } else if (requiredField.key.toLowerCase().contains("firstname")) {
+                requiredField.groupingPosition = 1;
+            } else if (requiredField.key.toLowerCase().contains("lastname")) {
+                requiredField.groupingPosition = 2;
+            } else if (requiredField.key.toLowerCase().contains("birthdate")) {
+                requiredField.groupingPosition = 3;
+            } else {
+                requiredField.groupingPosition = 99;
+            }
+        }
+
+        Collections.sort(requiredFieldList, new Comparator<RequiredField>() {
+            @Override
+            public int compare(RequiredField o1, RequiredField o2) {
+                return o1.groupingPosition - o2.groupingPosition;
+            }
+        });
+
+        return requiredFieldList;
+    }
+
+    void iterateObject(String key, boolean isContains) {
+        List<Integer> removedPositions = new ArrayList<>();
+        for (int i = 0; i < requiredFields.size(); i++) {
+            RequiredField requiredField = requiredFields.get(i);
+            if (isContains) {
+                if (requiredField.key.contains(key)) {
+                    finalRequiredFields.add(requiredField);
+                    removedPositions.add(i);
+//                    removeItem(requiredField);
+                }
+            } else {
+                if (requiredField.key.equals(key)) {
+                    finalRequiredFields.add(requiredField);
+                    removedPositions.add(i);
+//                    removeItem(requiredField);
+                }
+            }
+        }
+
+        /*for (int removedPosition : removedPositions) {
+            requiredFields.remove(removedPosition);
+        }*/
+    }
+
+    List<RequiredField> getIteratedObject(String key, boolean isContains) {
+        List<RequiredField> field = new ArrayList<>();
+        for (int i = 0; i < requiredFields.size(); i++) {
+            RequiredField requiredField = requiredFields.get(i);
+            if (isContains) {
+                if (requiredField.key.contains(key)) {
+//                    finalRequiredFields.add(requiredField);
+                    field.add(requiredField);
+                }
+            } else {
+                if (requiredField.key.equals(key)) {
+//                    finalRequiredFields.add(requiredField);
+                    field.add(requiredField);
+                }
+            }
+        }
+
+        return field;
+    }
+
+    private void removeItem(RequiredField key) {
+        List<RequiredField> fields = requiredFields;
+        for (int i = 0; i < requiredFields.size(); i++) {
+            if (key.key.equals(requiredFields.get(i).key)) {
+                requiredFields.remove(i);
+                return;
+            }
         }
     }
 
