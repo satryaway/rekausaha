@@ -17,9 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.jixstreet.rekatoursandtravel.R;
 import com.jixstreet.rekatoursandtravel.RekaApplication;
 import com.jixstreet.rekatoursandtravel.flight.adapter.FlightAdapter;
@@ -28,6 +25,9 @@ import com.jixstreet.rekatoursandtravel.flight.model.Departures;
 import com.jixstreet.rekatoursandtravel.flight.model.NearbyGoDate;
 import com.jixstreet.rekatoursandtravel.utils.CommonConstants;
 import com.jixstreet.rekatoursandtravel.utils.ErrorException;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -177,10 +177,12 @@ public class DepartureActivity extends AppCompatActivity {
                     try {
                         if (bundle.getBoolean(CommonConstants.IS_IN_RETURN)) {
                             SimpleDateFormat sdf = new SimpleDateFormat("kk:mm");
-                            String returnTime = depAirportArrayList.get(position).simpleDepartureTime;
-                            Date parsedReturnTime = sdf.parse(returnTime);
+                            String departureTimeReturn = depAirportArrayList.get(position).simpleDepartureTime;
+                            String arrivalTimeGo = bundle.getString(CommonConstants.ARRIVAL_TIME);
+                            Date parsedDepartureTime = sdf.parse(departureTimeReturn);
+                            Date parsedArrivalTimeGo = sdf.parse(arrivalTimeGo);
                             Date parsedGoTime = sdf.parse(departure_time);
-                            if ((parsedReturnTime.getTime() < parsedGoTime.getTime()) && (dateValue.equals(retDateValue))) {
+                            if ((parsedArrivalTimeGo.getTime() > parsedDepartureTime.getTime()) && (dateValue.equals(retDateValue))) {
                                 Toast.makeText(DepartureActivity.this, "Waktu pulang harus lebih besar dari waktu pergi", Toast.LENGTH_LONG).show();
                             } else {
                                 Intent intentDeparture = new Intent(DepartureActivity.this, OrderFlightActivity.class);
@@ -204,6 +206,7 @@ public class DepartureActivity extends AppCompatActivity {
                             findFlightIntent.putExtra(CommonConstants.AIRPORT_LOCATION_A, bundle.getString(CommonConstants.AIRPORT_LOCATION_D));
                             findFlightIntent.putExtra(CommonConstants.ADULT, bundle.getString(CommonConstants.ADULT));
                             findFlightIntent.putExtra(CommonConstants.CHILD, bundle.getString(CommonConstants.CHILD));
+                            findFlightIntent.putExtra(CommonConstants.ARRIVAL_TIME, depAirportArrayList.get(position).simpleArrivalTime);
                             findFlightIntent.putExtra(CommonConstants.INFRANT, bundle.getString(CommonConstants.INFRANT));
                             findFlightIntent.putExtra(CommonConstants.DATE, dateValue);
                             findFlightIntent.putExtra(CommonConstants.RET_DATE, bundle.getString(CommonConstants.RET_DATE));
