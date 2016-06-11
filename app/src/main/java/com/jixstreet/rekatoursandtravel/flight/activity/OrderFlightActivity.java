@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -17,9 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.jixstreet.rekatoursandtravel.R;
 import com.jixstreet.rekatoursandtravel.RekaApplication;
 import com.jixstreet.rekatoursandtravel.flight.model.DeparturesOrder;
@@ -27,6 +25,9 @@ import com.jixstreet.rekatoursandtravel.flight.model.Resource;
 import com.jixstreet.rekatoursandtravel.utils.CommonConstants;
 import com.jixstreet.rekatoursandtravel.utils.ErrorException;
 import com.jixstreet.rekatoursandtravel.utils.Util;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -219,8 +220,31 @@ public class OrderFlightActivity extends AppCompatActivity {
         View layoutChild = view.findViewById(R.id.layout_child);
         View layoutInfrant = view.findViewById(R.id.layout_baby);
         TextView tvTotal = (TextView) view.findViewById(R.id.tv_total);
+        TextView transitCountTv = (TextView) view.findViewById(R.id.transit_count_tv);
+        ViewGroup transitWrapper = (ViewGroup) view.findViewById(R.id.transit_wrapper);
+        ViewGroup transitInfoWrapper = (ViewGroup) view.findViewById(R.id.transit_info_wrapper);
 
         status.setText(departures.status);
+
+        if (departures.flightInfos.publicInfos.size() > 1) {
+            transitWrapper.setVisibility(View.VISIBLE);
+            transitCountTv.setText(departures.stop);
+
+            for (int i = 0; i < departures.flightInfos.publicInfos.size(); i++) {
+                DeparturesOrder.FlightInfo flightInfo = departures.flightInfos.publicInfos.get(i);
+
+                View views = layoutInflater.inflate(R.layout.item_transit, null);
+                TextView flightNumberTv = (TextView) views.findViewById(R.id.flight_number_tv);
+                TextView cityInfoTv = (TextView) views.findViewById(R.id.city_info_tv);
+                TextView timeTv = (TextView) views.findViewById(R.id.time_tv);
+
+                flightNumberTv.setText(flightInfo.flightNumber);
+                cityInfoTv.setText(String.format("%s - %s", flightInfo.departureCity, flightInfo.arrivalCity));
+                timeTv.setText(String.format("%s - %s", flightInfo.simpleDepartureTime, flightInfo.simpleArrivalTime));
+
+                transitInfoWrapper.addView(views);
+            }
+        }
 
         if (hasFood.equals("0")) {
             ivFood.setVisibility(View.GONE);

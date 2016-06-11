@@ -3,6 +3,7 @@ package com.jixstreet.rekatoursandtravel.flight.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by satryaway on 12/26/2015.
@@ -52,6 +53,30 @@ public class DeparturesOrder implements Serializable {
     @SerializedName("image")
     public String image;
     public String status;
+    @SerializedName("flight_infos")
+    public FlightInfos flightInfos;
+
+    public class FlightInfos implements Serializable {
+        @SerializedName("flight_info")
+        public List<FlightInfo> publicInfos;
+    }
+
+    public class FlightInfo implements Serializable {
+        @SerializedName("flight_number")
+        public String flightNumber;
+
+        @SerializedName("departure_city")
+        public String departureCity;
+
+        @SerializedName("arrival_city")
+        public String arrivalCity;
+
+        @SerializedName("simple_departure_time")
+        public String simpleDepartureTime;
+
+        @SerializedName("simple_arrival_time")
+        public String simpleArrivalTime;
+    }
 
 //    "flight_id": "2037033",
 //            "airlines_name": "GARUDA",
