@@ -112,8 +112,9 @@ public class InfoPassangerActivity extends AppCompatActivity {
             Gson gson = new Gson();
             Iterator<String> iterator = requiredObject.keys();
             layoutInflater = (LayoutInflater) getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+            Iterator<String> tempIterator = requiredObject.keys();
 
-            if (!iterator.next().equals(CommonConstants.SEPARATOR)) {
+            if (!tempIterator.next().equals(CommonConstants.SEPARATOR)) {
                 collectField(requiredObject);
             } else {
                 while (iterator.hasNext()) {

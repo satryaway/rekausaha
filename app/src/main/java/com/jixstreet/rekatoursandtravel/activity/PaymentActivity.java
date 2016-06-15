@@ -59,12 +59,16 @@ public class PaymentActivity extends AppCompatActivity {
 
     @Bind(R.id.tv_sisa_waktu)
     TextView tvSisaWaktu;
+
     @Bind(R.id.tv_upto)
     TextView tvUpto;
+
     @Bind(R.id.tv_expire_time)
     TextView tvExpiredTime;
+
     @Bind(R.id.layout_time)
     RelativeLayout layoutTime;
+
     @Bind(R.id.list_step_payment)
     ListView listStepPayment;
 
@@ -78,10 +82,15 @@ public class PaymentActivity extends AppCompatActivity {
 
     @Bind(R.id.layout_flight)
     LinearLayout layoutFlight;
+
     @Bind(R.id.layout_hotel)
     LinearLayout layoutHotel;
+
     @Bind(R.id.layout_klikbca)
     CardView layoutKlikbca;
+
+    @Bind(R.id.layout_mandiriclickpay)
+    CardView layoutMandiriKlikPay;
 
     @Bind(R.id.tv_total)
     TextView tvTotal;
@@ -91,6 +100,12 @@ public class PaymentActivity extends AppCompatActivity {
 
     @Bind(R.id.step_wrapper)
     LinearLayout stepWrapper;
+
+    @Bind(R.id.mandiri_card_number_et)
+    EditText mandiriCardNumberEt;
+
+    @Bind(R.id.token_response_et)
+    EditText tokenResponseEt;
 
     private String orderId;
     private ArrayList<Steps> stepses = new ArrayList<>();
@@ -108,6 +123,7 @@ public class PaymentActivity extends AppCompatActivity {
     private long elapsedMinutes;
     private long elapsedSeconds;
     private String initialTime;
+    private boolean isMandiri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,7 +152,9 @@ public class PaymentActivity extends AppCompatActivity {
             layoutTime.setVisibility(View.GONE);
             layoutKlikbca.setVisibility(View.VISIBLE);
         } else if (type.equals("mandiri_clickpay")) {
+            isMandiri = true;
             layoutTime.setVisibility(View.GONE);
+            layoutMandiriKlikPay.setVisibility(View.VISIBLE);
         }
 
         getData(url);
@@ -308,6 +326,11 @@ public class PaymentActivity extends AppCompatActivity {
 
         if (isAfter && isKlikBCA)
             requestParams.put(CommonConstants.USER_BCA, evKlikbca.getText().toString());
+
+        if (isAfter && isMandiri) {
+            requestParams.put("card_no", mandiriCardNumberEt.getText().toString());
+            requestParams.put("token_response", tokenResponseEt.getText().toString());
+        }
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.getting_order));
