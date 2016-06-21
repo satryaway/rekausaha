@@ -104,6 +104,14 @@ public class OrderHotelActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public static String convertStandardJSONString(String data_json) {
+        data_json = data_json.replaceAll("\\\\r\\\\n", "");
+        data_json = data_json.replace("\"{", "{");
+        data_json = data_json.replace("}\",", "},");
+        data_json = data_json.replace("}\"", "}");
+        return data_json;
+    }
+
     private void getOrder(String url) {
 
         RequestParams requestParams = new RequestParams();

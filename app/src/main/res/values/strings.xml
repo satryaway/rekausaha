@@ -229,7 +229,115 @@
     <string name="get_customer_express_field">{ \"fake\" : \"\",   \"required\": { \"separator_adult1\":{\"mandatory\":1,\"type\":\"text\",\"example\":\"\",\"FieldText\":\"Informasi Kontak yang Dapat Dihubungi\",\"category\":\"separator\"},     \"express_fullname\": {       \"mandatory\": 1,       \"type\": \"textbox\",       \"example\": \"Jane\",       \"FieldText\": \"Nama Lengkap\"     },     \"express_phone\": {       \"mandatory\": 1,       \"type\": \"textbox\",       \"example\": \"+628xxxxxxxx\",       \"FieldText\": \"Nomor telepon\"     },     \"expresss_specialrequest\": {       \"mandatory\": 0,       \"type\": \"textbox\",       \"example\": \"lantainya yang dibawah\",       \"FieldText\": \"Permintaan Khusus (Pilihan)\"     },     \"express_guest\": {       \"mandatory\": 0,       \"type\": \"checkbox\",       \"example\": \"1\",       \"FieldText\": \"Saya tidak menginap di hotel ini. Saya melakukan booking untuk orang lain. \",       \"resource\": [         \"0\",         \"1\"       ]     },  \"separator_customer_1\":{\"mandatory\":1,\"type\":\"text\",\"example\":\"\",\"FieldText\":\"Informasi Tamu\",\"category\":\"separator\"},      \"express_guestfullname\": {       \"mandatory\": 0,       \"type\": \"textbox\",       \"example\": \"John\",       \"FieldText\": \"Nama Lengkap tamu yang akan menginap\"     },     \"express_email\": {       \"mandatory\": 1,       \"type\": \"textbox\",       \"example\": \"email@email.com\",       \"FieldText\": \"Email\"     }   } }</string>
     <string name="getting_order">Getting order</string>
     <string name="pembayaran">Pembayaran</string>
-    <string name="fixed_hotem_customer_field">{\"required\":{\"separator\":{\"mandatory\":1,\"type\":\"text\",\"example\":\"\",\"FieldText\":\"Informasi Kontak yang Dapat Dihubungi\",\"category\":\"separator\",\"disabled\":\"false\"},\"conSalutation\":{\"mandatory\":1,\"type\":\"combobox\",\"example\":\"Mr\",\"FieldText\":\"Titel\",\"category\":\"contact\",\"resource\":[{\"id\":\"Mr\",\"name\":\"Tuan\"},{\"id\":\"Mrs\",\"name\":\"Nyonya\"},{\"id\":\"Ms\",\"name\":\"Nona\"}],\"disabled\":\"false\"},\"conFirstName\":{\"mandatory\":1,\"type\":\"textbox\",\"example\":\"Jane\",\"FieldText\":\"Nama Lengkap sesuai dengan KTP\\/Passport\\/SIM\",\"category\":\"contact\",\"disabled\":\"false\"},\"conLastName\":{\"mandatory\":0,\"type\":\"textbox\",\"example\":\"wacob\",\"FieldText\":\"Nama Belakang\",\"category\":\"contact\",\"disabled\":\"false\"},\"conPhone\":{\"mandatory\":1,\"type\":\"textbox\",\"example\":\"+6285212345678\",\"FieldText\":\"No. Telepon\",\"category\":\"contact\",\"disabled\":\"false\"},\"conEmailAddress\":{\"mandatory\":1,\"type\":\"textbox\",\"example\":\"example@email.com\",\"FieldText\":\"Kontak Email\",\"category\":\"contact\",\"disabled\":\"false\"},\"separator_adult1\":{\"mandatory\":1,\"type\":\"text\",\"example\":\"\",\"FieldText\":\"Informasi Tamu\",\"category\":\"separator\",\"disabled\":\"false\"},\"express_fullname\":{      \"mandatory\":1,     \"type\":\"textbox\",     \"example\":\"Jane\",     \"FieldText\":\"Nama Lengkap\"  }, \"express_phone\":{      \"mandatory\":1,     \"type\":\"textbox\",     \"example\":\"+628xxxxxxxx\",     \"FieldText\":\"Nomor telepon\"  }, \"express_email\":{      \"mandatory\":1,     \"type\":\"textbox\",     \"example\":\"email@email.com\",     \"FieldText\":\"Email\"  }}}</string>
+    <!--<string name="fixed_hotem_customer_field">{\"required\":{\"separator\":{\"mandatory\":1,\"type\":\"text\",\"example\":\"\",\"FieldText\":\"Informasi Kontak yang Dapat Dihubungi\",\"category\":\"separator\",\"disabled\":\"false\"},\"conSalutation\":{\"mandatory\":1,\"type\":\"combobox\",\"example\":\"Mr\",\"FieldText\":\"Titel\",\"category\":\"contact\",\"resource\":[{\"id\":\"Mr\",\"name\":\"Tuan\"},{\"id\":\"Mrs\",\"name\":\"Nyonya\"},{\"id\":\"Ms\",\"name\":\"Nona\"}],\"disabled\":\"false\"},\"conFirstName\":{\"mandatory\":1,\"type\":\"textbox\",\"example\":\"Jane\",\"FieldText\":\"Nama Lengkap sesuai dengan KTP\\/Passport\\/SIM\",\"category\":\"contact\",\"disabled\":\"false\"},\"conLastName\":{\"mandatory\":0,\"type\":\"textbox\",\"example\":\"wacob\",\"FieldText\":\"Nama Belakang\",\"category\":\"contact\",\"disabled\":\"false\"},\"conPhone\":{\"mandatory\":1,\"type\":\"textbox\",\"example\":\"+6285212345678\",\"FieldText\":\"No. Telepon\",\"category\":\"contact\",\"disabled\":\"false\"},\"conEmailAddress\":{\"mandatory\":1,\"type\":\"textbox\",\"example\":\"example@email.com\",\"FieldText\":\"Kontak Email\",\"category\":\"contact\",\"disabled\":\"false\"},\"separator_adult1\":{\"mandatory\":1,\"type\":\"text\",\"example\":\"\",\"FieldText\":\"Informasi Tamu\",\"category\":\"separator\",\"disabled\":\"false\"},\"express_fullname\":{      \"mandatory\":1,     \"type\":\"textbox\",     \"example\":\"Jane\",     \"FieldText\":\"Nama Lengkap\"  }, \"express_phone\":{      \"mandatory\":1,     \"type\":\"textbox\",     \"example\":\"+628xxxxxxxx\",     \"FieldText\":\"Nomor telepon\"  }, \"express_email\":{      \"mandatory\":1,     \"type\":\"textbox\",     \"example\":\"email@email.com\",     \"FieldText\":\"Email\"  }}}</string>-->
+    <string name="fixed_hotem_customer_field">{\"required\":{\"separator\":{\"mandatory\":1,\"type\":\"text\",\"example\":\"\",\"FieldText\":\"Informasi Kontak yang Dapat Dihubungi\",\"category\":\"separator\",\"disabled\":\"false\"},\"conSalutation\":{\"mandatory\":1,\"type\":\"combobox\",\"example\":\"Mr\",\"FieldText\":\"Titel\",\"category\":\"contact\",\"resource\":[{\"id\":\"Mr\",\"name\":\"Tuan\"},{\"id\":\"Mrs\",\"name\":\"Nyonya\"},{\"id\":\"Ms\",\"name\":\"Nona\"}],\"disabled\":\"false\"},\"conFirstName\":{\"mandatory\":1,\"type\":\"textbox\",\"example\":\"Jane\",\"FieldText\":\"Nama Lengkap sesuai dengan KTP/Passport/SIM\",\"category\":\"contact\",\"disabled\":\"false\"},\"conLastName\":{\"mandatory\":0,\"type\":\"textbox\",\"example\":\"wacob\",\"FieldText\":\"Nama Belakang\",\"category\":\"contact\",\"disabled\":\"false\"},\"conPhone\":{\"mandatory\":1,\"type\":\"textbox\",\"example\":\"+6285212345678\",\"FieldText\":\"No. Telepon\",\"category\":\"contact\",\"disabled\":\"false\"},\"conEmailAddress\":{\"mandatory\":1,\"type\":\"textbox\",\"example\":\"example@email.com\",\"FieldText\":\"Kontak Email\",\"category\":\"contact\",\"disabled\":\"false\"},\"country\":{
+
+    \"mandatory\":1,
+    \"type\":\"combobox\",
+    \"example\":\"ID\",
+    \"FieldText\":\"Nationality\",
+    \"category\":\"adult1\",
+    \"resource\":\"https:\/\/api-sandbox.tiket.com\/general_api\/listCountry\",
+    \"disabled\":\"false\"
+
+},\"separator_adult1\":{\"mandatory\":1,\"type\":\"text\",\"example\":\"\",\"FieldText\":\"Informasi Tamu\",\"category\":\"separator\",\"disabled\":\"false\"},\"express_fullname\":{      \"mandatory\":1,     \"type\":\"textbox\",     \"example\":\"Jane\",     \"FieldText\":\"Nama Lengkap\"  }, \"express_phone\":{      \"mandatory\":1,     \"type\":\"textbox\",     \"example\":\"+628xxxxxxxx\",     \"FieldText\":\"Nomor telepon\"  }, \"express_email\":{      \"mandatory\":1,     \"type\":\"textbox\",     \"example\":\"email@email.com\",     \"FieldText\":\"Email\"  }}}</string>
+    <!--<string name="fixed_hotem_customer_field">{
+	"required": {
+		"separator": {
+			"mandatory": 1,
+			"type": "text",
+			"example": "",
+			"FieldText": "Informasi Kontak yang Dapat Dihubungi",
+			"category": "separator",
+			"disabled": "false"
+		},
+		"conSalutation": {
+			"mandatory": 1,
+			"type": "combobox",
+			"example": "Mr",
+			"FieldText": "Titel",
+			"category": "contact",
+			"resource": [{
+				"id": "Mr",
+				"name": "Tuan"
+			}, {
+				"id": "Mrs",
+				"name": "Nyonya"
+			}, {
+				"id": "Ms",
+				"name": "Nona"
+			}],
+			"disabled": "false"
+		},
+		"conFirstName": {
+			"mandatory": 1,
+			"type": "textbox",
+			"example": "Jane",
+			"FieldText": "Nama Lengkap sesuai dengan KTP/Passport/SIM",
+			"category": "contact",
+			"disabled": "false"
+		},
+		"conLastName": {
+			"mandatory": 0,
+			"type": "textbox",
+			"example": "wacob",
+			"FieldText": "Nama Belakang",
+			"category": "contact",
+			"disabled": "false"
+		},
+		"conPhone": {
+			"mandatory": 1,
+			"type": "textbox",
+			"example": "+6285212345678",
+			"FieldText": "No. Telepon",
+			"category": "contact",
+			"disabled": "false"
+		},
+		"conEmailAddress": {
+			"mandatory": 1,
+			"type": "textbox",
+			"example": "example@email.com",
+			"FieldText": "Kontak Email",
+			"category": "contact",
+			"disabled": "false"
+		},
+		"country": {
+			"mandatory": 1,
+			"type": "combobox",
+			"example": "ID",
+			"FieldText": "Nationality",
+			"category": "adult1",
+			"resource": "https:\/\/api-sandbox.tiket.com\/general_api\/listCountry",
+			"disabled": "false"
+		},
+		"separator_adult1": {
+			"mandatory": 1,
+			"type": "text",
+			"example": "",
+			"FieldText": "Informasi Tamu",
+			"category": "separator",
+			"disabled": "false"
+		},
+		"express_fullname": {
+			"mandatory": 1,
+			"type": "textbox",
+			"example": "Jane",
+			"FieldText": "Nama Lengkap"
+		},
+		"express_phone": {
+			"mandatory": 1,
+			"type": "textbox",
+			"example": "+628xxxxxxxx",
+			"FieldText": "Nomor telepon"
+		},
+		"express_email": {
+			"mandatory": 1,
+			"type": "textbox",
+			"example": "email@email.com",
+			"FieldText": "Email"
+		}
+	}
+}</string> -->
     <string name="my_booking">My Booking</string>
     <string name="card_number">Card Number</string>
     <string name="token_response">Token Response</string>
