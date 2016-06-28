@@ -58,13 +58,13 @@ public class RoomAdapter extends ArrayAdapter<Room> {
         holder.tvNameRoom.setText(room.roomName);
         holder.tvPriceRoom.setText(Util.toRupiahFormat(room.price));
         holder.tvJumlahKamar.setText("Jumlah kamar : " + room.roomAvailable);
-        holder.ivFood.setVisibility(!room.with_breakfasts.equals("0") ? View.VISIBLE : View.GONE);
+        holder.ivFood.setVisibility(!room.with_breakfasts.equals("0") ? View.VISIBLE : View.INVISIBLE);
 
-        setCallBack();
+        setCallBack(room);
         return convertView;
     }
 
-    private void setCallBack() {
+    private void setCallBack(final Room room) {
         holder.ivinfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,7 +73,7 @@ public class RoomAdapter extends ArrayAdapter<Room> {
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
                 dialog.setContentView(R.layout.dialog_info);
 
-                setInitDialog(dialog);
+                setInitDialog(dialog, room);
                 dialog.show();
 
             }
@@ -91,7 +91,7 @@ public class RoomAdapter extends ArrayAdapter<Room> {
 //        });
     }
 
-    private void setInitDialog(final Dialog dialog) {
+    private void setInitDialog(final Dialog dialog, Room room) {
         ImageView dialogClose = (ImageView) dialog.findViewById(R.id.iv_close);
         TextView tvNameRoom = (TextView) dialog.findViewById(R.id.tv_name_room);
         ImageView ivRoom = (ImageView) dialog.findViewById(R.id.iv_room);
