@@ -2,6 +2,7 @@ package com.jixstreet.rekatoursandtravel.hotel.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -17,18 +18,18 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.jixstreet.rekatoursandtravel.RekaApplication;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-import com.nineoldandroids.animation.Animator;
-import com.nineoldandroids.animation.ValueAnimator;
 import com.jixstreet.rekatoursandtravel.R;
+import com.jixstreet.rekatoursandtravel.RekaApplication;
 import com.jixstreet.rekatoursandtravel.hotel.adapter.HotelAreaAdapter;
 import com.jixstreet.rekatoursandtravel.hotel.model.HotelArea;
 import com.jixstreet.rekatoursandtravel.utils.CommonConstants;
 import com.jixstreet.rekatoursandtravel.utils.ErrorException;
 import com.jixstreet.rekatoursandtravel.utils.Util;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.ValueAnimator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,6 +56,7 @@ public class ChooserHotelActivity extends AppCompatActivity {
     HotelAreaAdapter hotelAreaAdapter;
     WeakHashMap<View, Integer> mOriginalViewHeightPool = new WeakHashMap<>();
     private List<HotelArea> hotelAreas = new ArrayList<>();
+    private String responseApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +71,14 @@ public class ChooserHotelActivity extends AppCompatActivity {
         setCallBack();
 
         String locale = getResources().getConfiguration().locale.getCountry();
-        Log.e("locale",locale);
+        Log.e("locale", locale);
+
+        SharedPreferences sharedPreferences = RekaApplication.getInstance().getSharedPreferences();
+        responseApi = sharedPreferences.getString(CommonConstants.HOTEL_LIST, "");
+        if (!responseApi.isEmpty()) {
+            setValue(responseApi);
+        }
+
         getData("id", false);
     }
 
@@ -100,7 +109,7 @@ public class ChooserHotelActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() != 0) {
+                if (s.length() >= 3) {
                     getData(s.toString(), true);
                 }
             }
@@ -135,7 +144,7 @@ public class ChooserHotelActivity extends AppCompatActivity {
         });
     }
 
-    private void getData(String keywords, boolean bool) {
+    private void getData(String keywords, final boolean bool) {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.please_wait));
         progressDialog.setCancelable(false);
@@ -158,7 +167,7 @@ public class ChooserHotelActivity extends AppCompatActivity {
         client.get(url, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onStart() {
-                progressDialog.show();
+                if (responseApi.isEmpty() || bool) progressDialog.show();
             }
 
             @Override
@@ -169,20 +178,16 @@ public class ChooserHotelActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
-
-                    if (hotelAreas != null) {
-                        hotelAreas.clear();
-                        hotelAreas = new ArrayList<>();
-                        hotelAreaAdapter.removeContent(hotelAreas);
-                    }
-
                     JSONArray hotelAreaArray = response.getJSONObject(CommonConstants.RESULTS).getJSONArray(CommonConstants.RESULT);
-                    for (int i = 0; i < hotelAreaArray.length(); i++) {
-                        Gson gson = new Gson();
-                        hotelAreas.add(gson.fromJson(hotelAreaArray.getJSONObject(i).toString(), HotelArea.class));
+                    responseApi = hotelAreaArray.toString();
+
+                    if (!bool) {
+                        SharedPreferences.Editor editor = RekaApplication.getInstance().getSharedPreferences().edit();
+                        editor.putString(CommonConstants.HOTEL_LIST, responseApi);
+                        editor.apply();
                     }
 
-                    hotelAreaAdapter.updateContent(hotelAreas);
+                    setValue(responseApi);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -199,6 +204,27 @@ public class ChooserHotelActivity extends AppCompatActivity {
                 ErrorException.getError(ChooserHotelActivity.this, errorResponse);
             }
         });
+    }
+
+    private void setValue(String responseApi) {
+        JSONArray hotelAreaArray = null;
+        try {
+            hotelAreaArray = new JSONArray(responseApi);
+            if (hotelAreas != null) {
+                hotelAreas.clear();
+                hotelAreas = new ArrayList<>();
+                hotelAreaAdapter.removeContent(hotelAreas);
+            }
+
+            for (int i = 0; i < hotelAreaArray.length(); i++) {
+                Gson gson = new Gson();
+                hotelAreas.add(gson.fromJson(hotelAreaArray.getJSONObject(i).toString(), HotelArea.class));
+            }
+
+            hotelAreaAdapter.updateContent(hotelAreas);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     //animation executor

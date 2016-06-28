@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -53,14 +54,22 @@ public class AirportChooserActivity extends AppCompatActivity {
     private EditText filterAirportET;
     private Toolbar toolbar;
     private String title;
+    private String responseApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.airport_chooser_layout);
 
-        getData();
         initUI();
+
+        SharedPreferences sharedPreferences = RekaApplication.getInstance().getSharedPreferences();
+        responseApi = sharedPreferences.getString(CommonConstants.AIRPORT_LIST, "");
+        if (!responseApi.isEmpty()) {
+            setValue(responseApi);
+        }
+
+        getData();
         setCallBack();
     }
 
@@ -159,7 +168,7 @@ public class AirportChooserActivity extends AppCompatActivity {
         client.get(url, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onStart() {
-                progressDialog.show();
+                if (responseApi.isEmpty()) progressDialog.show();
             }
 
             @Override
@@ -171,12 +180,13 @@ public class AirportChooserActivity extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     JSONArray airportArrayList = response.getJSONObject(CommonConstants.ALL_AIRPORT).getJSONArray(CommonConstants.AIRPORT);
-                    for (int i = 0; i < airportArrayList.length(); i++) {
-                        Gson gson = new Gson();
-                        airportList.add(gson.fromJson(airportArrayList.getJSONObject(i).toString(), Airport.class));
-                    }
+                    responseApi = airportArrayList.toString();
 
-                    mAirportListAdapter.updateContent(airportList);
+                    SharedPreferences.Editor editor = RekaApplication.getInstance().getSharedPreferences().edit();
+                    editor.putString(CommonConstants.AIRPORT_LIST, responseApi);
+                    editor.apply();
+
+                    setValue(responseApi);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -194,6 +204,20 @@ public class AirportChooserActivity extends AppCompatActivity {
                 showDialog();
             }
         });
+    }
+
+    private void setValue(String responseApi) {
+        try {
+            JSONArray airportArrayList = new JSONArray(responseApi);
+            for (int i = 0; i < airportArrayList.length(); i++) {
+                Gson gson = new Gson();
+                airportList.add(gson.fromJson(airportArrayList.getJSONObject(i).toString(), Airport.class));
+            }
+
+            mAirportListAdapter.updateContent(airportList);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     //animation executor

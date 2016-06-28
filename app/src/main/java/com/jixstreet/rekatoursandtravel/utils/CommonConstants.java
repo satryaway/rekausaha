@@ -35,6 +35,9 @@ public class CommonConstants {
     public static final String PAYMENT_DISCOUNT = "payment_discount";
     public static final String REFRESH_TOKEN = "refresh_token";
     public static final String ARRIVAL_TIME = "arrival_time";
+    public static final String AIRPORT_LIST = "airport_list";
+
+    public static final String HOTEL_LIST = "hotel_list";
     public static String TOKEN = "token";
     public static String OUTPUT = "output";
     public static String JSON = "json";
