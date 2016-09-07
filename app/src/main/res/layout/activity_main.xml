@@ -21,8 +21,6 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="?attr/actionBarSize"
             android:gravity="center"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp"
             android:src="@drawable/logo" />
     </android.support.v7.widget.Toolbar>
 

@@ -125,9 +125,10 @@ public class ListHotelActivity extends AppCompatActivity {
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.please_wait));
+        progressDialog.setCancelable(false);
 
         AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-        client.setTimeout(10000);
+        client.setTimeout(100000);
         client.get(url, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onStart() {
@@ -203,10 +204,6 @@ public class ListHotelActivity extends AppCompatActivity {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
                 finish();
-                break;
-
-            case R.id.action_search:
-
                 break;
             case R.id.action_sort:
                 Intent intentSortir = new Intent(ListHotelActivity.this,

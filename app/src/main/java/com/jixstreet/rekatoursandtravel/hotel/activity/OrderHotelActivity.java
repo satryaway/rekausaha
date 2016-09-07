@@ -97,7 +97,7 @@ public class OrderHotelActivity extends AppCompatActivity {
     @OnClick(R.id.next_btn)
     public void onClickPembayaran() {
 //        getOrder(url);
-        Intent intent = new Intent(this, InfoPassangerActivity.class);
+        Intent intent = new Intent(this, HotelDataInputActivity.class);
         intent.putExtra(CommonConstants.RESPONE, getString(R.string.fixed_hotem_customer_field));
         intent.putExtra(CommonConstants.IS_HOTEL, true);
         intent.putExtra(CommonConstants.BOOKURI, url);
@@ -120,9 +120,10 @@ public class OrderHotelActivity extends AppCompatActivity {
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.please_wait));
+        progressDialog.setCancelable(false);
 
         AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-        client.setTimeout(10000);
+        client.setTimeout(100000);
         client.get(url, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onStart() {

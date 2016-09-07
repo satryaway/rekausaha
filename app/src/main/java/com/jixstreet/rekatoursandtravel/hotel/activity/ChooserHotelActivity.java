@@ -163,7 +163,7 @@ public class ChooserHotelActivity extends AppCompatActivity {
         requestParams.put(CommonConstants.OUTPUT, CommonConstants.JSON);
 
         AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-        client.setTimeout(10000);
+        client.setTimeout(100000);
         client.get(url, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onStart() {

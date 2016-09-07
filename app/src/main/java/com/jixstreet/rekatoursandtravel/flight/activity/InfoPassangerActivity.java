@@ -403,6 +403,7 @@ public class InfoPassangerActivity extends AppCompatActivity {
             requiredFieldList = new ArrayList<>();
             String fullKind = "separator_" + kind + iterator;
             iterateObject(fullKind, false);
+
             for (int i = 0; i < requiredFields.size(); i++) {
                 String s1 = requiredFields.get(i).key;
                 if (s1.contains(s)) {

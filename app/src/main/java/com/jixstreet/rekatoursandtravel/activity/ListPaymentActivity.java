@@ -85,9 +85,10 @@ public class ListPaymentActivity extends AppCompatActivity {
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.please_wait));
+        progressDialog.setCancelable(false);
 
         AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-        client.setTimeout(10000);
+        client.setTimeout(100000);
         client.get(url, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onStart() {
