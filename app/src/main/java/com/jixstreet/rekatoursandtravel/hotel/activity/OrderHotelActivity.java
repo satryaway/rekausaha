@@ -97,7 +97,7 @@ public class OrderHotelActivity extends AppCompatActivity {
     @OnClick(R.id.next_btn)
     public void onClickPembayaran() {
 //        getOrder(url);
-        Intent intent = new Intent(this, InfoPassangerActivity.class);
+        Intent intent = new Intent(this, HotelInputDataActivity.class);
         intent.putExtra(CommonConstants.RESPONE, getString(R.string.fixed_hotem_customer_field));
         intent.putExtra(CommonConstants.IS_HOTEL, true);
         intent.putExtra(CommonConstants.BOOKURI, url);
