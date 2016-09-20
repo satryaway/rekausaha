@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Rekatour</string>
+    <string name="app_name">Rekatours</string>
 
     <bool name="default_circle_indicator_centered">true</bool>
     <color name="default_circle_indicator_fill_color">#FFFFFFFF</color>
