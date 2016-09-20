@@ -151,6 +151,10 @@ public class ProfileHotelActivity extends AppCompatActivity {
                 Log.e("JSON FLIGHT", response.toString() + "");
                 try {
 
+                    fotos = new ArrayList<>();
+                    facilitiys = new ArrayList<>();
+                    rooms = new ArrayList<>();
+
                     //getValue
                     Gson gson = new Gson();
                     JSONArray photoArray = response.getJSONObject(CommonConstants.ALL_PHOTO).getJSONArray(CommonConstants.PHOTO);
