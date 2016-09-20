@@ -160,7 +160,8 @@ public class MainActivity extends AppCompatActivity
         requestParams.put(CommonConstants.OUTPUT, CommonConstants.JSON);
 
         AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-        client.setTimeout(10000);
+        client.addHeader("user-agent", "twh:[22490422]:[Reka Tours dan Travel]");
+        client.setTimeout(100000);
         client.get(url, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {

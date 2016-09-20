@@ -199,6 +199,7 @@ public class PaymentActivity extends AppCompatActivity {
         progressDialog.setMessage(getString(R.string.please_wait));
 
         AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
+        client.addHeader("user-agent", "twh:[22490422]:[Reka Tours dan Travel]");
         client.setTimeout(100000);
 
         String url = CommonConstants.BASE_URL + "general_api/getPolicies";
@@ -336,6 +337,7 @@ public class PaymentActivity extends AppCompatActivity {
         progressDialog.setMessage(getString(R.string.getting_order));
 
         AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
+        client.addHeader("user-agent", "twh:[22490422]:[Reka Tours dan Travel]");
         client.setTimeout(100000);
         client.get(url, requestParams, new JsonHttpResponseHandler() {
             @Override
@@ -461,6 +463,7 @@ public class PaymentActivity extends AppCompatActivity {
         progressDialog.setMessage(getString(R.string.please_wait));
 
         AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
+        client.addHeader("user-agent", "twh:[22490422]:[Reka Tours dan Travel]");
         client.setTimeout(100000);
         client.get(url, requestParams, new JsonHttpResponseHandler() {
             @Override

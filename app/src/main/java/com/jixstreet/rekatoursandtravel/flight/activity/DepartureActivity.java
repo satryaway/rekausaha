@@ -316,6 +316,7 @@ public class DepartureActivity extends AppCompatActivity {
         progressDialog.setMessage(getString(R.string.please_wait));
 
         AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
+        client.addHeader("user-agent", "twh:[22490422]:[Reka Tours dan Travel]");
         client.setTimeout(10000);
         client.get(url, requestParams, new JsonHttpResponseHandler() {
             @Override
