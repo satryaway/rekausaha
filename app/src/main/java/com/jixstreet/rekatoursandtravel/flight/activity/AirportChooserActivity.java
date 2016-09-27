@@ -164,7 +164,8 @@ public class AirportChooserActivity extends AppCompatActivity {
         progressDialog.setCancelable(false);
 
         AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-        client.setTimeout(10000);
+        client.addHeader("user-agent", "twh:[22691871]:[Reka Tours dan Travel]");
+        client.setTimeout(100000);
         client.get(url, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onStart() {
