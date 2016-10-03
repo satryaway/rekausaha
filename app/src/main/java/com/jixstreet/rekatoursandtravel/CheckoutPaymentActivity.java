@@ -61,8 +61,7 @@ public class CheckoutPaymentActivity extends AppCompatActivity {
         WebSettings settings = webview.getSettings();
         settings.setJavaScriptEnabled(true);
         webview.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-        String newUA = "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.4) Gecko/20100101 Firefox/4.0";
-        newUA = "twh:[22691871]:[Reka Tours dan Travel]";
+        String newUA = "twh:[22691871];[CV. Rajawali Reka Cipta (Rekatours)];";
         webview.getSettings().setUserAgentString(newUA);
 
         final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
@@ -98,7 +97,7 @@ public class CheckoutPaymentActivity extends AppCompatActivity {
 
         url += "&checkouttoken=" + RekaApplication.getInstance().getToken();
         HashMap<String, String> map = new HashMap<>();
-        map.put("user-agent", "twh:[22691871]:[Reka Tours dan Travel]");
+        map.put("user-agent", "twh:[22691871];[CV. Rajawali Reka Cipta (Rekatours)];");
 
         webview.loadUrl(url, map);
     }

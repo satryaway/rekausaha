@@ -25,6 +25,7 @@ import com.jixstreet.rekatoursandtravel.fragment.FeedbackFragment;
 import com.jixstreet.rekatoursandtravel.fragment.HomeFragment;
 import com.jixstreet.rekatoursandtravel.fragment.NewsFragment;
 import com.jixstreet.rekatoursandtravel.model.Country;
+import com.jixstreet.rekatoursandtravel.utils.APIAgent;
 import com.jixstreet.rekatoursandtravel.utils.Builder;
 import com.jixstreet.rekatoursandtravel.utils.CommonConstants;
 import com.loopj.android.http.AsyncHttpClient;
@@ -65,11 +66,11 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         sharedPreferences = this.getSharedPreferences(CommonConstants.REKA_USAHA, MODE_PRIVATE);
-        String token = sharedPreferences.getString(CommonConstants.TOKEN, "");
+//        String token = sharedPreferences.getString(CommonConstants.TOKEN, "");
 
-        if (token.isEmpty() || isRefreshToken) {
+//        if (token.isEmpty() || isRefreshToken) {
             getAccessToken();
-        }
+//        }
 
         countrySessionManager = new CountrySessionManager(this);
         if (countrySessionManager.getCountry(this) == null) {
@@ -159,9 +160,7 @@ public class MainActivity extends AppCompatActivity
         requestParams.put(CommonConstants.SECRET_KEY, getString(R.string.secret_key));
         requestParams.put(CommonConstants.OUTPUT, CommonConstants.JSON);
 
-        AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-        client.addHeader("user-agent", "twh:[22691871]:[Reka Tours dan Travel]");
-        client.setTimeout(100000);
+        APIAgent client = new APIAgent();
         client.get(url, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {

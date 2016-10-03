@@ -31,6 +31,7 @@ import com.jixstreet.rekatoursandtravel.activity.ListOrderActivity;
 import com.jixstreet.rekatoursandtravel.flight.model.RequestedField;
 import com.jixstreet.rekatoursandtravel.flight.model.RequiredField;
 import com.jixstreet.rekatoursandtravel.model.Country;
+import com.jixstreet.rekatoursandtravel.utils.APIAgent;
 import com.jixstreet.rekatoursandtravel.utils.CommonConstants;
 import com.jixstreet.rekatoursandtravel.utils.ErrorException;
 import com.loopj.android.http.AsyncHttpClient;
@@ -544,9 +545,7 @@ public class InfoPassangerActivity extends AppCompatActivity {
 
         String url = isHotel ? bookUri : CommonConstants.BASE_URL + "order/add/flight?v=3";
 
-        AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-        client.addHeader("user-agent", "twh:[22691871]:[Reka Tours dan Travel]");
-        client.setTimeout(300000);
+        APIAgent client = new APIAgent();
         client.get(url, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onStart() {

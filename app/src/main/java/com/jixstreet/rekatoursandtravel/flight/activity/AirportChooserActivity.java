@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.jixstreet.rekatoursandtravel.RekaApplication;
+import com.jixstreet.rekatoursandtravel.utils.APIAgent;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -163,9 +164,7 @@ public class AirportChooserActivity extends AppCompatActivity {
         progressDialog.setMessage(getString(R.string.please_wait));
         progressDialog.setCancelable(false);
 
-        AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-        client.addHeader("user-agent", "twh:[22691871]:[Reka Tours dan Travel]");
-        client.setTimeout(100000);
+        APIAgent client = new APIAgent();
         client.get(url, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onStart() {

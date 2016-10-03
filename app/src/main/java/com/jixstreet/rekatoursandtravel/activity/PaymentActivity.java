@@ -27,6 +27,7 @@ import com.jixstreet.rekatoursandtravel.adapter.StepsAdapter;
 import com.jixstreet.rekatoursandtravel.model.MyOrder;
 import com.jixstreet.rekatoursandtravel.model.Policy;
 import com.jixstreet.rekatoursandtravel.model.Steps;
+import com.jixstreet.rekatoursandtravel.utils.APIAgent;
 import com.jixstreet.rekatoursandtravel.utils.CommonConstants;
 import com.jixstreet.rekatoursandtravel.utils.DateTimeUtils;
 import com.jixstreet.rekatoursandtravel.utils.ErrorException;
@@ -198,11 +199,9 @@ public class PaymentActivity extends AppCompatActivity {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.please_wait));
 
-        AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-        client.addHeader("user-agent", "twh:[22691871]:[Reka Tours dan Travel]");
-        client.setTimeout(100000);
-
         String url = CommonConstants.BASE_URL + "general_api/getPolicies";
+
+        APIAgent client = new APIAgent();
         client.get(url, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onStart() {
@@ -336,9 +335,7 @@ public class PaymentActivity extends AppCompatActivity {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.getting_order));
 
-        AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-        client.addHeader("user-agent", "twh:[22691871]:[Reka Tours dan Travel]");
-        client.setTimeout(100000);
+        APIAgent client = new APIAgent();
         client.get(url, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onStart() {
@@ -462,9 +459,7 @@ public class PaymentActivity extends AppCompatActivity {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.please_wait));
 
-        AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-        client.addHeader("user-agent", "twh:[22691871]:[Reka Tours dan Travel]");
-        client.setTimeout(100000);
+        APIAgent client = new APIAgent();
         client.get(url, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onStart() {

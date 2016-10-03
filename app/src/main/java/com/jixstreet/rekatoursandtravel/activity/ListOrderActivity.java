@@ -17,6 +17,7 @@ import com.jixstreet.rekatoursandtravel.R;
 import com.jixstreet.rekatoursandtravel.RekaApplication;
 import com.jixstreet.rekatoursandtravel.flight.adapter.MyOrderAdapter;
 import com.jixstreet.rekatoursandtravel.model.MyOrder;
+import com.jixstreet.rekatoursandtravel.utils.APIAgent;
 import com.jixstreet.rekatoursandtravel.utils.CommonConstants;
 import com.jixstreet.rekatoursandtravel.utils.ErrorException;
 import com.loopj.android.http.AsyncHttpClient;
@@ -97,9 +98,7 @@ public class ListOrderActivity extends AppCompatActivity {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.please_wait));
 
-        AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-        client.addHeader("user-agent", "twh:[22691871]:[Reka Tours dan Travel]");
-        client.setTimeout(100000);
+        APIAgent client = new APIAgent();
         client.get(url, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onStart() {
@@ -174,9 +173,7 @@ public class ListOrderActivity extends AppCompatActivity {
             progressDialog.setMessage("Saving your order");
         }
 
-        AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-        client.addHeader("user-agent", "twh:[22691871]:[Reka Tours dan Travel]");
-        client.setTimeout(100000);
+        APIAgent client = new APIAgent();
         client.get(url, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onStart() {
@@ -321,9 +318,7 @@ public class ListOrderActivity extends AppCompatActivity {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.please_wait));
 
-        AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-        client.addHeader("user-agent", "twh:[22691871]:[Reka Tours dan Travel]");
-        client.setTimeout(100000);
+        APIAgent client = new APIAgent();
         client.get(url, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onStart() {
@@ -401,9 +396,7 @@ public class ListOrderActivity extends AppCompatActivity {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.please_wait));
 
-        AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-        client.addHeader("user-agent", "twh:[22691871]:[Reka Tours dan Travel]");
-        client.setTimeout(100000);
+        APIAgent client = new APIAgent();
         client.get(url, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onStart() {
