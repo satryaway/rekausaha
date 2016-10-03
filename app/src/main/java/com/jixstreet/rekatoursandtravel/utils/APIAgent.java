@@ -1,8 +1,5 @@
 package com.jixstreet.rekatoursandtravel.utils;
 
-import android.app.ProgressDialog;
-import android.content.Context;
-
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -12,27 +9,32 @@ import com.loopj.android.http.RequestParams;
  * REQUEST HANDLER
  */
 public class APIAgent {
-    private static AsyncHttpClient client = new AsyncHttpClient();
-    private Context context;
-    private ProgressDialog progressDialog;
+    private AsyncHttpClient client;
 
-    public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-        client.setTimeout(1000);
+    public APIAgent() {
+        client = new AsyncHttpClient();
+        client.addHeader("user-agent", "twh:[22691871];[CV. Rajawali Reka Cipta (Rekatours)];");
+        client.setUserAgent("twh:[22691871];[CV. Rajawali Reka Cipta (Rekatours)];");
+        client.setTimeout(100000);
+    }
+
+    public void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         client.get(url, params, responseHandler);
     }
 
-    public static void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+    public void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         client.post(url, params, responseHandler);
     }
 
-    public static void put(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+    public void put(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         client.put(url, params, responseHandler);
     }
-    public static void patch(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+
+    public void patch(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         client.patch(url, params, responseHandler);
     }
 
-    public static void delete(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+    public void delete(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         client.delete(url, params, responseHandler);
     }
 }
