@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.jixstreet.rekatoursandtravel.R;
 import com.jixstreet.rekatoursandtravel.utils.GmailSender;
@@ -48,9 +49,14 @@ public class FeedbackFragment extends Fragment {
                 try {
                     GmailSender sender = new GmailSender("reka.toursntravel02@gmail.com", "Rekaproject02");
                     sender.sendMail("Hi, this is subject",
-                            "This is Body laaaaa",
+                            emailET.getText().toString() + " - " +
+                            kritikSaranET.getText().toString(),
                             "reka.toursntravel02@gmail.com",
-                            "satryaway@gmail.com");
+                            "info@rekatoursntravel.com");
+
+                    Toast.makeText(getActivity(), "Feedback sent", Toast.LENGTH_SHORT).show();
+                    emailET.setText("");
+                    kritikSaranET.setText("");
                 } catch (Exception e) {
                     Log.e("SendMail", e.getMessage(), e);
                 }
