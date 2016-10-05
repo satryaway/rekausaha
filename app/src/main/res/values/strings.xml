@@ -20,7 +20,24 @@
     <string name="kritik_saran">Kritik dan Saran</string>
     <string name="tentang">Tentang Reka</string>
     <string name="app_version">App Version 1.0</string>
-    <string name="app_description">lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet</string>
+    <string name="app_description">
+        REKATOURS tidak sekedar menyediakan anda tiket pesawat dan reservasi hotel, kami memberikan kenyamanan perjalanan dan liburan anda dengan layanan lengkap : tiket pesawat terbang/kereta api, akomodasi hotel, transportasi dan pengaturan tour anda.
+Tour kami customized, unique &amp; personal, sehingga tidak ada kata bosan karena perjalanan anda kami desain sesuai dengan keinginan anda. Tinggal relax, menikmati perjalanan, selebihnya kami yang atur kebutuhan liburan anda.
+\n\n
+Untuk permintaan layanan kami, silahkan menghubungi :
+\nTelepon : +62 21 824 00280, 0813 15942222
+\nWhatsapp: +62 813 15942222
+\nEmail: info@rekatoursntravel.com
+\nLineID: rekatours
+\n\n
+Kunjungi juga website dan media social Rekatours:
+\nwww.rekatoursntravel.com
+\nFB: facebook.com/rekatours
+\nIG: @rekatours
+\nTwitter: @rekatour
+\n\n
+Rekatours adalah brand milik CV. Rajawali Reka Cipta
+</string>
     <string name="email_anda">Alamat email anda</string>
     <string name="kritik_saran_description">Kritik &amp; saran yang anda tulis akan dikirim langsung ke email Rekatour.</string>
     <string name="send">Kirim</string>
@@ -368,4 +385,5 @@
     <string name="my_booking">My Booking</string>
     <string name="card_number">Card Number</string>
     <string name="token_response">Token Response</string>
+    <string name="running_text"><![CDATA[Terbang nyaman dengan harga promo – Diskon khusus untuk paket tour Yogyakarta dan Jawa Tengah – Call/WA: 0813 1594 2222]]></string>
 </resources>
