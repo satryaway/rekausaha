@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ListView;
 
 import com.jixstreet.rekatoursandtravel.R;
@@ -20,6 +22,9 @@ import butterknife.ButterKnife;
 public class NewsFragment extends Fragment {
     @Bind(R.id.list_news)
     ListView listNews;
+
+    @Bind(R.id.web_view)
+    WebView webView;
 
     private NewsAdapter newsAdapter;
     private News news;
@@ -48,6 +53,11 @@ public class NewsFragment extends Fragment {
 
         newsAdapter = new NewsAdapter(getActivity(), arrayList);
         listNews.setAdapter(newsAdapter);
+
+        webView = (WebView) view.findViewById(R.id.web_view);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setWebViewClient(new WebViewClient());
+        webView.loadUrl("http://bit.ly/reka-news");
 
         return view;
     }
