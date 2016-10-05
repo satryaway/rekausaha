@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity
         isRefreshToken = intent.getBooleanExtra(CommonConstants.REFRESH_TOKEN, false);
 
         ButterKnife.bind(this);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
         sharedPreferences = this.getSharedPreferences(CommonConstants.REKA_USAHA, MODE_PRIVATE);
