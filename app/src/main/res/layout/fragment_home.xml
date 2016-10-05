@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="20"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/pager_atas"
-        android:layout_width="384dp"
-        android:layout_height="400dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="14"
         android:layout_alignParentTop="true">
+
 
         <com.jixstreet.rekatoursandtravel.views.pagerindicator.AutoScrollViewPager
             android:id="@+id/pager"
@@ -21,12 +25,31 @@
             android:layout_alignParentBottom="true"
             android:layout_centerVertical="true"
             android:padding="15dp" />
+
+        <TextView
+            android:id="@+id/txt_runningtext"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="#85000000"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:freezesText="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:padding="10dp"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="@string/running_text"
+            android:textColor="@android:color/white" />
     </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/layout_navmenu"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="6"
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/pager_atas"
         android:layout_centerHorizontal="true"
@@ -52,22 +75,4 @@
             android:src="@drawable/hotel_ic" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/txt_runningtext"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="#85000000"
-        android:ellipsize="marquee"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:freezesText="true"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:padding="10dp"
-        android:scrollHorizontally="true"
-        android:singleLine="true"
-        android:text="@string/running_text"
-        android:textColor="@android:color/white" />
-
-</RelativeLayout>
+</LinearLayout>
