@@ -23,7 +23,7 @@
                 android:layout_width="171dp"
                 android:layout_height="96dp"
                 android:layout_centerInParent="true"
-                android:src="@drawable/illustration" />
+                android:src="@drawable/reka" />
 
             <TextView
                 android:id="@+id/version_app"
@@ -44,6 +44,13 @@
             android:layout_marginTop="-20dp"
             android:src="@drawable/toolbar_bottom" />
 
+        <ImageView
+            android:layout_width="171dp"
+            android:layout_height="96dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:src="@drawable/illustration" />
+
         <TextView
             android:id="@+id/text2"
             android:layout_width="wrap_content"
@@ -51,6 +58,34 @@
             android:layout_margin="@dimen/activity_horizontal_margin"
             android:layout_marginTop="-20dp"
             android:text="@string/app_description" />
+
+        <LinearLayout
+            android:id="@+id/hyperlink_wrapper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="128dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginRight="36dp"
+                android:src="@drawable/planet_earth" />
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginRight="36dp"
+                android:src="@drawable/ic_like" />
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_email" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
