@@ -1,5 +1,6 @@
 package com.jixstreet.rekatoursandtravel.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -46,9 +47,19 @@ public class FeedbackFragment extends Fragment {
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("message/rfc822");
+                i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"info@rekatoursntravel.com"});
+                i.putExtra(Intent.EXTRA_SUBJECT, emailET.getText().toString());
+                i.putExtra(Intent.EXTRA_TEXT   , kritikSaranET.getText().toString());
                 try {
+                    startActivity(Intent.createChooser(i, "Send mail..."));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(getActivity(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                }
+                /*try {
                     GmailSender sender = new GmailSender("reka.toursntravel02@gmail.com", "Rekaproject02");
-                    sender.sendMail("Hi, this is subject",
+                    sender.sendMail("Feedback for Rekatours",
                             emailET.getText().toString() + " - " +
                             kritikSaranET.getText().toString(),
                             "reka.toursntravel02@gmail.com",
@@ -56,10 +67,10 @@ public class FeedbackFragment extends Fragment {
 
                     Toast.makeText(getActivity(), "Feedback sent", Toast.LENGTH_SHORT).show();
                     emailET.setText("");
-                    kritikSaranET.setText("");
+                    kritikSaranET.setText(" ");
                 } catch (Exception e) {
                     Log.e("SendMail", e.getMessage(), e);
-                }
+                }*/
             }
         });
     }
