@@ -28,9 +28,9 @@ public class HeaderAdapter extends PagerAdapter {
             R.drawable.banner3
     };
     private String[] HEADERCAPTION = {
-            "Bromo",
-            "Raja Ampat",
-            "Ubud"
+            "Just relax...",
+            "Promo Tour Jogja",
+            "Customized Wiskul"
     };
 
     public HeaderAdapter(Context context) {

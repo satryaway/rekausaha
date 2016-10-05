@@ -5,16 +5,14 @@
 
     <RelativeLayout
         android:id="@+id/pager_atas"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/layout_navmenu"
+        android:layout_width="384dp"
+        android:layout_height="400dp"
         android:layout_alignParentTop="true">
 
         <com.jixstreet.rekatoursandtravel.views.pagerindicator.AutoScrollViewPager
             android:id="@+id/pager"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <com.jixstreet.rekatoursandtravel.views.pagerindicator.CirclePageIndicator
             android:id="@+id/indicator"
@@ -25,10 +23,41 @@
             android:padding="15dp" />
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/layout_navmenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/pager_atas"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <ImageView
+            android:id="@+id/nav_flight"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:padding="20dp"
+            android:src="@drawable/flight_ic" />
+
+        <ImageView
+            android:id="@+id/nav_hotel"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:padding="20dp"
+            android:src="@drawable/hotel_ic" />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/txt_runningtext"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:background="#85000000"
         android:ellipsize="marquee"
         android:focusable="true"
@@ -38,33 +67,7 @@
         android:padding="10dp"
         android:scrollHorizontally="true"
         android:singleLine="true"
-        android:text="Diskon Eksklusif Tiket Pesawat. Khusus pelanggan Info Promo, nikmati diskon untuk tiket pesawat dengan 17+ maskapai rute domestik dan internasional."
+        android:text="@string/running_text"
         android:textColor="@android:color/white" />
-
-    <LinearLayout
-        android:id="@+id/layout_navmenu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:orientation="horizontal"
-        android:weightSum="2">
-
-        <ImageView
-            android:id="@+id/nav_flight"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_weight="1"
-            android:padding="20dp"
-            android:src="@drawable/flight_ic" />
-
-        <ImageView
-            android:id="@+id/nav_hotel"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_weight="1"
-            android:padding="20dp"
-            android:src="@drawable/hotel_ic" />
-    </LinearLayout>
 
 </RelativeLayout>
