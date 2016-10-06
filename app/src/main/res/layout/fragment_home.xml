@@ -20,11 +20,12 @@
 
         <com.jixstreet.rekatoursandtravel.views.pagerindicator.CirclePageIndicator
             android:id="@+id/indicator"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
-            android:layout_centerVertical="true"
-            android:padding="15dp" />
+            android:layout_centerVertical="true" />
 
         <TextView
             android:id="@+id/txt_runningtext"

@@ -50,7 +50,7 @@ public class HeaderAdapter extends PagerAdapter {
         ButterKnife.bind(this, view);
 
         Picasso.with(context).load(HEADERS[position]).into(imageHeader);
-        imageCaption.setText(HEADERCAPTION[position]);
+//        imageCaption.setText(HEADERCAPTION[position]);
 
         container.addView(view, 0);
         return view;
