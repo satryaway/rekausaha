@@ -13,8 +13,8 @@ public class APIAgent {
 
     public APIAgent() {
         client = new AsyncHttpClient();
-        client.addHeader("user-agent", "twh:[22691871];[CV. Rajawali Reka Cipta (Rekatours)];");
-        client.setUserAgent("twh:[22691871];[CV. Rajawali Reka Cipta (Rekatours)];");
+        client.addHeader("user-agent", "twh:[23346146];[CV. Rajawali Reka Cipta (Rekatours)];");
+        client.setUserAgent("twh:[23346146];[CV. Rajawali Reka Cipta (Rekatours)];");
         client.setTimeout(100000);
     }
 

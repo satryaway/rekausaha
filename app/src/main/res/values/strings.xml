@@ -10,17 +10,17 @@
     <color name="default_circle_indicator_stroke_color">#FFDDDDDD</color>
     <dimen name="default_circle_indicator_stroke_width">1dp</dimen>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_settings" translatable="false">Settings</string>
     <string name="pick_what">Pick what you need</string>
-    <string name="beranda">Beranda</string>
-    <string name="kabar_berita">Kabar Berita</string>
-    <string name="kritik_saran">Kritik dan Saran</string>
-    <string name="tentang">Tentang Reka</string>
-    <string name="app_version">App Version 1.0</string>
-    <string name="app_description">
+    <string name="beranda" translatable="false">Beranda</string>
+    <string name="kabar_berita" translatable="false">Kabar Berita</string>
+    <string name="kritik_saran" translatable="false">Kritik dan Saran</string>
+    <string name="tentang" translatable="false">Tentang Reka</string>
+    <string name="app_version" translatable="false">App Version 1.0</string>
+    <string name="app_description" translatable="false">
         REKATOURS tidak sekedar menyediakan anda tiket pesawat dan reservasi hotel, kami memberikan kenyamanan perjalanan dan liburan anda dengan layanan lengkap : tiket pesawat terbang/kereta api, akomodasi hotel, transportasi dan pengaturan tour anda.
 Tour kami customized, unique &amp; personal, sehingga tidak ada kata bosan karena perjalanan anda kami desain sesuai dengan keinginan anda. Tinggal relax, menikmati perjalanan, selebihnya kami yang atur kebutuhan liburan anda.
 \n\nUntuk permintaan layanan kami, silahkan menghubungi :
@@ -35,86 +35,86 @@ Tour kami customized, unique &amp; personal, sehingga tidak ada kata bosan karen
 \nTwitter: @rekatour
 \n\nRekatours adalah brand milik CV. Rajawali Reka Cipta\n\nPowered by Tiket.com
 </string>
-    <string name="email_anda">Alamat email anda</string>
-    <string name="kritik_saran_description">Kritik &amp; saran yang anda tulis akan dikirim langsung ke email Rekatour.</string>
-    <string name="send">Kirim</string>
-    <string name="please_wait">Please Wait</string>
-    <string name="RTO">Request Timed Out</string>
-    <string name="search_airport">Cari Bandara</string>
-    <string name="sekali_jalan">Sekali Jalan</string>
-    <string name="pulang_pergi">Pulang Pergi</string>
-    <string name="dari">Dari</string>
-    <string name="menuju">Menuju</string>
-    <string name="berangkat">Berangkat</string>
-    <string name="pulang">Pulang</string>
-    <string name="penumpang">Penumpang</string>
-    <string name="dewasa">Dewasa</string>
-    <string name="anak">Anak 2-12 tahun</string>
-    <string name="cari_pesawat">Cari Pesawat</string>
-    <string name="pilih_penerbangan">Pilih Penerbangan</string>
-    <string name="pergi">Pergi</string>
-    <string name="detail_pesanan">Detail Pesanan</string>
-    <string name="bayi"><![CDATA[Bayi <2 Tahun]]></string>
-    <string name="pilih_kota_keberangkatan">Pilih Kota Keberangkatan</string>
-    <string name="pilih_kota_tujuan">Pilih Kota Tujuan</string>
-    <string name="filter">Filter</string>
-    <string name="informasi_penumpang">Informasi Penumpang</string>
-    <string name="informasi_kontak">Informasi kontak yang dapat dihubungi</string>
-    <string name="titel">Titel</string>
-    <string name="nama_lengkap">Nama Lengkap</string>
-    <string name="no_telp">No Telepon</string>
-    <string name="email">Email</string>
-    <string name="pilih_titel">Pilih Titel</string>
-    <string name="metode_pembayaran">Metode Pembayaran</string>
-    <string name="kartu_kredit">Kartu Kredit</string>
-    <string name="atm_transfer">Atm Transfer</string>
-    <string name="cimb_clicks">CIMB Clicks</string>
-    <string name="klik_bca">KlikBCA</string>
-    <string name="mandiri_clickpay">Mandiri Clickpay</string>
-    <string name="epay_bri">ePay BRI</string>
-    <string name="bca_klikpay">BCA Klikpay</string>
-    <string name="order_id">Order ID</string>
-    <string name="sisa_waktu">Sisa waktu pemesanan</string>
-    <string name="tanggal_lahir">Tanggal Lahir</string>
-    <string name="filter_berdasarkan">Filter Berdasarkan</string>
-    <string name="pagi">03.01-09.00</string>
-    <string name="waktu_penerbangan">Waktu penerbangan</string>
-    <string name="siang">09.01-15.00</string>
-    <string name="sore">15.01-18.00</string>
-    <string name="malam">08.01-03.00</string>
-    <string name="nonstop">Non-stop</string>
-    <string name="transit">Transit</string>
-    <string name="maskapai">Maskapai</string>
-    <string name="opsi_penerbangan">Opsi penerbangan</string>
-    <string name="harga">Harga</string>
-    <string name="termurah">Termurah</string>
-    <string name="termahal">Termahal</string>
-    <string name="simpan">Simpan</string>
-    <string name="nama_depan">Nama Depan</string>
-    <string name="nama_belakang">Nama Belakang</string>
-    <string name="daftar_pemesanan">Daftar Pemesanan</string>
-    <string name="hotel">Hotel</string>
-    <string name="kota_hotel">Kota / Hotel</string>
-    <string name="check_in">Check-in</string>
-    <string name="check_out">Check-out</string>
-    <string name="cari_hotel">Cari Hotel</string>
-    <string name="tamu">Tamu</string>
-    <string name="kamar">Kamar</string>
-    <string name="pilih_kota_hotel">Pilih Kota / Hotel</string>
-    <string name="daftar_hotel">Daftar Hotel</string>
-    <string name="search">Cari</string>
-    <string name="sortir">Sortir</string>
-    <string name="popularitas">Popularitas</string>
-    <string name="terpopuler">- terpopuler</string>
-    <string name="harga_termurah">- termurah</string>
-    <string name="harga_termahal">- termahal</string>
-    <string name="rating_tertinggi">- tertinggi</string>
-    <string name="rating">Rating</string>
-    <string name="bintang">Bintang</string>
+    <string name="email_anda" translatable="false">Alamat email anda</string>
+    <string name="kritik_saran_description" translatable="false">Kritik &amp; saran yang anda tulis akan dikirim langsung ke email Rekatour.</string>
+    <string name="send" translatable="false">Kirim</string>
+    <string name="please_wait" translatable="false">Please Wait</string>
+    <string name="RTO" translatable="false">Request Timed Out</string>
+    <string name="search_airport" translatable="false">Cari Bandara</string>
+    <string name="sekali_jalan" translatable="false">Sekali Jalan</string>
+    <string name="pulang_pergi" translatable="false">Pulang Pergi</string>
+    <string name="dari" translatable="false">Dari</string>
+    <string name="menuju" translatable="false">Menuju</string>
+    <string name="berangkat" translatable="false">Berangkat</string>
+    <string name="pulang" translatable="false">Pulang</string>
+    <string name="penumpang" translatable="false">Penumpang</string>
+    <string name="dewasa" translatable="false">Dewasa</string>
+    <string name="anak" translatable="false">Anak 2-12 tahun</string>
+    <string name="cari_pesawat" translatable="false">Cari Pesawat</string>
+    <string name="pilih_penerbangan" translatable="false">Pilih Penerbangan</string>
+    <string name="pergi" translatable="false">Pergi</string>
+    <string name="detail_pesanan" translatable="false">Detail Pesanan</string>
+    <string name="bayi" translatable="false"><![CDATA[Bayi <2 Tahun]]></string>
+    <string name="pilih_kota_keberangkatan" translatable="false">Pilih Kota Keberangkatan</string>
+    <string name="pilih_kota_tujuan" translatable="false">Pilih Kota Tujuan</string>
+    <string name="filter" translatable="false">Filter</string>
+    <string name="informasi_penumpang" translatable="false">Informasi Penumpang</string>
+    <string name="informasi_kontak" translatable="false">Informasi kontak yang dapat dihubungi</string>
+    <string name="titel" translatable="false">Titel</string>
+    <string name="nama_lengkap" translatable="false">Nama Lengkap</string>
+    <string name="no_telp" translatable="false">No Telepon</string>
+    <string name="email" translatable="false">Email</string>
+    <string name="pilih_titel" translatable="false">Pilih Titel</string>
+    <string name="metode_pembayaran" translatable="false">Metode Pembayaran</string>
+    <string name="kartu_kredit" translatable="false">Kartu Kredit</string>
+    <string name="atm_transfer" translatable="false">Atm Transfer</string>
+    <string name="cimb_clicks" translatable="false">CIMB Clicks</string>
+    <string name="klik_bca" translatable="false">KlikBCA</string>
+    <string name="mandiri_clickpay" translatable="false">Mandiri Clickpay</string>
+    <string name="epay_bri" translatable="false">ePay BRI</string>
+    <string name="bca_klikpay" translatable="false">BCA Klikpay</string>
+    <string name="order_id" translatable="false">Order ID</string>
+    <string name="sisa_waktu" translatable="false">Sisa waktu pemesanan</string>
+    <string name="tanggal_lahir" translatable="false">Tanggal Lahir</string>
+    <string name="filter_berdasarkan" translatable="false">Filter Berdasarkan</string>
+    <string name="pagi" translatable="false">03.01-09.00</string>
+    <string name="waktu_penerbangan" translatable="false">Waktu penerbangan</string>
+    <string name="siang" translatable="false">09.01-15.00</string>
+    <string name="sore" translatable="false">15.01-18.00</string>
+    <string name="malam" translatable="false">08.01-03.00</string>
+    <string name="nonstop" translatable="false">Non-stop</string>
+    <string name="transit" translatable="false">Transit</string>
+    <string name="maskapai" translatable="false">Maskapai</string>
+    <string name="opsi_penerbangan" translatable="false">Opsi penerbangan</string>
+    <string name="harga" translatable="false">Harga</string>
+    <string name="termurah" translatable="false">Termurah</string>
+    <string name="termahal" translatable="false">Termahal</string>
+    <string name="simpan" translatable="false">Simpan</string>
+    <string name="nama_depan" translatable="false">Nama Depan</string>
+    <string name="nama_belakang" translatable="false">Nama Belakang</string>
+    <string name="daftar_pemesanan" translatable="false">Daftar Pemesanan</string>
+    <string name="hotel" translatable="false">Hotel</string>
+    <string name="kota_hotel" translatable="false">Kota / Hotel</string>
+    <string name="check_in" translatable="false">Check-in</string>
+    <string name="check_out" translatable="false">Check-out</string>
+    <string name="cari_hotel" translatable="false">Cari Hotel</string>
+    <string name="tamu" translatable="false">Tamu</string>
+    <string name="kamar" translatable="false">Kamar</string>
+    <string name="pilih_kota_hotel" translatable="false">Pilih Kota / Hotel</string>
+    <string name="daftar_hotel" translatable="false">Daftar Hotel</string>
+    <string name="search" translatable="false">Cari</string>
+    <string name="sortir" translatable="false">Sortir</string>
+    <string name="popularitas" translatable="false">Popularitas</string>
+    <string name="terpopuler" translatable="false">- terpopuler</string>
+    <string name="harga_termurah" translatable="false">- termurah</string>
+    <string name="harga_termahal" translatable="false">- termahal</string>
+    <string name="rating_tertinggi" translatable="false">- tertinggi</string>
+    <string name="rating" translatable="false">Rating</string>
+    <string name="bintang" translatable="false">Bintang</string>
 
 
 
-    <string name="large_text">
+    <string name="large_text" translatable="false">
         "Material is the metaphor.\n\n"
 
         "A material metaphor is the unifying theory of a rationalized space and a system of motion."
@@ -171,28 +171,29 @@ Tour kami customized, unique &amp; personal, sehingga tidak ada kata bosan karen
         "that does not change. If an object changes elevation, it should return to its resting "
         "elevation as soon as possible.\n\n"
     </string>
-    <string name="lihat_kamar">Lihat Kamar</string>
-    <string name="title_activity_main2">Main2Activity</string>
-    <string name="pesan_sekarang">Pesan Sekarang</string>
-    <string name="pesanan_anda">Pesanan Anda</string>
-    <string name="hotel_bintang">Hotel Bintang</string>
-    <string name="rating_terendah">terendah</string>
-    <string name="fasilitas">Fasilitas</string>
-    <string name="not_customer">Saya tidak menginap di hotel. saya membuat pemesanan ini untuk orang lain.</string>
-    <string name="informasi_kontak_tamu">Informasi tamu</string>
-    <string name="userid_klikbca">User ID KlikBCA</string>
-    <string name="rincian_pembayaran">Rincian Pembayaran</string>
-    <string name="no_flight">Tidak ada penerbangan, silahkan mengubah tanggal dan rute.</string>
-    <string name="refresh">Refresh</string>
-    <string name="kewarganegaraan">Kewarganegaraan</string>
-    <string name="needed">Diperlukan</string>
-    <string name="field_not_completed">Data belum lengkap. Silahkan masukkan semua isian yang dibutuhkan</string>
-    <string name="ok">OK</string>
-    <string name="secret_key">a76c00688218aca2ccc746ea7fdf2417</string>
-    <string name="registering">Registering</string>
-    <string name="title_activity_maps">Map</string>
-    <string name="hotel_customer_field">{\"diagnostic\":{\"status\":200,\"elapsetime\":\"0.2042\",\"memoryusage\":\"6.24MB\",\"unix_timestamp\":1460558836,\"confirm\":\"success\",\"lang\":\"id\",\"currency\":\"IDR\"},\"output_type\":\"json\",\"required\":{\"separator\":{\"mandatory\":1,\"type\":\"text\",\"example\":\"\",\"FieldText\":\"Informasi Kontak yang Dapat Dihubungi\",\"category\":\"separator\",\"disabled\":\"false\"},\"conSalutation\":{\"mandatory\":1,\"type\":\"combobox\",\"example\":\"Mr\",\"FieldText\":\"Titel\",\"category\":\"contact\",\"resource\":[{\"id\":\"Mr\",\"name\":\"Tuan\"},{\"id\":\"Mrs\",\"name\":\"Nyonya\"},{\"id\":\"Ms\",\"name\":\"Nona\"}],\"disabled\":\"false\"},\"conFirstName\":{\"mandatory\":1,\"type\":\"textbox\",\"example\":\"Jane\",\"FieldText\":\"Nama Lengkap sesuai dengan KTP\\/Passport\\/SIM\",\"category\":\"contact\",\"disabled\":\"false\"},\"conLastName\":{\"mandatory\":0,\"type\":\"textbox\",\"example\":\"wacob\",\"FieldText\":\"Nama Belakang\",\"category\":\"contact\",\"disabled\":\"false\"},\"conPhone\":{\"mandatory\":1,\"type\":\"textbox\",\"example\":\"+6285212345678\",\"FieldText\":\"No. Telepon\",\"category\":\"contact\",\"disabled\":\"false\"},\"conEmailAddress\":{\"mandatory\":1,\"type\":\"textbox\",\"example\":\"example@email.com\",\"FieldText\":\"Kontak Email\",\"category\":\"contact\",\"disabled\":\"false\"}},\"departures\":{\"flight_id\":\"2177211\",\"airlines_name\":\"AIRASIA\",\"flight_number\":\"QZ-7912\",\"flight_date\":\"2016-04-14\",\"stop\":\"Langsung\",\"price_value\":\"315000.00\",\"price_adult\":\"315000.00\",\"price_child\":\"0.00\",\"price_infant\":\"0.00\",\"count_adult\":\"1\",\"count_child\":\"0\",\"count_infant\":\"0\",\"timestamp\":\"2016-04-08 10:02:51\",\"simple_departure_time\":\"13:20\",\"simple_arrival_time\":\"15:55\",\"long_via\":\"\",\"full_via\":\"BDO - DPS (13:20 - 15:55)\",\"markup_price_string\":\"IDR 415.000\",\"markup_price\":415000,\"need_baggage\":1,\"duration\":\"1 j 35 m\",\"image\":\"https:\\/\\/api-sandbox.tiket.com\\/images\\/tiket2\\/icon_airasia_2.jpg\",\"flight_infos\":{\"flight_info\":[{\"flight_number\":\"QZ-7912\",\"departure_city\":\"BDO\",\"arrival_city\":\"DPS\",\"simple_departure_time\":\"\",\"simple_arrival_time\":\"\"}]},\"sss_key\":null},\"login_status\":\"false\",\"token\":\"17d6e7eeb6605e182fea261c6baf9cf7f08094dd\"}</string>
-    <string name="hotel_customer_field_express">{
+    <string name="lihat_kamar" translatable="false">Lihat Kamar</string>
+    <string name="title_activity_main2" translatable="false">Main2Activity</string>
+    <string name="pesan_sekarang" translatable="false">Pesan Sekarang</string>
+    <string name="pesanan_anda" translatable="false">Pesanan Anda</string>
+    <string name="hotel_bintang" translatable="false">Hotel Bintang</string>
+    <string name="rating_terendah" translatable="false">terendah</string>
+    <string name="fasilitas" translatable="false">Fasilitas</string>
+    <string name="not_customer" translatable="false">Saya tidak menginap di hotel. saya membuat pemesanan ini untuk orang lain.</string>
+    <string name="informasi_kontak_tamu" translatable="false">Informasi tamu</string>
+    <string name="userid_klikbca" translatable="false">User ID KlikBCA</string>
+    <string name="rincian_pembayaran" translatable="false">Rincian Pembayaran</string>
+    <string name="no_flight" translatable="false">Tidak ada penerbangan, silahkan mengubah tanggal dan rute.</string>
+    <string name="refresh" translatable="false">Refresh</string>
+    <string name="kewarganegaraan" translatable="false">Kewarganegaraan</string>
+    <string name="needed" translatable="false">Diperlukan</string>
+    <string name="field_not_completed" translatable="false">Data belum lengkap. Silahkan masukkan semua isian yang dibutuhkan</string>
+    <string name="ok" translatable="false">OK</string>
+    <!--<string name="secret_key">a76c00688218aca2ccc746ea7fdf2417</string> //development-->
+    <string name="secret_key" translatable="false">b3bb3432012f081b692aa8808edf742b</string>
+    <string name="registering" translatable="false">Registering</string>
+    <string name="title_activity_maps" translatable="false">Map</string>
+    <string name="hotel_customer_field" translatable="false">{\"diagnostic\":{\"status\":200,\"elapsetime\":\"0.2042\",\"memoryusage\":\"6.24MB\",\"unix_timestamp\":1460558836,\"confirm\":\"success\",\"lang\":\"id\",\"currency\":\"IDR\"},\"output_type\":\"json\",\"required\":{\"separator\":{\"mandatory\":1,\"type\":\"text\",\"example\":\"\",\"FieldText\":\"Informasi Kontak yang Dapat Dihubungi\",\"category\":\"separator\",\"disabled\":\"false\"},\"conSalutation\":{\"mandatory\":1,\"type\":\"combobox\",\"example\":\"Mr\",\"FieldText\":\"Titel\",\"category\":\"contact\",\"resource\":[{\"id\":\"Mr\",\"name\":\"Tuan\"},{\"id\":\"Mrs\",\"name\":\"Nyonya\"},{\"id\":\"Ms\",\"name\":\"Nona\"}],\"disabled\":\"false\"},\"conFirstName\":{\"mandatory\":1,\"type\":\"textbox\",\"example\":\"Jane\",\"FieldText\":\"Nama Lengkap sesuai dengan KTP\\/Passport\\/SIM\",\"category\":\"contact\",\"disabled\":\"false\"},\"conLastName\":{\"mandatory\":0,\"type\":\"textbox\",\"example\":\"wacob\",\"FieldText\":\"Nama Belakang\",\"category\":\"contact\",\"disabled\":\"false\"},\"conPhone\":{\"mandatory\":1,\"type\":\"textbox\",\"example\":\"+6285212345678\",\"FieldText\":\"No. Telepon\",\"category\":\"contact\",\"disabled\":\"false\"},\"conEmailAddress\":{\"mandatory\":1,\"type\":\"textbox\",\"example\":\"example@email.com\",\"FieldText\":\"Kontak Email\",\"category\":\"contact\",\"disabled\":\"false\"}},\"departures\":{\"flight_id\":\"2177211\",\"airlines_name\":\"AIRASIA\",\"flight_number\":\"QZ-7912\",\"flight_date\":\"2016-04-14\",\"stop\":\"Langsung\",\"price_value\":\"315000.00\",\"price_adult\":\"315000.00\",\"price_child\":\"0.00\",\"price_infant\":\"0.00\",\"count_adult\":\"1\",\"count_child\":\"0\",\"count_infant\":\"0\",\"timestamp\":\"2016-04-08 10:02:51\",\"simple_departure_time\":\"13:20\",\"simple_arrival_time\":\"15:55\",\"long_via\":\"\",\"full_via\":\"BDO - DPS (13:20 - 15:55)\",\"markup_price_string\":\"IDR 415.000\",\"markup_price\":415000,\"need_baggage\":1,\"duration\":\"1 j 35 m\",\"image\":\"https:\\/\\/api-sandbox.tiket.com\\/images\\/tiket2\\/icon_airasia_2.jpg\",\"flight_infos\":{\"flight_info\":[{\"flight_number\":\"QZ-7912\",\"departure_city\":\"BDO\",\"arrival_city\":\"DPS\",\"simple_departure_time\":\"\",\"simple_arrival_time\":\"\"}]},\"sss_key\":null},\"login_status\":\"false\",\"token\":\"17d6e7eeb6605e182fea261c6baf9cf7f08094dd\"}</string>
+    <string name="hotel_customer_field_express" translatable="false">{
   "required": {
 "separator_adult1":{"mandatory":1,"type":"text","example":"","FieldText":"Informasi Kontak yang Dapat Dihubungi","category":"separator"},
     "express_fullname": {
@@ -240,15 +241,15 @@ Tour kami customized, unique &amp; personal, sehingga tidak ada kata bosan karen
     }
   }
 }</string>
-    <string name="get_customer_express_field">{ \"fake\" : \"\",   \"required\": { \"separator_adult1\":{\"mandatory\":1,\"type\":\"text\",\"example\":\"\",\"FieldText\":\"Informasi Kontak yang Dapat Dihubungi\",\"category\":\"separator\"},     \"express_fullname\": {       \"mandatory\": 1,       \"type\": \"textbox\",       \"example\": \"Jane\",       \"FieldText\": \"Nama Lengkap\"     },     \"express_phone\": {       \"mandatory\": 1,       \"type\": \"textbox\",       \"example\": \"+628xxxxxxxx\",       \"FieldText\": \"Nomor telepon\"     },     \"expresss_specialrequest\": {       \"mandatory\": 0,       \"type\": \"textbox\",       \"example\": \"lantainya yang dibawah\",       \"FieldText\": \"Permintaan Khusus (Pilihan)\"     },     \"express_guest\": {       \"mandatory\": 0,       \"type\": \"checkbox\",       \"example\": \"1\",       \"FieldText\": \"Saya tidak menginap di hotel ini. Saya melakukan booking untuk orang lain. \",       \"resource\": [         \"0\",         \"1\"       ]     },  \"separator_customer_1\":{\"mandatory\":1,\"type\":\"text\",\"example\":\"\",\"FieldText\":\"Informasi Tamu\",\"category\":\"separator\"},      \"express_guestfullname\": {       \"mandatory\": 0,       \"type\": \"textbox\",       \"example\": \"John\",       \"FieldText\": \"Nama Lengkap tamu yang akan menginap\"     },     \"express_email\": {       \"mandatory\": 1,       \"type\": \"textbox\",       \"example\": \"email@email.com\",       \"FieldText\": \"Email\"     }   } }</string>
-    <string name="getting_order">Getting order</string>
-    <string name="pembayaran">Pembayaran</string>
+    <string name="get_customer_express_field" translatable="false">{ \"fake\" : \"\",   \"required\": { \"separator_adult1\":{\"mandatory\":1,\"type\":\"text\",\"example\":\"\",\"FieldText\":\"Informasi Kontak yang Dapat Dihubungi\",\"category\":\"separator\"},     \"express_fullname\": {       \"mandatory\": 1,       \"type\": \"textbox\",       \"example\": \"Jane\",       \"FieldText\": \"Nama Lengkap\"     },     \"express_phone\": {       \"mandatory\": 1,       \"type\": \"textbox\",       \"example\": \"+628xxxxxxxx\",       \"FieldText\": \"Nomor telepon\"     },     \"expresss_specialrequest\": {       \"mandatory\": 0,       \"type\": \"textbox\",       \"example\": \"lantainya yang dibawah\",       \"FieldText\": \"Permintaan Khusus (Pilihan)\"     },     \"express_guest\": {       \"mandatory\": 0,       \"type\": \"checkbox\",       \"example\": \"1\",       \"FieldText\": \"Saya tidak menginap di hotel ini. Saya melakukan booking untuk orang lain. \",       \"resource\": [         \"0\",         \"1\"       ]     },  \"separator_customer_1\":{\"mandatory\":1,\"type\":\"text\",\"example\":\"\",\"FieldText\":\"Informasi Tamu\",\"category\":\"separator\"},      \"express_guestfullname\": {       \"mandatory\": 0,       \"type\": \"textbox\",       \"example\": \"John\",       \"FieldText\": \"Nama Lengkap tamu yang akan menginap\"     },     \"express_email\": {       \"mandatory\": 1,       \"type\": \"textbox\",       \"example\": \"email@email.com\",       \"FieldText\": \"Email\"     }   } }</string>
+    <string name="getting_order" translatable="false">Getting order</string>
+    <string name="pembayaran" translatable="false">Pembayaran</string>
     <!--<string name="fixed_hotem_customer_field">{\"required\":{\"separator\":{\"mandatory\":1,\"type\":\"text\",\"example\":\"\",\"FieldText\":\"Informasi Kontak yang Dapat Dihubungi\",\"category\":\"separator\",\"disabled\":\"false\"},\"conSalutation\":{\"mandatory\":1,\"type\":\"combobox\",\"example\":\"Mr\",\"FieldText\":\"Titel\",\"category\":\"contact\",\"resource\":[{\"id\":\"Mr\",\"name\":\"Tuan\"},{\"id\":\"Mrs\",\"name\":\"Nyonya\"},{\"id\":\"Ms\",\"name\":\"Nona\"}],\"disabled\":\"false\"},\"conFirstName\":{\"mandatory\":1,\"type\":\"textbox\",\"example\":\"Jane\",\"FieldText\":\"Nama Lengkap sesuai dengan KTP\\/Passport\\/SIM\",\"category\":\"contact\",\"disabled\":\"false\"},\"conLastName\":{\"mandatory\":0,\"type\":\"textbox\",\"example\":\"wacob\",\"FieldText\":\"Nama Belakang\",\"category\":\"contact\",\"disabled\":\"false\"},\"conPhone\":{\"mandatory\":1,\"type\":\"textbox\",\"example\":\"+6285212345678\",\"FieldText\":\"No. Telepon\",\"category\":\"contact\",\"disabled\":\"false\"},\"conEmailAddress\":{\"mandatory\":1,\"type\":\"textbox\",\"example\":\"example@email.com\",\"FieldText\":\"Kontak Email\",\"category\":\"contact\",\"disabled\":\"false\"},\"separator_adult1\":{\"mandatory\":1,\"type\":\"text\",\"example\":\"\",\"FieldText\":\"Informasi Tamu\",\"category\":\"separator\",\"disabled\":\"false\"},\"express_fullname\":{      \"mandatory\":1,     \"type\":\"textbox\",     \"example\":\"Jane\",     \"FieldText\":\"Nama Lengkap\"  }, \"express_phone\":{      \"mandatory\":1,     \"type\":\"textbox\",     \"example\":\"+628xxxxxxxx\",     \"FieldText\":\"Nomor telepon\"  }, \"express_email\":{      \"mandatory\":1,     \"type\":\"textbox\",     \"example\":\"email@email.com\",     \"FieldText\":\"Email\"  }}}</string>-->
 
     <!--<string name="fixed_hotem_customer_field">{\"required\":{\"separator\":{\"mandatory\":1,\"type\":\"text\",\"example\":\"\",\"FieldText\":\"Informasi Kontak yang Dapat Dihubungi\",\"category\":\"separator\",\"disabled\":\"false\"},\"conSalutation\":{\"mandatory\":1,\"type\":\"combobox\",\"example\":\"Mr\",\"FieldText\":\"Titel\",\"category\":\"contact\",\"resource\":[{\"id\":\"Mr\",\"name\":\"Tuan\"},{\"id\":\"Mrs\",\"name\":\"Nyonya\"},{\"id\":\"Ms\",\"name\":\"Nona\"}],\"disabled\":\"false\"},\"conFirstName\":{\"mandatory\":1,\"type\":\"textbox\",\"example\":\"Jane\",\"FieldText\":\"Nama Lengkap sesuai dengan KTP/Passport/SIM\",\"category\":\"contact\",\"disabled\":\"false\"},\"conLastName\":{\"mandatory\":0,\"type\":\"textbox\",\"example\":\"wacob\",\"FieldText\":\"Nama Belakang\",\"category\":\"contact\",\"disabled\":\"false\"},\"conPhone\":{\"mandatory\":1,\"type\":\"textbox\",\"example\":\"+6285212345678\",\"FieldText\":\"No. Telepon\",\"category\":\"contact\",\"disabled\":\"false\"},\"conEmailAddress\":{\"mandatory\":1,\"type\":\"textbox\",\"example\":\"example@email.com\",\"FieldText\":\"Kontak Email\",\"category\":\"contact\",\"disabled\":\"false\"},\"separator_adult1\":{\"mandatory\":1,\"type\":\"text\",\"example\":\"\",\"FieldText\":\"Informasi Tamu\",\"category\":\"separator\",\"disabled\":\"false\"},\"express_salutation\":{    \"mandatory\":1,    \"type\":\"combobox\",    \"example\":\"Mr\",    \"FieldText\":\"Titel\",    \"category\":\"contact\",    \"resource\":[        {            \"id\":\"Mr\",            \"name\":\"Tuan\"        },        {            \"id\":\"Mrs\",            \"name\":\"Nyonya\"        },        {            \"id\":\"Ms\",            \"name\":\"Nona\"        }    ],    \"disabled\":\"false\"
 },\"express_fullname\":{      \"mandatory\":1,     \"type\":\"textbox\",     \"example\":\"Jane\",     \"FieldText\":\"Nama Lengkap\"  }, \"express_phone\":{      \"mandatory\":1,     \"type\":\"textbox\",     \"example\":\"+628xxxxxxxx\",     \"FieldText\":\"Nomor telepon\"  }, \"express_email\":{      \"mandatory\":1,     \"type\":\"textbox\",     \"example\":\"email@email.com\",     \"FieldText\":\"Email\"  }}}</string>-->
 
-    <string name="fixed_hotem_customer_field">{\"required\":{\"separator\":{\"mandatory\":1,\"type\":\"text\",\"example\":\"\",\"FieldText\":\"Informasi Kontak yang Dapat Dihubungi\",\"category\":\"separator\",\"disabled\":\"false\"},\"conSalutation\":{\"mandatory\":1,\"type\":\"combobox\",\"example\":\"Mr\",\"FieldText\":\"Titel\",\"category\":\"contact\",\"resource\":[{\"id\":\"Mr\",\"name\":\"Tuan\"},{\"id\":\"Mrs\",\"name\":\"Nyonya\"},{\"id\":\"Ms\",\"name\":\"Nona\"}],\"disabled\":\"false\"},\"conFirstName\":{\"mandatory\":1,\"type\":\"textbox\",\"example\":\"Jane\",\"FieldText\":\"Nama Lengkap sesuai dengan KTP/Passport/SIM\",\"category\":\"contact\",\"disabled\":\"false\"},\"conLastName\":{\"mandatory\":0,\"type\":\"textbox\",\"example\":\"wacob\",\"FieldText\":\"Nama Belakang\",\"category\":\"contact\",\"disabled\":\"false\"},\"conPhone\":{\"mandatory\":1,\"type\":\"textbox\",\"example\":\"+6285212345678\",\"FieldText\":\"No. Telepon\",\"category\":\"contact\",\"disabled\":\"false\"},\"conEmailAddress\":{\"mandatory\":1,\"type\":\"textbox\",\"example\":\"example@email.com\",\"FieldText\":\"Kontak Email\",\"category\":\"contact\",\"disabled\":\"false\"},\"country\":{
+    <string name="fixed_hotem_customer_field" translatable="false">{\"required\":{\"separator\":{\"mandatory\":1,\"type\":\"text\",\"example\":\"\",\"FieldText\":\"Informasi Kontak yang Dapat Dihubungi\",\"category\":\"separator\",\"disabled\":\"false\"},\"conSalutation\":{\"mandatory\":1,\"type\":\"combobox\",\"example\":\"Mr\",\"FieldText\":\"Titel\",\"category\":\"contact\",\"resource\":[{\"id\":\"Mr\",\"name\":\"Tuan\"},{\"id\":\"Mrs\",\"name\":\"Nyonya\"},{\"id\":\"Ms\",\"name\":\"Nona\"}],\"disabled\":\"false\"},\"conFirstName\":{\"mandatory\":1,\"type\":\"textbox\",\"example\":\"Jane\",\"FieldText\":\"Nama Lengkap sesuai dengan KTP/Passport/SIM\",\"category\":\"contact\",\"disabled\":\"false\"},\"conLastName\":{\"mandatory\":0,\"type\":\"textbox\",\"example\":\"wacob\",\"FieldText\":\"Nama Belakang\",\"category\":\"contact\",\"disabled\":\"false\"},\"conPhone\":{\"mandatory\":1,\"type\":\"textbox\",\"example\":\"+6285212345678\",\"FieldText\":\"No. Telepon\",\"category\":\"contact\",\"disabled\":\"false\"},\"conEmailAddress\":{\"mandatory\":1,\"type\":\"textbox\",\"example\":\"example@email.com\",\"FieldText\":\"Kontak Email\",\"category\":\"contact\",\"disabled\":\"false\"},\"country\":{
 
     \"mandatory\":1,
     \"type\":\"combobox\",
@@ -379,9 +380,9 @@ Tour kami customized, unique &amp; personal, sehingga tidak ada kata bosan karen
 		}
 	}
 }</string> -->
-    <string name="my_booking">My Booking</string>
-    <string name="card_number">Card Number</string>
-    <string name="token_response">Token Response</string>
-    <string name="running_text"><![CDATA[Terbang nyaman dengan harga promo – Diskon khusus untuk paket tour Yogyakarta dan Jawa Tengah – Call/WA: 0813 1594 2222]]></string>
-    <string name="subject">Subject</string>
+    <string name="my_booking" translatable="false">My Booking</string>
+    <string name="card_number" translatable="false">Card Number</string>
+    <string name="token_response" translatable="false">Token Response</string>
+    <string name="running_text" translatable="false"><![CDATA[Terbang nyaman dengan harga promo – Diskon khusus untuk paket tour Yogyakarta dan Jawa Tengah – Call/WA: 0813 1594 2222]]></string>
+    <string name="subject" translatable="false">Subject</string>
 </resources>
