@@ -63,7 +63,7 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
     private SimpleDateFormat monthYearFormatter;
     private SimpleDateFormat dateDefaultFormatter;
     private Calendar newCalendar;
-    private String VALUE_HOTEL_AREA = "id";
+    private String VALUE_HOTEL_AREA = "Indonesia";
     private int HOTEL_KOTA = 400;
     private Date todayDate;
     private Date checkinDate;

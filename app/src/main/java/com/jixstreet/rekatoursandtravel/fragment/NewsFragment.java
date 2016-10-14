@@ -1,5 +1,7 @@
 package com.jixstreet.rekatoursandtravel.fragment;
 
+import android.app.ProgressDialog;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,6 +10,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.jixstreet.rekatoursandtravel.R;
 import com.jixstreet.rekatoursandtravel.adapter.NewsAdapter;
@@ -54,9 +57,30 @@ public class NewsFragment extends Fragment {
         newsAdapter = new NewsAdapter(getActivity(), arrayList);
         listNews.setAdapter(newsAdapter);
 
+        final ProgressDialog pd = new ProgressDialog(getActivity());
+        pd.setMessage("Loading");
+
         webView = (WebView) view.findViewById(R.id.web_view);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient());
+        webView.setWebViewClient(new WebViewClient() {
+                                     public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                                         Toast.makeText(getActivity(), description, Toast.LENGTH_SHORT).show();
+                                     }
+
+                                     @Override
+                                     public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                                         pd.show();
+                                     }
+
+
+                                     @Override
+                                     public void onPageFinished(WebView view, String url) {
+                                         pd.dismiss();
+                                     }
+                                 }
+
+        );
         webView.loadUrl("http://bit.ly/reka-news");
 
         return view;

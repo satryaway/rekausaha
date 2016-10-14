@@ -49,6 +49,7 @@
         android:hint="@string/kritik_saran"
         android:maxLength="1000"
         android:minLines="5"
+        android:maxLines="5"
         android:padding="10dp"
         android:textCursorDrawable="@null" />
 

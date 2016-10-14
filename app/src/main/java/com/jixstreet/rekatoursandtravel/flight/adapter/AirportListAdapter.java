@@ -182,7 +182,8 @@ public class AirportListAdapter extends BaseAdapter implements StickyListHeaders
                 for (int i = 0; i < airportFilterList.size(); i++) {
                     if (airportFilterList.get(i).name.toLowerCase().contains(constraint)
                             || airportFilterList.get(i).countryName.toLowerCase().contains(constraint)
-                            || airportFilterList.get(i).locationName.toLowerCase().contains(constraint)) {
+                            || airportFilterList.get(i).locationName.toLowerCase().contains(constraint)
+                            || airportFilterList.get(i).code.toLowerCase().contains(constraint)) {
                         filterList.add(airportFilterList.get(i));
                     }
                 }
